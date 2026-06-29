@@ -1,0 +1,120 @@
+# Philosophy as a network — chronological map of philosophers
+
+A mobile-first, chronologically-organized map of Western philosophy:
+
+- **Time runs left to right.** A node's horizontal position is its midlife year.
+- **Each horizontal lane is a school of thought.** Schools are ordered roughly chronologically (Pre-Socratics on top, contemporary feminism near the bottom).
+- **Each circle is a philosopher**, colored by school.
+- **Lines connect philosophers who argued with one another** — six kinds of relation: continuation, critique, reinterpretation, radicalization, inversion, diagnosis.
+- **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected (every relation has a short embedded summary; landmark ones have full essays).
+- **Add your own philosophers** with the ＋ button. They're generated, previewed (with proposed connections you can toggle), added live to the map, and saved in your browser. Export them as JSON to merge into the repo.
+- A **century axis** (vertical gridlines + year labels) makes "time flows left to right" legible.
+
+121 philosophers, 260 relations, 21 schools — plus whatever you add.
+
+## Running it
+
+The site loads its data over HTTP, so it needs a local server:
+
+```bash
+cd grafo-filosofos
+python3 serve.py
+# open http://localhost:8123
+```
+
+## Mobile-first design
+
+- **Topbar**: hamburger (left) opens the drawer, theme toggle (right).
+- **Drawer**: relation-type filters + school index ("tap to jump" pans the graph to that school's lane; the eye icon toggles its visibility).
+- **Side panel** (desktop) becomes a **bottom sheet** (mobile) with a grip handle and a backdrop.
+- **Zoom controls** bottom-right: + / − / fit-to-screen.
+- **Lane labels** on the left (desktop only) — they stick to the screen and follow the lanes as you pan.
+
+On a phone the lanes panel hides (recovered via the drawer's school list), the inline search collapses into a topbar search button that opens the drawer, and the panel and add-sheet slide up from the bottom (with a grip you can swipe down to dismiss). Safe-area insets keep controls clear of notches.
+
+## Adding a philosopher (and the LLM seam)
+
+The ＋ button opens a sheet: type a name → **Generate** → preview the node and its proposed connections (toggle any off) → **Add to map**. The node is positioned by its era/school, the graph pans to it, and it's persisted to `localStorage`. The drawer's **Export** button downloads `philograph-additions.json` (your additions only) to merge into `data/`.
+
+The generator currently returns **placeholder data** (a working demo). The real Claude call is written out in comments at the `=== LLM INTEGRATION POINT ===` in [`scripts/generator.js`](scripts/generator.js): `generate()` is already `async`, so wiring a real request (structured tool-use output, the existing roster in a cached system block, model `claude-sonnet-4-6`) is a localized change. Use the `claude-api` skill when implementing it. Because a static page can't safely hold an API key, that step also needs either a serverless proxy or a bring-your-own-key field — see the comments.
+
+## Interaction model
+
+- **Default view**: all 121 philosophers visible at low contrast — you see the shape of philosophical history.
+- **Tap a node**: that philosopher and its direct neighbors light up; everything else dims to a faint trace. Panel opens.
+- **Tap an edge**: both endpoints light up; panel opens with the relation's summary and (if present) full essay.
+- **Tap the background**: clears highlight, closes the panel.
+- **Zoom in past ~0.42**: all node labels appear. Below that, only highlighted labels show — so the graph stays readable at any scale.
+
+## Data model
+
+```jsonc
+// philosophers.json — one object per philosopher
+{
+  "id": "kant",
+  "name": "Immanuel Kant",
+  "dates": "1724–1804",
+  "school": "german-idealism",
+  "tradition": "Transcendental idealism / Enlightenment",
+  "region": "Königsberg, Prussia",
+  "central_ideas": ["…"],
+  "key_works": ["…"],
+  "short_description": "…"
+}
+
+// relations.json — one object per directed edge
+{
+  "id": "kant-hume",
+  "source": "kant",
+  "target": "hume",
+  "type": "continuacion",
+  "bridge": "Response to empiricist skepticism",
+  "title": "Kant and the awakening from dogmatic slumber",
+  "summary": "Hume had argued that …",        // always shown
+  "essay": "content/essays/kant-hume.md",     // optional full essay
+  "quotes": [{ "text": "…", "source": "…" }]
+}
+```
+
+Edge direction: from the later philosopher to the earlier one. Relations are interpretive; the graph encodes one defensible reading, not the only one.
+
+## Structure
+
+```
+grafo-filosofos/
+├── index.html               # topbar, drawer, panel, lanes, welcome, error
+├── styles/main.css          # theme variables, mobile-first responsive layout
+├── scripts/
+│   ├── graph.js             # chronological + school-lane layout, addPhilosopher, time helpers
+│   ├── panel.js             # philosopher card (connections list) + relation/essay view
+│   ├── search.js            # drawer content: filters, school index, export button
+│   ├── generator.js         # NEW: generate a philosopher (stub now; real-Claude seam inside)
+│   ├── store.js             # NEW: localStorage persistence + JSON export of additions
+│   └── app.js               # data merge, theme, drawer, zoom, lane labels, century axis, add-flow
+├── data/
+│   ├── philosophers.json    # 121 philosophers
+│   └── relations.json       # 260 relations
+├── content/essays/          # 6 featured full essays
+└── serve.py                 # static server on port 8123
+```
+
+## Adding content
+
+- **A philosopher**: append to `philosophers.json` with a unique `id`, a valid `school` (or add a new one in the CSS palette under `:root` + dark theme), and parseable `dates` (the chronological position is computed from this field).
+- **A relation**: append to `relations.json` with `source`/`target` ids that exist; always include a `summary`. Optional `essay` path → drop the `.md` under `content/essays/`.
+
+## Layout tuning
+
+Three constants at the top of `scripts/graph.js` control the look:
+
+- `LANE_HEIGHT` — vertical spacing between school lanes (130 px).
+- `X_SCALE` — horizontal pixels per year (4.5).
+- `JITTER` — sub-row offsets within a lane to spread philosophers of similar dates.
+
+The label-show zoom threshold is also tuneable (`syncLabels` uses `0.42`).
+
+## Known trade-offs
+
+- **The X axis is linear**: antiquity is sparse, modernity is dense. A piecewise scale would even out the visual rhythm but distort time.
+- **Edges across many lanes** look chaotic at low opacity by design — they become readable only when a node is selected.
+- **Wittgenstein → Wittgenstein** stays as a self-loop. Modeling it as two nodes ("early" / "late") remains a defensible alternative.

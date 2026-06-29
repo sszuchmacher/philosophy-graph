@@ -1,0 +1,984 @@
+/* ============================================================
+   Theme variables (light + dark). Schools and relation types
+   each have their own color.
+   ============================================================ */
+:root {
+  --bg: #f5f2ea;
+  --bg-elev: #fffdf8;
+  --bg-elev-soft: rgba(255, 253, 248, 0.92);
+  --ink: #2b2622;
+  --ink-soft: #6b6358;
+  --line: #ddd6c8;
+  --accent: #7a5c3e;
+
+  --rel-continuacion: #4a7a9b;
+  --rel-critica: #b04a3f;
+  --rel-reinterpretacion: #6b8e4e;
+  --rel-radicalizacion: #9b6a3f;
+  --rel-inversion: #8a4f8e;
+  --rel-diagnostico: #4f6f6b;
+
+  --school-presocratic: #c79a5a;
+  --school-classical: #8b6f3d;
+  --school-hellenistic: #b58a3a;
+  --school-late-antique: #8a6b3c;
+  --school-medieval: #4d6a5a;
+  --school-renaissance: #b07050;
+  --school-rationalism: #3e5a7a;
+  --school-empiricism: #6e5e8a;
+  --school-enlightenment: #c08c3a;
+  --school-german-idealism: #3a4a78;
+  --school-19c-continental: #5a5a6e;
+  --school-utilitarianism: #8a7a3a;
+  --school-pragmatism: #3a6a4a;
+  --school-phenomenology-existentialism: #8a4a3a;
+  --school-analytic: #4a5e6e;
+  --school-critical-theory: #8a2e3a;
+  --school-hermeneutics: #6a4e3a;
+  --school-poststructuralism: #6a3a6e;
+  --school-political: #3a5a4a;
+  --school-feminist: #b04a6a;
+  --school-philosophy-of-science: #2e6a8a;
+
+  --serif: "EB Garamond", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --topbar-height: 56px;
+  --lanes-width: 180px;
+  --drawer-width: 320px;
+  --panel-width: 460px;
+}
+
+html[data-theme="dark"] {
+  --bg: #1a1816;
+  --bg-elev: #242220;
+  --bg-elev-soft: rgba(36, 34, 32, 0.92);
+  --ink: #ece6da;
+  --ink-soft: #a39b8d;
+  --line: #38342f;
+  --accent: #c9a87a;
+
+  --rel-continuacion: #6fa8c9;
+  --rel-critica: #d97469;
+  --rel-reinterpretacion: #93b873;
+  --rel-radicalizacion: #c99a6a;
+  --rel-inversion: #b885bb;
+  --rel-diagnostico: #79a39e;
+
+  --school-presocratic: #d4ab6a;
+  --school-classical: #b89760;
+  --school-hellenistic: #d2a857;
+  --school-late-antique: #b08a55;
+  --school-medieval: #74957e;
+  --school-renaissance: #cc8a72;
+  --school-rationalism: #6789ad;
+  --school-empiricism: #9988b8;
+  --school-enlightenment: #dba85b;
+  --school-german-idealism: #6577ad;
+  --school-19c-continental: #8c8ca0;
+  --school-utilitarianism: #c0ad5d;
+  --school-pragmatism: #6b9c7c;
+  --school-phenomenology-existentialism: #c07868;
+  --school-analytic: #7c93a6;
+  --school-critical-theory: #c75b6a;
+  --school-hermeneutics: #9c7e64;
+  --school-poststructuralism: #9b6ba0;
+  --school-political: #6c9a82;
+  --school-feminist: #d076a0;
+  --school-philosophy-of-science: #5a9ec7;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+button { font-family: var(--sans); }
+
+/* ============================================================
+   Top bar
+   ============================================================ */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  z-index: 30;
+}
+
+.topbar__menu { font-size: 18px; }
+
+.topbar__title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.topbar__controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.search {
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 7px 12px;
+  width: 220px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search:focus { border-color: var(--accent); }
+
+.icon-btn {
+  font-size: 16px;
+  width: 36px; height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.icon-btn:hover { background: var(--line); }
+.icon-btn:active { transform: scale(0.95); }
+
+.primary-btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: var(--bg-elev);
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+.primary-btn:hover { filter: brightness(1.08); }
+
+/* ============================================================
+   Sticky lane labels on the left (desktop only)
+   ============================================================ */
+.lanes {
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  bottom: 0;
+  width: var(--lanes-width);
+  background: var(--bg-elev-soft);
+  border-right: 1px solid var(--line);
+  z-index: 12;
+  overflow: hidden;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+.lane-label {
+  position: absolute;
+  left: 0; right: 0;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.lane-label__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Drawer (left slide-in) — filters + school index
+   ============================================================ */
+.drawer {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  width: var(--drawer-width);
+  max-width: 88vw;
+  background: var(--bg-elev);
+  border-right: 1px solid var(--line);
+  transform: translateX(-100%);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+}
+.drawer.is-open { transform: translateX(0); }
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  height: var(--topbar-height);
+}
+
+.drawer__title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.drawer__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px 32px;
+}
+
+.drawer__section { margin-bottom: 22px; }
+.drawer__section-title {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.legend-item, .school-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, opacity 0.15s;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.legend-item:hover, .school-item:hover { background: var(--line); }
+.legend-item.is-off, .school-item.is-off { opacity: 0.35; }
+
+.legend-swatch {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.school-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.school-item__name { flex: 1; }
+.school-item__filter {
+  font-size: 16px;
+  padding: 0 6px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.school-item__filter:hover { background: var(--bg); color: var(--ink); }
+.school-item__filter.is-off { color: var(--accent); }
+
+.drawer-help {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-style: italic;
+  padding: 0 4px;
+}
+
+/* ============================================================
+   Backdrop (used by drawer and by bottom-sheet panel on mobile)
+   ============================================================ */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 40;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.backdrop.is-shown { opacity: 1; }
+
+/* ============================================================
+   Graph
+   ============================================================ */
+.graph {
+  position: fixed;
+  top: var(--topbar-height);
+  left: var(--lanes-width);
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  touch-action: none;
+}
+
+/* Subtle alternating-lane background, painted as a repeating gradient. */
+.graph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 65px,
+    rgba(0, 0, 0, 0.018) 65px,
+    rgba(0, 0, 0, 0.018) 130px
+  );
+}
+
+/* ============================================================
+   Zoom controls
+   ============================================================ */
+.zoom-controls {
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.zoom-controls .icon-btn {
+  background: var(--bg-elev);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   Side / bottom-sheet panel
+   ============================================================ */
+.panel {
+  position: fixed;
+  top: var(--topbar-height);
+  right: 0;
+  bottom: 0;
+  width: var(--panel-width);
+  max-width: 92vw;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 45;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+}
+.panel.is-open { transform: translateX(0); }
+
+.panel__grip { display: none; }      /* mobile-only handle */
+
+.panel__close {
+  position: absolute;
+  top: 12px; right: 14px;
+  width: 32px; height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.panel__close:hover { background: var(--line); color: var(--ink); }
+
+.panel__content { padding: 32px 34px 60px; }
+
+/* --- Philosopher view --- */
+.ph-school {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 100px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.ph-name {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0 0 2px;
+  line-height: 1.15;
+}
+.ph-dates { color: var(--ink-soft); font-size: 14px; margin-bottom: 16px; }
+.ph-meta { font-size: 13px; color: var(--ink-soft); margin-bottom: 4px; }
+.ph-meta strong { color: var(--ink); font-weight: 600; }
+.ph-desc {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 18px 0;
+}
+.ph-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin: 22px 0 8px;
+  font-weight: 600;
+}
+.ph-list { margin: 0; padding-left: 18px; }
+.ph-list li { margin-bottom: 4px; line-height: 1.4; }
+
+/* Signature quote */
+.ph-quote {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink);
+  margin: 18px 0;
+  padding: 4px 0 4px 16px;
+  border-left: 3px solid var(--accent);
+}
+.ph-quote cite {
+  display: block;
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* Section-title hint + count badge */
+.conn-count, .conn-hint {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 10px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.conn-count {
+  background: var(--line);
+  color: var(--ink-soft);
+  border-radius: 100px;
+  padding: 1px 7px;
+}
+.conn-hint {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Accordion — shared by ideas, works, and connections */
+.acc-list, .ph-connections { display: flex; flex-direction: column; gap: 1px; }
+.acc-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 8px;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  transition: background 0.12s;
+}
+.acc-head:hover { background: var(--line); }
+.acc-title { flex: 1; }
+.acc-chevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--ink-soft);
+  font-size: 17px;
+  line-height: 1;
+  transition: transform 0.16s;
+}
+.acc-head[aria-expanded="true"] .acc-chevron { transform: rotate(90deg); }
+.acc-body {
+  padding: 2px 10px 14px 10px;
+}
+.acc-body p {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.acc-link {
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.acc-link:hover { text-decoration: underline; }
+
+/* Connection rows (an accordion variant with a colored type) */
+.conn-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.conn-name { flex: 1; }
+.conn-type {
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+/* Connection expanded body */
+.conn-bridge {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.conn-bridge .arrow { color: var(--accent); }
+.conn-summary {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.conn-essay {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.conn-essay p { margin: 0 0 0.9em; }
+.conn-essay blockquote {
+  margin: 0.9em 0;
+  padding: 2px 0 2px 14px;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.conn-quotes { margin: 10px 0; }
+.conn-goto {
+  margin-top: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bg-elev);
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: filter 0.12s;
+}
+.conn-goto:hover { filter: brightness(1.08); }
+
+/* External links */
+.ph-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.ph-link {
+  font-size: 12.5px;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 5px 12px;
+  transition: background 0.12s;
+}
+.ph-link:hover { background: var(--line); }
+
+/* --- Relation / essay view --- */
+.essay-kicker {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  color: #fff;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.essay-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+.essay-bridge {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  line-height: 1.45;
+}
+.essay-bridge .arrow { color: var(--accent); }
+
+.essay-summary {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  margin-bottom: 22px;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.essay-body {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.62;
+}
+.essay-body p { margin: 0 0 1.1em; }
+.essay-body em { color: var(--ink); }
+.essay-body strong { font-weight: 600; }
+.essay-body blockquote {
+  margin: 1.2em 0;
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.essay-cites { margin-top: 30px; border-top: 1px solid var(--line); padding-top: 16px; }
+.essay-cites .ph-section-title { margin-top: 0; }
+.cite { margin-bottom: 12px; font-family: var(--serif); }
+.cite__text { font-style: italic; }
+.cite__src { display: block; font-family: var(--sans); font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+/* ============================================================
+   Welcome overlay
+   ============================================================ */
+.welcome {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.welcome[hidden] { display: none; }
+.welcome__card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  max-width: 420px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+.welcome__card h2 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.welcome__card p {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.welcome__card .primary-btn { margin-top: 8px; }
+
+/* ============================================================
+   Error overlay
+   ============================================================ */
+.error {
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  background: var(--bg);
+  z-index: 70;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.error[hidden] { display: none; }
+.error:not([hidden]) { display: flex; }
+.error code {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   Century axis — vertical gridlines + year labels over the graph
+   ============================================================ */
+.time-axis {
+  position: fixed;
+  top: var(--topbar-height);
+  left: var(--lanes-width);
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 8;            /* below lane labels (12) and nodes, above bg */
+}
+.time-tick {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.06);
+}
+html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
+.time-tick__label {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Floating action button — add a philosopher
+   ============================================================ */
+.fab {
+  position: fixed;
+  left: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--bg-elev);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 35;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  transition: transform 0.12s, filter 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fab:hover { filter: brightness(1.08); }
+.fab:active { transform: scale(0.93); }
+
+/* ============================================================
+   Add-philosopher sheet
+   ============================================================ */
+.add-sheet {
+  position: fixed;
+  top: var(--topbar-height);
+  right: 0;
+  bottom: 0;
+  width: var(--panel-width);
+  max-width: 92vw;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 55;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+}
+.add-sheet.is-open { transform: translateX(0); }
+.add-sheet__grip { display: none; }
+.add-sheet__content { padding: 30px 30px 50px; }
+.add-sheet__title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+.add-sheet__hint {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+.add-form { display: flex; gap: 8px; margin-bottom: 14px; }
+.add-input {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+}
+.add-input:focus { border-color: var(--accent); }
+.add-status {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.add-preview { margin-top: 8px; }
+.add-preview__name { font-family: var(--serif); font-size: 22px; margin: 0 0 2px; }
+.add-preview__meta { font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; }
+.add-preview__desc { font-family: var(--serif); font-size: 15px; line-height: 1.5; margin-bottom: 16px; }
+.add-conn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.add-conn:hover { background: var(--line); }
+.add-conn input { width: 16px; height: 16px; accent-color: var(--accent); }
+.add-conn__type { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-left: auto; }
+.add-actions { display: flex; gap: 10px; margin-top: 18px; }
+.ghost-btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.ghost-btn:hover { background: var(--line); }
+
+/* Export button in the drawer */
+.export-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  padding: 9px 12px;
+  margin-top: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.export-btn:hover { background: var(--line); }
+.export-btn__count { color: var(--ink-soft); font-size: 12px; }
+
+/* Mobile-only search button in the topbar (hidden on desktop) */
+.topbar__search-btn { display: none; font-size: 20px; }
+
+/* ============================================================
+   Mobile-first responsive — phones and narrow tablets
+   ============================================================ */
+@media (max-width: 820px) {
+  :root { --topbar-height: 52px; }
+
+  /* Hide the sticky lanes panel; the drawer holds the school index. */
+  .lanes { display: none; }
+  .graph { left: 0; }
+  .time-axis { left: 0; }
+
+  /* Safe-area inset for notches */
+  .topbar { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--topbar-height) + env(safe-area-inset-top, 0px)); }
+
+  /* Topbar shrinks: collapse the second half of the title and hide the inline search */
+  .topbar__title-rest { display: none; }
+  .topbar__title { font-size: 17px; }
+  .search {
+    width: 0;
+    padding: 0;
+    border: 0;
+    visibility: hidden;
+  }
+  .topbar__search-btn { display: inline-flex; }
+  /* Search appears at the top of the drawer instead — see search.js. */
+  .drawer__content > .search {
+    width: 100%;
+    visibility: visible;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+
+  /* Panel and add-sheet become bottom sheets */
+  .panel, .add-sheet {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 14px 14px 0 0;
+    transform: translateY(100%);
+    box-shadow: 0 -4px 28px rgba(0, 0, 0, 0.16);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .panel.is-open, .add-sheet.is-open { transform: translateY(0); }
+
+  .panel__grip, .add-sheet__grip {
+    display: block;
+    width: 44px;
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+    margin: 8px auto 0;
+  }
+  .panel__close { top: 6px; right: 8px; }
+  .panel__content { padding: 18px 22px 40px; }
+  .add-sheet__content { padding: 18px 22px 40px; }
+
+  .ph-name { font-size: 26px; }
+  .essay-title { font-size: 23px; }
+  .essay-body { font-size: 17px; }
+
+  /* Bigger tap targets */
+  .icon-btn { width: 40px; height: 40px; font-size: 18px; }
+  .zoom-controls { bottom: calc(14px + env(safe-area-inset-bottom, 0px)); right: 12px; }
+  /* FAB sits above the zoom controls on the opposite corner */
+  .fab { left: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Tiny screens — extra compaction */
+@media (max-width: 380px) {
+  .topbar { padding-left: 10px; padding-right: 10px; gap: 8px; }
+  .icon-btn { width: 36px; height: 36px; }
+}
