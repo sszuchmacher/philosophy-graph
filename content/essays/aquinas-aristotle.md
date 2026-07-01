@@ -1,0 +1,9 @@
+When Aristotle's complete works flooded into the Latin West in the thirteenth century — through Arabic and Greek translations — they provoked a crisis. Here was a comprehensive, compelling philosophy of nature, mind, and God, built entirely on reason, and much of it seemed to threaten Christian doctrine: the eternity of the world, a God who does not know particulars, on some readings the mortality of the individual soul. Some churchmen wanted Aristotle banned.
+
+Thomas Aquinas made the opposite wager: that Aristotle, rightly understood, was not the enemy of faith but its greatest natural ally. His life's work is the vast reconciliation of the two, and the *Summa Theologiae* is its monument — a Christian theology built through and through with Aristotelian tools.
+
+The borrowings are structural. Aristotle's **matter and form**, act and potency, become the means to explain the soul (as the form of the body), the sacraments, even the Eucharist. The **four causes** organize his account of creation. The analysis of virtue as a mean, cultivated by habit, becomes the core of his ethics, crowned by the theological virtues. Aristotle's unmoved mover is refashioned into the God of the Five Ways.
+
+But Aquinas *corrects* where faith requires. Against the eternity of the world, he argues (like Maimonides) that reason cannot settle the question, leaving creation to revelation. Above Aristotle's natural happiness he sets the supernatural end — the vision of God — that exceeds anything Aristotle imagined. And he adopts Avicenna's essence–existence distinction to make room for a God who is pure existence and a creation that receives its being.
+
+The result is not Aristotle baptized whole but Aristotle *elevated*: nature perfected by grace, reason completed by faith. "Grace does not destroy nature but perfects it" — the motto of the whole synthesis.

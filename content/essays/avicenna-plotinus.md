@@ -1,0 +1,9 @@
+Avicenna is remembered as an Aristotelian, but the frame of his cosmos is Neoplatonic — inherited, through the Arabic philosophical tradition, from Plotinus. The Arabic-speaking world had received a paraphrase of parts of Plotinus's *Enneads* under a misleading title, the so-called *Theology of Aristotle*, and so read Plotinian emanation as if it were Aristotle's own. Avicenna builds on that fusion.
+
+From Plotinus comes the governing picture: reality flows, by necessary overflow, from a single ultimate source. In Avicenna this becomes a graded **emanation** of intelligences from the Necessary Existent. From God, the One, proceeds a first Intelligence; from its threefold self-contemplation proceed a further intelligence, a celestial soul, and a heavenly sphere; and so on down through ten intelligences, each governing a sphere, until we reach the lowest — the **Agent Intellect**, which governs our world and illuminates human minds.
+
+This is pure Neoplatonic architecture: a descending hierarchy from a simple, self-sufficient source, in which each level generates the next by contemplation, and lower reality lies progressively further from the perfect unity above. What Plotinus described as the outflow from the One, Avicenna renders as a chain of separate intelligences bridging God and the cosmos.
+
+Yet the continuity is not slavish. Avicenna disciplines Plotinian emanation with Aristotelian logic and his own necessary/contingent distinction, giving the mystical outflow the form of a rigorous metaphysical deduction. Emanation becomes not poetic overflow but the necessary consequence of the Necessary Existent's nature.
+
+Through Avicenna, the Plotinian cosmos — the One and its descending intelligences — passed into both Islamic philosophy and, in Latin translation, the Christian schools, carrying Neoplatonism forward in Aristotelian dress.

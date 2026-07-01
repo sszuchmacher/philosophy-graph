@@ -1,0 +1,9 @@
+In the Latin Middle Ages, Aristotle was simply "the Philosopher," and Averroes was simply "the Commentator." No further names were needed. The twelfth-century Andalusian jurist and physician Ibn Rushd devoted his life to expounding Aristotle line by line, and his commentaries became the indispensable guide by which Europe read the recovered Greek master.
+
+Averroes's project was **purification**. He believed that the true Aristotle had been distorted — by the Neoplatonic accretions thinkers like Avicenna had woven in, and by theological compromise. Where Avicenna had reorganized Aristotle around the essence–existence distinction and a Neoplatonic emanation, Averroes wanted to recover Aristotle *as he actually was*: the eternity of the world, the primacy of the concrete individual substance, a God who is final cause rather than emanating source. He criticized Avicenna precisely for adding what Aristotle never taught.
+
+He wrote commentaries at three levels — short, middle, and long — the "long commentaries" quoting Aristotle's text in full and expounding each phrase. This was scholarship of a rigor the Latin world had not seen, and when translated it transformed the medieval curriculum.
+
+The influence was double-edged. Averroes gave the West its most powerful reading of Aristotle, but some of his conclusions — the eternity of the world, and above all the **unity of the intellect** (that all humans share one immaterial mind) — clashed head-on with Christian doctrine. "Latin Averroism" became a movement and a scandal; Aquinas wrote a treatise against it.
+
+Yet even as they condemned his errors, the schoolmen could not do without him. To study Aristotle in the thirteenth century *was* to study him through Averroes — the Commentator whose devotion to the text made the Philosopher intelligible to an age that had nearly lost him.

@@ -1,0 +1,9 @@
+Averroes and Avicenna are the two giants of Aristotelian philosophy in Islam, and Averroes defined himself in large part *against* his predecessor. Both revered Aristotle; they disagreed sharply about what loyalty to him required.
+
+Averroes's charge is that Avicenna had adulterated Aristotle — mixing in doctrines that were Neoplatonic or merely Avicennian and passing them off as the Philosopher's. His prime target is the **distinction between essence and existence**. Avicenna had made existence something "added" to an essence, so that in creatures existence is almost an accident befalling a nature. Averroes rejects this as a confusion: for Aristotle, existence is not a further ingredient laid on top of a thing but simply the being of the substance itself. To treat existence as an added accident, he argues, is bad metaphysics and bad Aristotle.
+
+He objects likewise to Avicenna's elaborate scheme of emanating intelligences and his proof of God from possibility and necessity. Averroes prefers Aristotle's own route — a first mover reached through the analysis of motion — and a cosmos of eternal spheres cleansed of the Neoplatonic outflow Avicenna had absorbed.
+
+Underlying the quarrel is a difference of temperament. Avicenna was a system-builder who felt free to extend and reorganize Aristotle into something new; Averroes was a purist who thought the highest philosophical task was to recover the master exactly, distortions removed.
+
+Ironically, in the Latin West both men were read together as "the Arabs," and it was often Averroes's *critique* that alerted Christian thinkers to the tensions in the inherited Aristotle. When Aquinas adopts the essence–existence distinction, he sides with Avicenna against Averroes on the very point that most divided them — while claiming to understand it better than either.

@@ -1,0 +1,9 @@
+Duns Scotus, working a generation after Aquinas, admired the Thomist achievement and then challenged it at its metaphysical root — on the deceptively technical question of how the word "being" applies to God and to creatures.
+
+Aquinas had held that being is **analogical**. When we call God "good," or say God "is," and when we say a creature is good or exists, we use the words neither in exactly the same sense (that would drag God down to the creaturely level) nor in wholly different senses (then we could say nothing about God at all), but in a *proportional*, analogical sense — related but not identical. This preserves God's transcendence: our concepts stretch toward Him without ever capturing Him.
+
+Scotus objects that analogy quietly destroys the possibility of knowing God at all. If "being" means something *different* when applied to God than when applied to creatures, then any argument reasoning from creatures up to God commits a fallacy — sliding between two meanings of the middle term. For our natural knowledge of God to be valid, there must be at least one concept that applies to God and creatures in *exactly the same sense*.
+
+That concept is **being** itself, said **univocally**. "Being" means the same thing wherever it applies; God and creatures differ not in the *sense* of "being" but in their *mode* of it — God as infinite being, creatures as finite. A single univocal concept of being spans the divide, and only so can metaphysics reason from the world to God.
+
+The disagreement looks arcane but reshaped Western thought. By making being univocal, Scotus flattened the Thomist hierarchy of analogical participation and set metaphysics on a path — through Ockham and beyond — toward a single, common notion of existence encompassing God and world alike. Some historians trace the distant origins of modern ontology to this univocity of being.

@@ -1,0 +1,9 @@
+Anselm had offered a proof of God so pure it needed nothing but the concept of God itself: God is "that than which nothing greater can be conceived"; but a God existing in reality is greater than one existing only in thought; therefore God must exist in reality. From the definition alone, existence follows.
+
+Aquinas admired Anselm but rejected the argument — and his objection set the terms for centuries of debate, anticipating Kant. The flaw, he says, is that it illegitimately leaps from the order of *thought* to the order of *reality*.
+
+Grant that God is "that than which nothing greater can be conceived." It follows that *if* we grasp this concept, we understand that God exists *in the mind*. But it does not follow that such a being exists *outside* the mind. From the fact that the word signifies something greater than anything conceivable, one cannot conclude that the thing itself exists in reality; that would follow only if we already granted that such a being actually exists — which is the very point in question. The argument assumes what it means to prove.
+
+Underlying this is a principle central to Aquinas's whole epistemology: we have no direct insight into God's essence. Anselm's proof works only if the mind can "see" from God's very concept that His essence includes existence. But God's essence is not self-evident *to us*; His existence, though self-evident *in itself*, must be demonstrated to us **from His effects** — from the world.
+
+That is why Aquinas replaces the ontological argument with the **Five Ways**: proofs that begin not from the idea of God but from features of the world we actually experience — motion, causation, contingency — and reason back to God as their cause. Existence, for Aquinas, is reached through the senses, not deduced from a definition.
