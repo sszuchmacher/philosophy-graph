@@ -1,0 +1,7 @@
+Protagoras had declared that **man is the measure of all things** — that whatever appears to someone is true *for* that someone, so there is no truth beyond appearances. For a democratic, cosmopolitan Athens it was a liberating creed; for Plato it was the enemy at the root.
+
+Plato's counterattack, staged mainly in the *Theaetetus*, is patient and devastating. First he ties the doctrine to its source: the man-measure thesis rests on the Heraclitean claim that all things flow, for only if there is no stable being can each appearance be its own truth. Then he springs the trap of **self-refutation**. If every belief is true for the one who holds it, consider the belief — held by almost everyone — that Protagoras is *wrong*. By his own principle, that belief is true. The doctrine undermines itself the moment it is stated.
+
+There is a moral stake beneath the logic. If man is the measure, then the Sophist — who teaches persuasion for pay and promises to make the weaker argument the stronger — has no rival, because there is no truth against which his cleverness could be judged. Knowledge collapses into rhetoric, and education into flattery.
+
+Against this Plato sets the **Forms**: measures that are *not* human, standards of justice and beauty that we discover rather than invent, that make it possible for one judgment to be better than another. Protagoras says we are the measure; Plato answers that if we were, nothing could be measured at all — and that the whole worth of the philosophical life depends on there being a measure we did not make.
