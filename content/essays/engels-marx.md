@@ -1,0 +1,11 @@
+The relationship between Engels and Marx is unlike almost any other in the history of philosophy: not a matter of influence across generations but a **lifelong collaboration** so close that "Marxism" is, in large part, their joint creation.
+
+They met in 1844 and discovered they had arrived independently at converging views. Engels brought something Marx then lacked: direct knowledge of **industrial capitalism**. As the son of a factory owner sent to work in Manchester, Engels had seen the new industrial proletariat firsthand, and his *Condition of the Working Class in England* gave Marx a vivid empirical picture of the class whose emancipation would become the center of his thought. Engels helped turn Marx toward the systematic study of economics.
+
+They wrote foundational works **together** — *The German Ideology* (where historical materialism is first fully stated) and the *Communist Manifesto*. And for the rest of Marx's life Engels sustained the partnership in the most concrete way: he returned to the hated family business in Manchester largely to **support Marx financially**, sending money for decades so that Marx could sit in the British Museum and write *Capital*. Without Engels's sacrifice, *Capital* might never have been finished.
+
+After Marx's death in 1883, Engels became the **editor and guardian** of the work. From Marx's mountain of drafts he assembled and published the second and third volumes of *Capital* — an act of interpretation as much as editing — and in works like *Anti-Dühring* he produced the accessible expositions through which most people, then and later, actually learned Marxism.
+
+That role gave Engels enormous influence over what "Marxism" became — and some later scholars argue he also shaped it, systematizing Marx's ideas into a more rigid "dialectical materialism" and extending the dialectic into nature in ways Marx himself might not have endorsed.
+
+The continuity here, then, is not one thinker developing another but two minds and one project. Engels supplied empirical knowledge, financial survival, editorial completion, and popular transmission; Marx supplied the central theoretical genius. The body of thought that reshaped the twentieth century is, properly, the work of both.

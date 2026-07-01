@@ -1,0 +1,9 @@
+Fichte had made the **I** the ground of everything: the self posits itself, and posits nature only as the not-I, a resisting limit whose sole role is to be the field for the ego's moral striving. Nature has no reality or value of its own; it is merely the material the self needs in order to act.
+
+Schelling, Fichte's brilliant early follower, came to find this intolerable — a philosophy that dissolved the whole natural world into an appendage of human subjectivity. His break with Fichte is, at bottom, the demand to **put nature back**: to grant it a reality, a life, and a development of its own.
+
+Where Fichte had only a philosophy of the I, Schelling adds a **philosophy of nature** (*Naturphilosophie*). Nature is not dead stuff opposed to spirit, nor a mere projection of the ego; it is a living, dynamic, self-organizing power, structured by polar forces and ascending through stages — matter, life, mind — toward consciousness. Nature is "visible spirit," spirit in the process of becoming aware of itself.
+
+This yields a grand symmetry Fichte lacked. If nature is unconscious spirit rising toward mind, and mind is spirit become conscious, then the two are one reality seen from opposite ends. Schelling's *System of Transcendental Idealism* traces spirit's emergence from the side of the I; his philosophy of nature traces the same process from the side of the object, nature climbing toward self-awareness. Subject and object, mind and nature, are the identical Absolute approached from two directions.
+
+So Schelling corrects Fichte by restoring the independent dignity of the natural world. The I is no longer the sole source with nature as its shadow; both are expressions of one Absolute in which they are ultimately identical. This "philosophy of identity" — nature and spirit as two poles of a single reality — is Schelling's decisive step beyond Fichte, and the immediate provocation for Hegel's own break with them both.
