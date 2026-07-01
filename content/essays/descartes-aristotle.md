@@ -1,0 +1,9 @@
+Descartes was educated by Jesuits in a curriculum saturated with Aristotle — the scholastic synthesis of substantial forms, real qualities, final causes, and the authority of "the Philosopher" as expounded by centuries of commentators. His mature philosophy is, at bottom, a demolition of that entire edifice and a fresh start on new foundations.
+
+The break is methodological before it is doctrinal. Against a tradition that reasoned from received authorities and accumulated distinctions, Descartes resolves to accept *nothing* he has been taught, to doubt everything that can be doubted, and to rebuild knowledge from indubitable first principles found by the light of reason alone. The scholastic library is set aside; the thinking self starts over from the *cogito*.
+
+The doctrinal demolition follows. Aristotelian physics had explained nature through **substantial forms** and **final causes** — a stone falls because it seeks its natural place, fire rises because it strives upward, each thing acting for an end. Descartes sweeps all of this away. The material world contains no purposes, no striving, no forms: it is simply **extension** — matter as pure geometry, *res extensa*, governed entirely by size, shape, and motion, to be explained mechanically like a machine. Final causes are banished from physics; God's purposes, he says, are beyond our ken.
+
+This mechanization is the heart of the quarrel. Where Aristotle's cosmos was qualitative, purposive, and alive with natures, Descartes's is quantitative, mechanical, and mathematizable — a world of matter in motion that the new physics could actually calculate.
+
+By clearing away substantial forms and final causes, Descartes helped make modern science thinkable. The scholastic curriculum that trained him is not refined but *replaced* — and European philosophy, for two centuries, will orient itself around the Cartesian break rather than the Aristotelian inheritance.

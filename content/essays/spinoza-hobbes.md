@@ -1,0 +1,9 @@
+Spinoza's political philosophy takes its sharpest instrument straight from Hobbes: the shocking identification of **right with power**. In the state of nature, both hold, a thing's natural right extends exactly as far as its power to act — the big fish has a natural right to eat the small, because it can. There is no moral order antecedent to force; right is not a limit on power but a name for it.
+
+From this shared, naturalistic starting point — human beings as parts of nature, driven by self-interest and the drive for self-preservation (*conatus*), with no natural moral law hovering above them — Spinoza builds, like Hobbes, a social contract: individuals transfer their power to a sovereign to escape the insecurity of the natural condition and gain the safety only collective power provides.
+
+But Spinoza pointedly revises Hobbes's conclusions. Hobbes had argued that the logic of security demands an *absolute* sovereign, with subjects surrendering their right almost entirely. Spinoza denies the surrender can ever be complete. Because right just *is* power, and no one can truly hand over their power to think, judge, and feel, the sovereign's authority is always limited in fact by what subjects will actually tolerate and do. A ruler who tramples too far simply provokes the power that unseats him.
+
+From the same premise Spinoza therefore draws an anti-absolutist, even proto-liberal, conclusion. The most stable and rational state is not Hobbes's Leviathan but a **democracy** that leaves men free — above all free to think and speak, since freedom of thought cannot in any case be surrendered and its suppression only breeds resentment and revolt.
+
+So Spinoza continues Hobbes's naturalism — right coextensive with power, the state grounded in self-preservation — while inverting its politics: the same realism that led Hobbes to the absolute sovereign leads Spinoza to freedom, tolerance, and democracy.

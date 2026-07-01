@@ -1,0 +1,9 @@
+A generation before Descartes, Montaigne had filled his *Essays* with skepticism — deploying the ancient Pyrrhonist arsenal to humble human reason, insisting on the weakness of the senses, the endless disagreement of the learned, and the sovereignty of custom over conviction. His refrain, *Que sais-je?* — What do I know? — left every certainty open.
+
+Descartes inherits this corrosive doubt and does something Montaigne never intended with it: he turns it into a **method**. The methodical doubt of the *Meditations* — reject anything that can possibly be false, treat the senses as unreliable, entertain even the hypothesis of a deceiving demon — is the skeptical challenge Montaigne had posed, now taken up deliberately and pushed to its limit.
+
+But the purpose is inverted. For Montaigne, doubt was a resting place, a humane and permanent uncertainty, a way of living gracefully without dogmatism. For Descartes, doubt is a *weapon against itself* — a tool used precisely in order to defeat skepticism and reach certainty. He doubts everything so as to find whatever cannot be doubted, and in the *cogito* he claims to have found it: one truth the skeptic cannot touch, from which knowledge can be rebuilt.
+
+So Descartes takes Montaigne's most subversive tendency and reverses its result. Where the skeptic wielded doubt to show that nothing can be known, Descartes wields it to establish an unshakable foundation and, on it, a new science of nature.
+
+The relationship captures a hinge in European thought. Montaigne embodies the late-Renaissance crisis of doubt, the collapse of old certainties into humane suspension of judgment. Descartes answers that crisis — accepting the doubt in full, then converting it into the engine of a fresh and certain beginning. Skepticism, for him, is not a conclusion but a purgative on the way to system.

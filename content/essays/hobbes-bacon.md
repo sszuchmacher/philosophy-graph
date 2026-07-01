@@ -1,0 +1,9 @@
+Hobbes served for a time as Francis Bacon's secretary, taking down the older man's thoughts and, it is said, translating some of his essays into Latin. The personal link matters, for Hobbes carried Bacon's ambition — a new, this-worldly, method-driven science freed from Aristotelian scholasticism — into a domain Bacon had left largely untouched: politics and the human mind.
+
+From Bacon, Hobbes takes the conviction that genuine knowledge must break with verbal, scholastic philosophy and be rebuilt on a rigorous method aimed at real effects and real understanding. But Hobbes gives that impulse a form Bacon lacked — a *mechanistic* and *deductive* one. Where Bacon prized the inductive gathering of instances, Hobbes, inspired by the new geometry and the mechanical philosophy, dreams of a demonstrative science that reasons from definitions with the certainty of Euclid.
+
+He applies it to everything. All that exists is **body in motion**; sensation, thought, and desire are motions in the matter of the brain and heart; and human beings are mechanisms driven by the push and pull of appetite and aversion. From these mechanical first principles Hobbes deduces his psychology, and from the psychology his politics — the state of nature, the war of all against all, the necessity of the sovereign.
+
+This is the Baconian program radicalized and extended. Bacon wanted to master *nature* by method; Hobbes extends the mechanical, scientific method to the human world itself, treating society as a body to be analyzed into its moving parts and reassembled by design as the artificial "Leviathan."
+
+The continuity is the shared modern project: reject scholastic authority, build knowledge anew on method, turn it toward power over the world. Hobbes's originality is to make the science of *man and commonwealth* itself a branch of that mechanical philosophy — the first thoroughly modern political science.

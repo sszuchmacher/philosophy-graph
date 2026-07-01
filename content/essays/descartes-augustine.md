@@ -1,0 +1,9 @@
+When Descartes reached his first certainty — that even a deceived thinker must exist in order to be deceived — a critic quickly pointed out that Augustine had said something remarkably similar twelve centuries earlier. Against the skeptics, Augustine had written *si fallor, sum* — "if I am mistaken, I exist" — arguing that the very possibility of error proves the existence of the one who errs.
+
+The parallel is real and runs deeper than the single move. Both thinkers make the **turn inward** the road to certainty: distrusting the senses and the external world, they find bedrock in the mind's immediate awareness of itself. Both treat the soul as better known than the body, and both use this inner certainty as a stepping-stone toward God. The Augustinian ascent — from the self's self-knowledge to the God who grounds truth — is echoed in Descartes's path from the *cogito* to the proof of a non-deceiving God who guarantees clear and distinct ideas.
+
+Descartes was cagey about the debt, insisting his cogito did different work. And in a sense he is right. Augustine's insight was an incidental weapon against skepticism, embedded in a theological meditation; Descartes makes the thinking self the *first principle of a whole system*, the Archimedean point from which to rebuild all knowledge, science included. What was a devotional and anti-skeptical observation becomes the foundation stone of modern philosophy.
+
+There is also a difference of destination. Augustine's inward turn ends in God and the restless heart's rest; Descartes's ends in a method and a mathematized physics. The self is discovered not to be saved but to secure certainty for science.
+
+Still, the lineage is unmistakable. The most famous starting point of modern thought has a patristic ancestor — Descartes's cogito is, in form, an Augustinian discovery pressed into a wholly new and systematic use.

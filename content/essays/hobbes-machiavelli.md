@@ -1,0 +1,9 @@
+Machiavelli had looked at politics without illusions and described how power is really won and kept, setting aside the question of the good life. Hobbes shares that unflinching realism about human motives — but where Machiavelli offered maxims drawn from history and experience, Hobbes builds a *theory*, deducing political order from a science of human nature.
+
+Both begin from a dark estimate of humanity. For Machiavelli, men are "ungrateful, fickle, liars and deceivers," and a ruler must reckon with them as they are, not as they should be. Hobbes agrees: human beings are driven by self-interest, competition, and fear, and any stable politics must rest on those hard facts rather than on hopes of natural virtue. The wishful moralism of the classical tradition is, for both, a recipe for ruin.
+
+But Hobbes systematizes what Machiavelli left as shrewd observation. Machiavelli's realism is particular and historical — lessons about *this* prince, *that* republic, the uses of fortune and *virtù*. Hobbes turns realism into first principles: from a defined human nature and a hypothetical state of nature he *demonstrates*, in the geometric manner, why absolute sovereign power is necessary. The insight that force and fear underlie political order becomes not a counsel to rulers but a theorem.
+
+There is a shift of aim, too. Machiavelli advises the prince how to *seize and keep* power; Hobbes justifies the *authority* of the sovereign and the *obligation* of subjects, grounding both in each individual's rational desire for self-preservation. Realpolitik becomes political philosophy.
+
+So Hobbes continues Machiavelli's demystification of politics while giving it what Machiavelli never sought — a foundation. The one taught that power must be understood without moralizing; the other built, on that same clear-eyed ground, the first modern system of the state.

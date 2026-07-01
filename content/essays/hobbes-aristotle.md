@@ -1,0 +1,9 @@
+Aristotle had founded political philosophy on a natural teleology: **man is by nature a political animal**, the city (*polis*) is the natural community in which alone human beings reach their end, and it is prior to the individual as the whole is prior to the part. We are made to live together, and the state grows organically from that nature toward the good life.
+
+Hobbes overturns every term. Human beings are not naturally political; they are naturally *apart* — self-interested, roughly equal in their power to kill, driven by desire and above all by fear. There is no natural community and no natural common good. Left to nature, absent a common power, they fall into the **war of all against all**, where life is "solitary, poor, nasty, brutish, and short."
+
+The state, therefore, is not natural but **artificial** — a human construction, a "mortal god" assembled by covenant to escape the terror of the state of nature. Men are driven into the commonwealth not by a social instinct pulling them toward flourishing but by fear pushing them out of chaos. Political order rests on consent and self-preservation, not on any teleological striving toward virtue.
+
+This is the modern, mechanistic reversal of Aristotle. Where Aristotle explained the city by its *end* — the good life it makes possible — Hobbes explains it by its *cause* and its *matter*: frightened individuals contracting for security. The commonwealth is a machine engineered from the passions, analyzed like a body of moving parts.
+
+By replacing the political animal with the calculating, fearful individual, and natural community with artificial contract, Hobbes founds a wholly new tradition. Political legitimacy is now built from the ground up, out of the consent of separate persons — the framework within which Locke, Rousseau, and the whole liberal tradition will argue.
