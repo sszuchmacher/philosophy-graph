@@ -1,0 +1,11 @@
+Husserl came to philosophy through Franz Brentano, whose lectures in Vienna converted him from mathematics to the study of the mind — and the single idea he carried away became the cornerstone of phenomenology: **intentionality**.
+
+Brentano had revived a scholastic notion to define the mental: every mental act is *directed at an object* — every thought is a thought *of* something, every desire a desire *for* something, every perception a perception *of* something. This "aboutness," this directedness toward a content, is what distinguishes the mental from the physical. Brentano made it the mark of consciousness.
+
+Husserl takes intentionality as the very heart of consciousness and builds a whole science upon it. If consciousness is always consciousness-of, then the way to study the mind is to describe, with care and precision, the structures of this directedness — the different ways acts intend their objects (perceiving, remembering, imagining, judging), and the correlation between the act and what it presents. Phenomenology becomes the rigorous **descriptive analysis of intentional experience**.
+
+But Husserl also transforms and criticizes his teacher. Brentano practiced what he called *descriptive psychology* — still, for Husserl, a form of *psychology*, an empirical science of mental events. Husserl comes to insist that phenomenology is **not** psychology at all. Through the *epoché* — the bracketing of the natural world and of psychological existence — he seeks to describe not the mental states of an empirical mind but the **essential structures** of consciousness as such, the pure, a priori forms of intentionality.
+
+He also rejects Brentano's drift toward psychologism — the reduction of logical truths to psychological laws — waging war on it in the *Logical Investigations* and insisting on the objectivity of meanings and logical structures against any attempt to ground them in the workings of the mind.
+
+So Husserl continues Brentano by making intentionality the foundation of a new science of consciousness, while radicalizing it: from the empirical descriptive psychology of the teacher he draws out a pure, transcendental phenomenology of essences. The pupil's single great debt — that consciousness is always of an object — becomes the ground of one of the twentieth century's most influential philosophical movements.

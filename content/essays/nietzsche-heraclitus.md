@@ -1,0 +1,11 @@
+Among all the philosophers, Nietzsche reserved a rare and unqualified admiration for **Heraclitus**. Where he found decadence in Socrates and life-denial in Plato, in the obscure Ephesian he recognized a kindred spirit — one who had grasped, and *affirmed*, the deepest truths about existence.
+
+The core bond is the philosophy of **becoming**. Heraclitus had taught that everything flows, that reality is ceaseless change with no fixed, permanent being behind it. Nietzsche embraces this against the entire tradition that followed. Since Parmenides and Plato, Western thought had craved permanence — eternal Forms, immortal souls, unchanging God, timeless truth — treating the world of change as a lesser reality or an illusion. Nietzsche, with Heraclitus, denies that there is any such "true world" of static being behind the flux. There is only becoming, and the will to power endlessly overcoming itself.
+
+But Nietzsche prizes even more the *attitude* Heraclitus took toward this truth. To live in a world of pure becoming — with no permanence, no final purpose, no redemption in an eternal beyond — is unbearable to the weak, who invent stable "true worlds" to flee it. Heraclitus did not flee. He looked at the flux — the war of opposites, the world as an ever-living fire kindling and extinguishing — and pronounced it, Nietzsche believed, **innocent** and even *good*: the cosmos as the play of a child, building and destroying with no guilt and no goal.
+
+> I set apart with high reverence the name of Heraclitus.
+
+This is the seed of Nietzsche's own **affirmation** — the *amor fati* and the eternal return. To will the eternal recurrence of all things, to say Yes to a world of endless becoming without appealing to any permanent meaning beyond it, is to achieve the Heraclitean stance: affirming flux, opposition, and destruction as the innocent play of existence.
+
+So the continuity is deep and self-conscious. Nietzsche takes Heraclitus's metaphysics of becoming and, above all, his *affirmation* of a world without permanence, and makes them the foundation of his campaign against Platonic-Christian otherworldliness. Heraclitus is the one ancestor Nietzsche felt he had only to recover, not to overcome.
