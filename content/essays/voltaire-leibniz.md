@@ -1,0 +1,9 @@
+Leibniz had argued, with formidable metaphysical machinery, that ours is the **best of all possible worlds**. A perfectly good, wise, and powerful God, choosing among infinitely many possible worlds, must have chosen the best; therefore, despite appearances, every evil is necessary to a greater overall perfection, woven into a whole that could not be improved without being made worse. It was a serious answer to the problem of evil.
+
+Voltaire made it a laughing-stock. His weapon was not a counter-argument but a *novel* — **Candide** — whose hapless hero is tutored by the philosopher Pangloss, a walking parody of Leibnizian optimism who insists, through catastrophe after catastrophe, that "all is for the best in the best of all possible worlds." Candide is flogged, shipwrecked, and robbed; Pangloss is hanged and dissected; they witness the Lisbon earthquake, the horrors of war, slavery, and disease — and still the mantra is repeated, ever more absurd against the mounting evidence.
+
+Behind the satire lay real grief and anger. The **Lisbon earthquake** of 1755, which killed tens of thousands on a holy day, shattered Voltaire's patience with philosophical optimism. How could a system that pronounced this world the best be anything but an obscene insult to actual suffering? To tell the maimed and bereaved that their agony is a necessary thread in the world's perfection is, for Voltaire, a cruelty dressed as consolation.
+
+His critique is not metaphysical but moral and empirical: look at the world as it is, he says — at the sheer quantity of undeserved suffering — and the claim that it is "the best" collapses into mockery.
+
+*Candide* ends not with a system but with a modest, anti-metaphysical maxim: "we must cultivate our garden." Against Leibniz's grand theodicy, Voltaire sets limited, practical action in a world whose evils are real and not to be explained away. The satire did what no treatise could — it made philosophical optimism unspeakable.

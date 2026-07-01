@@ -1,0 +1,9 @@
+Locke had already broken the sovereign into parts. Against Hobbes's single absolute power, he distinguished the **legislative** from the **executive** power and insisted the legislative was supreme but limited, holding its authority in trust and bound to govern by settled law for the public good. The seed of divided, limited government was planted.
+
+Montesquieu takes that seed and develops it into the doctrine that would shape modern constitutions. In *The Spirit of the Laws*, drawing on his admiring (and somewhat idealized) reading of the English constitution, he articulates the full **separation of powers** into three branches — **legislative, executive, and judicial** — and adds the mechanism Locke had left underdeveloped: that these powers must be lodged in distinct hands so that each can **check** the others.
+
+The reasoning rests on a theory of human nature. Power, Montesquieu observes, tends to be abused; every man with power is inclined to push it to its limit. Therefore "power must check power" — liberty is preserved not by the virtue of rulers but by an institutional arrangement in which no single body can do everything. The independent judiciary is his signature addition: he singles out judging as a distinct power that must not be joined to the legislative or executive, lest the same hands that make and enforce the law also apply it.
+
+Where Locke's separation was mainly a distinction of functions with the legislature clearly on top, Montesquieu's is a *balance* — coordinate powers arranged to restrain one another. This is the decisive step from Locke's limited government to the modern system of checks and balances.
+
+The influence is direct and famous. Montesquieu's tripartite scheme, with its mutual checks, passes straight into the American Constitution and the design of the modern liberal state. Locke supplied the principle of limited, entrusted power; Montesquieu engineered the machine that would make it work.

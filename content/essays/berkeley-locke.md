@@ -1,0 +1,9 @@
+Berkeley accepted Locke's empiricism — that all our ideas come from experience — and then turned it against Locke's own belief in a material world, arguing that consistent empiricism leaves no room for matter at all.
+
+Locke had held a representative theory of perception: we directly perceive *ideas* in the mind, caused by and representing external material objects. He also distinguished **primary qualities** (size, shape, motion) that really belong to bodies from **secondary qualities** (color, taste, sound) that exist only in the mind. Matter, the substratum, lies behind our ideas, resembling them in their primary qualities.
+
+Berkeley pounces. If we only ever perceive our own ideas, he argues, we can never compare them to a supposed external object to check the resemblance — the material world becomes an unknowable, useless posit. Worse, Locke's own arguments that secondary qualities are mind-dependent apply equally to the primary ones: size and shape look different from different distances and to different perceivers, so they too exist only as perceived. Strip away both, and nothing is left of "matter" but a bare, unknowable, contradictory substratum.
+
+His conclusion is radical: **to be is to be perceived** — *esse est percipi*. There is no mind-independent matter; there are only minds and their ideas. Physical objects are simply collections of ideas, and to say the apple exists is to say it is being perceived, or could be. Matter is not merely unknowable; it is a meaningless notion that empiricism should discard.
+
+This is Locke radicalized to a startling end. Locke wanted experience to *ground* our knowledge of the material world; Berkeley shows that if experience is really all we have, the material world drops out, leaving an **idealism** of spirits and their perceptions — with God as the constant perceiver who keeps the world in being when no finite mind attends to it.
