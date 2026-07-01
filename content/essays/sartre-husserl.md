@@ -1,0 +1,11 @@
+Sartre's philosophy begins with Husserl. As a young man in Berlin he immersed himself in phenomenology, and its key concept — **intentionality** — became the foundation of everything he wrote. He seized on it with almost physical excitement: consciousness is not a container of images and contents but is *directed outward*, always consciousness *of* something, a bursting-toward the world.
+
+This liberated Sartre from what he called the "digestive philosophy" of the French idealist tradition, which had shut consciousness up inside itself with its private representations. Husserlian intentionality throws consciousness out into the world, among the things themselves. In an early essay Sartre celebrates this ecstatically: to know a tree is to be *out there*, on the road, in the world, not to have an image of the tree inside one's head.
+
+Sartre uses phenomenological description throughout — of the imagination, the emotions, and finally, in *Being and Nothingness*, of consciousness as such. His method is Husserl's: the careful description of the structures of experience as they present themselves.
+
+But Sartre radicalizes intentionality in a decisive way. If consciousness is *entirely* directed outward, then it has **no contents of its own** — no ego, no self, hiding inside it. In *The Transcendence of the Ego* he turns Husserl against Husserl, arguing that the "transcendental ego" Husserl placed at the center of consciousness is a fiction. Consciousness is empty, impersonal, a sheer nothingness of intending; the "I" is not its owner but one more object it constitutes *out in the world*, alongside trees and tables.
+
+This emptiness becomes the ground of Sartre's whole ontology. Because consciousness contains nothing and is nothing but its directedness, it is pure **freedom** — nothing in it determines it, no fixed self weighs it down; it must perpetually make itself. Husserl's intentional consciousness, hollowed out and stripped of its ego, turns into the free, self-creating "for-itself" of existentialism.
+
+So Sartre continues Husserl by taking intentionality as bedrock, while transforming it: the outward-directed consciousness becomes a contentless freedom, and phenomenological description becomes the method for an existentialist ontology of freedom and bad faith.
