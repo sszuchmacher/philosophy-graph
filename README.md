@@ -6,7 +6,7 @@ A mobile-first, chronologically-organized map of Western philosophy:
 - **Each horizontal lane is a school of thought.** Schools are ordered roughly chronologically (Pre-Socratics on top, contemporary feminism near the bottom).
 - **Each circle is a philosopher**, colored by school.
 - **Lines connect philosophers who argued with one another** — six kinds of relation: continuation, critique, reinterpretation, radicalization, inversion, diagnosis.
-- **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected (every relation has a short embedded summary; landmark ones have full essays).
+- **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected — **every one of the 260 relations has a full ~350-word essay** (about 91,000 words in all) explaining the philosophical link, rendered inline.
 - **Add your own philosophers** with the ＋ button. They're generated, previewed (with proposed connections you can toggle), added live to the map, and saved in your browser. Export them as JSON to merge into the repo.
 - A **century axis** (vertical gridlines + year labels) makes "time flows left to right" legible.
 
@@ -94,7 +94,7 @@ grafo-filosofos/
 ├── data/
 │   ├── philosophers.json    # 121 philosophers
 │   └── relations.json       # 260 relations
-├── content/essays/          # 6 featured full essays
+├── content/essays/          # 260 full essays, one per relation (~91k words)
 └── serve.py                 # static server on port 8123
 ```
 
