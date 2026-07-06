@@ -13,7 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=2" />
+  <link rel="stylesheet" href="styles/main.css?v=3" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -21,11 +21,25 @@
     <button id="drawer-toggle" class="icon-btn topbar__menu" aria-label="Open menu">☰</button>
     <h1 class="topbar__title">Philosophy <span class="topbar__title-rest">as a network</span></h1>
     <div class="topbar__controls">
+      <button id="trails-btn" class="trails-btn" aria-label="Guided trails">Trails</button>
       <input id="search" class="search" type="search" placeholder="Search philosopher…" autocomplete="off" />
       <button id="search-mobile-btn" class="icon-btn topbar__search-btn" aria-label="Search">⌕</button>
       <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">◐</button>
     </div>
   </header>
+
+  <!-- Trail progress bar (visible while walking a trail) -->
+  <div id="trail-bar" class="trail-bar" hidden>
+    <button class="trail-bar__exit icon-btn" aria-label="Exit trail">×</button>
+    <div class="trail-bar__info" role="button" title="Reopen current stop">
+      <span class="trail-bar__title"></span>
+      <span class="trail-bar__prog"></span>
+    </div>
+    <div class="trail-bar__btns">
+      <button class="trail-bar__prev icon-btn" aria-label="Previous stop">‹</button>
+      <button class="trail-bar__next icon-btn" aria-label="Next stop">›</button>
+    </div>
+  </div>
 
   <!-- Sticky lane labels on the left (desktop only) -->
   <div id="lanes" class="lanes" aria-hidden="true"></div>
@@ -73,6 +87,18 @@
   </aside>
   <div id="add-backdrop" class="backdrop" hidden></div>
 
+  <!-- Trails sheet: pick a guided trail -->
+  <aside id="trails-sheet" class="add-sheet" aria-hidden="true">
+    <div class="add-sheet__grip" aria-hidden="true"></div>
+    <button id="trails-close" class="panel__close" aria-label="Close">×</button>
+    <div class="add-sheet__content">
+      <h2 class="add-sheet__title">Guided trails</h2>
+      <p class="add-sheet__hint">Follow one idea as it passes from thinker to thinker. Each trail is a short chain of essays — read in order, they show how the theme evolved. Your place is saved.</p>
+      <div id="trails-list" class="trails-list"></div>
+    </div>
+  </aside>
+  <div id="trails-backdrop" class="backdrop" hidden></div>
+
   <!-- Side / bottom-sheet panel -->
   <aside id="panel" class="panel" aria-hidden="true">
     <div class="panel__grip" aria-hidden="true"></div>
@@ -87,7 +113,11 @@
       <h2>How to read this map</h2>
       <p>Each circle is a philosopher. <strong>Time flows left to right.</strong> Each <strong>row is a school of thought</strong>, ordered roughly by when it appeared.</p>
       <p>Tap any philosopher to see who they argued with. Tap a connecting line to read how they connected.</p>
-      <button id="welcome-dismiss" class="primary-btn">Got it</button>
+      <p>Not sure where to start? <strong>Follow a guided trail</strong> — one theme, evolving thinker by thinker.</p>
+      <div class="welcome__actions">
+        <button id="welcome-trails" class="primary-btn">Browse trails</button>
+        <button id="welcome-dismiss" class="ghost-btn">Explore freely</button>
+      </div>
     </div>
   </div>
 
@@ -95,9 +125,10 @@
 
   <script src="scripts/generator.js?v=2"></script>
   <script src="scripts/store.js?v=2"></script>
-  <script src="scripts/panel.js?v=2"></script>
+  <script src="scripts/panel.js?v=3"></script>
   <script src="scripts/search.js?v=2"></script>
-  <script src="scripts/graph.js?v=2"></script>
-  <script src="scripts/app.js?v=2"></script>
+  <script src="scripts/graph.js?v=3"></script>
+  <script src="scripts/trails.js?v=1"></script>
+  <script src="scripts/app.js?v=3"></script>
 </body>
 </html>

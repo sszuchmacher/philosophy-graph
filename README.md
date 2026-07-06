@@ -7,6 +7,7 @@ A mobile-first, chronologically-organized map of Western philosophy:
 - **Each circle is a philosopher**, colored by school.
 - **Lines connect philosophers who argued with one another** — six kinds of relation: continuation, critique, reinterpretation, radicalization, inversion, diagnosis.
 - **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected — **every one of the 260 relations has a full ~350-word essay** (about 91,000 words in all) explaining the philosophical link, rendered inline.
+- **Follow a guided trail.** The **Trails** button opens 13 curated journeys — *The Death of God*, *The Social Contract*, *Everything Flows*, *One Is Not Born a Woman*… Each trail walks one theme chronologically through 4–6 connections: the path lights up on the map, each stop opens the essay framed by a trail note, and your place is saved so you can resume or complete trails over time.
 - **Add your own philosophers** with the ＋ button. They're generated, previewed (with proposed connections you can toggle), added live to the map, and saved in your browser. Export them as JSON to merge into the repo.
 - A **century axis** (vertical gridlines + year labels) makes "time flows left to right" legible.
 
@@ -88,12 +89,14 @@ grafo-filosofos/
 │   ├── graph.js             # chronological + school-lane layout, addPhilosopher, time helpers
 │   ├── panel.js             # philosopher card (connections list) + relation/essay view
 │   ├── search.js            # drawer content: filters, school index, export button
-│   ├── generator.js         # NEW: generate a philosopher (stub now; real-Claude seam inside)
-│   ├── store.js             # NEW: localStorage persistence + JSON export of additions
+│   ├── generator.js         # generate a philosopher (stub now; real-Claude seam inside)
+│   ├── store.js             # localStorage persistence + JSON export of additions
+│   ├── trails.js            # guided trails: sheet, trail bar, progress, walking logic
 │   └── app.js               # data merge, theme, drawer, zoom, lane labels, century axis, add-flow
 ├── data/
 │   ├── philosophers.json    # 121 philosophers
-│   └── relations.json       # 260 relations
+│   ├── relations.json       # 260 relations
+│   └── trails.json          # 13 curated guided trails (68 stops)
 ├── content/essays/          # 260 full essays, one per relation (~91k words)
 └── serve.py                 # static server on port 8123
 ```

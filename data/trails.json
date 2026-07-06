@@ -1,0 +1,174 @@
+[
+  {
+    "id": "limits-of-knowledge",
+    "title": "What Can We Know?",
+    "tagline": "From radical doubt to fallible science — four centuries of asking whether certain knowledge is possible.",
+    "intro": "Is certain knowledge possible — and if so, how? This trail follows four centuries of the question: from the Renaissance's skeptical crisis, through empiricism's rise and self-destruction, to Kant's great rescue and its fallibilist afterlife.",
+    "steps": [
+      { "rel": "descartes-montaigne", "note": "The Renaissance ends in doubt: Montaigne's 'What do I know?' has left Europe without certainties. Descartes picks up the skeptic's weapon — and turns it into a method for finding bedrock." },
+      { "rel": "locke-descartes", "note": "Descartes claimed the mind arrives stocked with innate ideas, guaranteed by God. Locke wipes the slate clean: everything we know must enter through experience." },
+      { "rel": "hume-locke", "note": "Hume takes Locke's empiricism and follows it without flinching — causation, the self, and induction all dissolve. Empiricism ends in a skepticism deeper than the one Descartes tried to cure." },
+      { "rel": "kant-hume", "note": "Woken from his 'dogmatic slumber' by Hume, Kant makes the revolutionary move: the mind does not find order in the world, it puts it there. Knowledge is saved — at the price of never knowing things in themselves." },
+      { "rel": "popper-kant", "note": "The twentieth century inherits Kant's active mind but drops his certainty: for Popper, the frameworks we impose on nature are bold guesses that nature can refute. Knowledge is real — and forever provisional." }
+    ]
+  },
+  {
+    "id": "death-of-god",
+    "title": "The Death of God",
+    "tagline": "How the West lost its anchor — from cracks in optimism to Nietzsche's announcement, and the question of how to live afterward.",
+    "intro": "For a thousand years God anchored truth, morality, and meaning in the West. This trail follows the anchor coming loose — from the first cracks in philosophical optimism to Nietzsche's announcement, and the question that remains: how to live afterward.",
+    "steps": [
+      { "rel": "voltaire-leibniz", "note": "The Lisbon earthquake of 1755 kills tens of thousands on a holy day, and Voltaire turns Leibniz's 'best of all possible worlds' into a laughing-stock. Philosophical optimism never recovers." },
+      { "rel": "feuerbach-hegel", "note": "Hegel had made God rational — Spirit coming to know itself through history. Feuerbach flips the picture: it is not God who creates man, but man who projects his own best qualities into heaven." },
+      { "rel": "marx-feuerbach", "note": "Marx accepts the projection but asks the harder question: what makes humans need an imaginary heaven? A miserable earth. To abolish the illusion, change the conditions that produce it." },
+      { "rel": "nietzsche-kant", "note": "Nietzsche announces the death of God — and catches Kant trying to keep Christian morality alive on 'reason' alone. If the foundation is gone, the values built on it must fall too." },
+      { "rel": "camus-nietzsche", "note": "After Nietzsche, the question is no longer whether God exists but how to live without him. Camus answers: face the absurd honestly — no leaps, no illusions — and imagine Sisyphus happy." }
+    ]
+  },
+  {
+    "id": "social-contract",
+    "title": "The Social Contract",
+    "tagline": "Why obey the state? The modern answer — consent among equals — from Hobbes's terrified bargain to Rawls versus Nozick.",
+    "intro": "Why should anyone obey the state? For two thousand years the answer was nature or God. This trail follows the modern answer — consent among free and equal people — from Hobbes's terrified bargain to the Rawls–Nozick debate that still frames political philosophy.",
+    "steps": [
+      { "rel": "hobbes-aristotle", "note": "Aristotle said we are political animals and the state grows naturally. Hobbes demolishes this: the state is a machine we build out of fear, to escape the war of all against all." },
+      { "rel": "locke-hobbes", "note": "Locke accepts the contract but rejects the terror: we have rights before any government exists, and a state that violates them may be overthrown. Absolutism becomes limited government." },
+      { "rel": "rousseau-locke", "note": "Rousseau turns on the tradition's darling — property. What Locke called a natural right, Rousseau calls the original catastrophe: the fraud that made inequality permanent." },
+      { "rel": "kant-rousseau", "note": "Kant reads Rousseau and finds the key to morality itself: freedom is not doing what you want but obeying a law you give yourself. The general will becomes the categorical imperative." },
+      { "rel": "rawls-kant", "note": "Two centuries later, Rawls rebuilds the contract on Kant's foundations: justice is what free and equal persons would choose behind a veil of ignorance, where no one can rig the rules in their own favor." },
+      { "rel": "nozick-rawls", "note": "Nozick answers within three years: any attempt to maintain a 'fair' pattern must continuously violate liberty. The debate between fairness and freedom is still ours." }
+    ]
+  },
+  {
+    "id": "invention-of-self",
+    "title": "The Invention of the Self",
+    "tagline": "The I as bedrock certainty, dissolved into a bundle, condemned to freedom, produced by power — and finally performed.",
+    "intro": "'Know thyself,' said the oracle — but is there a self to know? This trail follows the I from its invention as bedrock certainty, through its dissolution and historicization, to its reinvention as something we perform.",
+    "steps": [
+      { "rel": "descartes-augustine", "note": "Augustine turned inward to find God; Descartes turns inward and finds bedrock certainty — 'I think, therefore I am.' The modern self is born as the one thing that cannot be doubted." },
+      { "rel": "hume-berkeley", "note": "Hume looks inside for this famous self and finds — nothing. Only a bundle of passing perceptions, a theater with no spectator. The indubitable I dissolves on inspection." },
+      { "rel": "sartre-descartes", "note": "Sartre keeps the cogito but empties it: consciousness has no essence, no fixed nature — it is a freedom that must invent itself. The self is not found but made." },
+      { "rel": "foucault-husserl", "note": "Foucault historicizes the blow: the 'subject' is not the origin of knowledge but a product of discourses, institutions, and power. 'Man' is a recent invention — and may be nearing its end." },
+      { "rel": "butler-foucault", "note": "Butler completes the arc for identity itself: even gender, the most 'natural' fact about the self, is produced by repeated performance. The self is not what you are but what you do — again and again." }
+    ]
+  },
+  {
+    "id": "anatomy-of-power",
+    "title": "The Anatomy of Power",
+    "tagline": "From the prince's fist to invisible discipline — how philosophy learned to see who rules, and how.",
+    "intro": "Who really rules, and how? This trail follows power's changing face — from the prince's fist, through the sovereign and the economy, to the invisible disciplines that shape what we take to be true.",
+    "steps": [
+      { "rel": "machiavelli-aristotle", "note": "Machiavelli breaks the classical spell: politics is not about the good life but about how power is actually won and kept. The unsentimental study of domination begins here." },
+      { "rel": "hobbes-machiavelli", "note": "Hobbes gives realism a theory: power is not one prince's art but the very foundation of order — a sovereign assembled from fear, because only overwhelming power keeps the peace." },
+      { "rel": "spinoza-hobbes", "note": "Spinoza radicalizes the equation — right simply is power — and then draws the opposite conclusion: because no one can surrender their power to think, the most stable state is a free one." },
+      { "rel": "foucault-marx", "note": "Marx located power in the economy, wielded by a class from above. Foucault breaks it loose: power is capillary — dispersed through clinics, schools, and prisons, producing subjects rather than merely repressing them." },
+      { "rel": "foucault-nietzsche", "note": "Behind Foucault stands Nietzsche: knowledge itself is bound to power, and our 'truths' have low, contingent origins. To trace an idea's genealogy is to expose the struggle that produced it." }
+    ]
+  },
+  {
+    "id": "good-life",
+    "title": "The Good Life",
+    "tagline": "Flourishing, pleasure, virtue, happiness summed — and the modern return to the question the Greeks asked first.",
+    "intro": "Before philosophy asked what we can know, it asked how we should live. This trail follows the rival answers — flourishing, pleasure, virtue, the greatest happiness — and the twentieth century's return to where the Greeks began.",
+    "steps": [
+      { "rel": "aristotle-plato", "note": "Plato located the good beyond this world, in the changeless Forms. Aristotle brings it down to earth: the good life is flourishing — virtue practiced, over a whole lifetime, among others." },
+      { "rel": "epicurus-aristotle", "note": "Epicurus simplifies radically: the good is pleasure — but pleasure understood as the absence of pain and fear. A quiet garden of friends beats Aristotle's political stage." },
+      { "rel": "zeno-citium-socrates", "note": "The Stoics reach past Epicurus back to Socrates in prison: virtue alone suffices for happiness. Everything else — health, wealth, reputation, even life — is indifferent." },
+      { "rel": "marcus-aurelius-epictetus", "note": "Stoicism proves itself at both extremes of fortune: a freed slave teaches it, and the emperor of Rome practices it nightly. Where you stand in the world is indifferent; the work of living well is the same." },
+      { "rel": "mill-bentham", "note": "Modernity quantifies: the good is the greatest happiness of the greatest number. But Mill rebels within the school — better to be Socrates dissatisfied than a fool satisfied." },
+      { "rel": "macintyre-aristotle", "note": "After two centuries of rules and calculations, MacIntyre declares modern moral philosophy bankrupt — and calls for a return to where this trail began: Aristotle and the virtues." }
+    ]
+  },
+  {
+    "id": "mind-and-body",
+    "title": "The Mind–Body Problem",
+    "tagline": "Descartes's fateful cut between thought and matter — and three centuries of trying to sew it back together.",
+    "intro": "You think, and you have a body — how are the two connected? This trail follows philosophy's hardest everyday problem, from Descartes's fateful cut between mind and matter to phenomenology's embodied answer.",
+    "steps": [
+      { "rel": "descartes-aristotle", "note": "Descartes mechanizes nature: matter is pure extension, explicable like clockwork. But that leaves mind — unextended, thinking — outside the machine. The modern problem is born from this cut." },
+      { "rel": "malebranche-descartes", "note": "How do two utterly different substances interact? Malebranche's answer is startling: they don't. God alone causes everything, on the occasion of our willing. The problem is 'solved' by making every event a miracle." },
+      { "rel": "spinoza-descartes", "note": "Spinoza dissolves the dualism at the root: mind and body are not two substances but two aspects of one and the same reality. There is nothing to connect, because they were never apart." },
+      { "rel": "merleau-ponty-husserl", "note": "Phenomenology returns to the question from within lived experience: before I have a body as an object, I am a body engaged with the world. The 'I think' rests on an 'I can.'" },
+      { "rel": "merleau-ponty-sartre", "note": "Against even his ally Sartre, Merleau-Ponty insists: consciousness is not a pure freedom hovering over matter. We are embodied through and through — and so is our freedom." }
+    ]
+  },
+  {
+    "id": "existence-precedes-essence",
+    "title": "Existence Precedes Essence",
+    "tagline": "No blueprint for being human: existentialism from Kierkegaard's revolt to Beauvoir's situated freedom.",
+    "intro": "What if there is no blueprint for being human? This trail follows existentialism from Kierkegaard's revolt against Hegel's System, through Heidegger and Sartre's radical freedom, to the corrections of Beauvoir and Camus.",
+    "steps": [
+      { "rel": "kierkegaard-hegel", "note": "Hegel built a System that comprehended everything. Kierkegaard's revolt founds existentialism: the System has no place for the one thing that matters — the existing individual who must choose." },
+      { "rel": "heidegger-kierkegaard", "note": "Heidegger secularizes Kierkegaard's categories — anxiety, the crowd, authenticity — into an analysis of existence itself: thrown into a world, fleeing our own death, called to own our lives." },
+      { "rel": "sartre-heidegger", "note": "Sartre turns ontology into a battle cry: existence precedes essence. There is no human nature; we are condemned to be free, and responsible for everything we become." },
+      { "rel": "beauvoir-sartre", "note": "Beauvoir corrects the excess: freedom is real but always situated — shaped by the body, by history, by oppression. And to will my own freedom honestly, I must will everyone's." },
+      { "rel": "camus-kierkegaard", "note": "Camus closes the circle by refusing where it began: faced with the absurd, Kierkegaard leaped into faith. Camus calls the leap philosophical suicide — stay lucid, stay in revolt, imagine Sisyphus happy." }
+    ]
+  },
+  {
+    "id": "becoming-woman",
+    "title": "One Is Not Born a Woman",
+    "tagline": "From Wollstonecraft's demand for reason to Butler's dissolution of the categories — feminism's philosophical spine.",
+    "intro": "The tradition called itself universal while ignoring half of humanity. This trail follows the question of woman from Wollstonecraft's Enlightenment demand, through Beauvoir's Other, to Irigaray's difference and Butler's performativity.",
+    "steps": [
+      { "rel": "wollstonecraft-rousseau", "note": "Rousseau preached freedom for Emile and docility for Sophie. Wollstonecraft catches the great philosopher of liberty denying it to half the species — and turns his own principles against him." },
+      { "rel": "beauvoir-wollstonecraft", "note": "A century and a half later, Beauvoir radicalizes the insight: one is not born, but becomes, a woman. Femininity is not nature but a situation imposed — and what is imposed can be changed." },
+      { "rel": "beauvoir-hegel", "note": "Beauvoir names the deep structure with Hegel's tools: man has posited himself as the Subject and woman as the Other — an otherness frozen in place, denied the struggle for recognition." },
+      { "rel": "irigaray-beauvoir", "note": "Irigaray breaks with her predecessor: if women merely become equal to men, the masculine remains the measure of everything. What is needed is not sameness but a feminine subjectivity of its own." },
+      { "rel": "butler-beauvoir", "note": "Butler pushes Beauvoir's sentence to its limit: if one becomes a woman, perhaps there is no natural 'sex' beneath the becoming at all. Gender is performance — and can be performed otherwise." }
+    ]
+  },
+  {
+    "id": "what-is-science",
+    "title": "What Makes Science Science?",
+    "tagline": "Bacon's new method, Popper's falsification, Kuhn's revolutions — and Feyerabend's 'anything goes.'",
+    "intro": "Science claims a special authority over truth. Where does that authority come from — and does it survive scrutiny? This trail follows the debate from Bacon's new method to Feyerabend's anarchic conclusion.",
+    "steps": [
+      { "rel": "bacon-aristotle", "note": "Bacon retires Aristotle's Organon after two thousand years: knowledge must be wrung from nature by observation and experiment, and its point is power over the world — 'for the relief of man's estate.'" },
+      { "rel": "popper-hume", "note": "Hume proved that no number of observations can ever prove a theory. Popper's escape: science never proves — it conjectures boldly and refutes. One black swan outweighs a thousand white ones." },
+      { "rel": "kuhn-popper", "note": "Kuhn checks the logic against history: real scientists don't abandon theories at the first anomaly — they work inside paradigms until crisis forces a revolution. Science is less tidy, and more human, than Popper allowed." },
+      { "rel": "lakatos-kuhn", "note": "Lakatos tries to rescue rationality from Kuhn's 'mob psychology': research programmes are judged over time — progressive if they keep predicting novel facts, degenerating if they only make excuses." },
+      { "rel": "feyerabend-kuhn", "note": "Feyerabend detonates the whole debate: every rule of method has, at some point, been fruitfully broken. 'Anything goes' — and science, having no unique method, deserves no unique authority." }
+    ]
+  },
+  {
+    "id": "everything-flows",
+    "title": "Everything Flows",
+    "tagline": "Heraclitus against Parmenides — the 2,500-year war over whether reality can change.",
+    "intro": "Can reality change — or is change an illusion? The oldest quarrel in philosophy, opened by Heraclitus and Parmenides, was never settled. This trail follows it across twenty-five centuries.",
+    "steps": [
+      { "rel": "parmenides-heraclitus", "note": "Heraclitus: everything flows. Parmenides: nothing can — for change requires being to come from non-being, which is impossible. Greek thought splits at this fork, and never fully heals." },
+      { "rel": "democritus-parmenides", "note": "The atomists find the loophole: grant that being is unchanging — then multiply it. Countless tiny Parmenidean 'ones' moving in the void: change saved as rearrangement." },
+      { "rel": "plato-heraclitus", "note": "Plato divides the estate: Heraclitus gets the sensible world (always flowing, never truly knowable), Parmenides the Forms (changeless, and alone fully real). Western metaphysics is born from this settlement." },
+      { "rel": "hegel-heraclitus", "note": "Twenty-three centuries later, Hegel reverses the verdict: 'There is no proposition of Heraclitus which I have not adopted in my Logic.' Becoming, not static being, is the truth — and contradiction is its engine." },
+      { "rel": "nietzsche-heraclitus", "note": "Nietzsche goes further: the changeless 'true world' was a lie told by those who could not bear the flux. Heraclitus alone affirmed it — the innocence of becoming, the world as a child at play." },
+      { "rel": "deleuze-nietzsche", "note": "In the twentieth century, Deleuze makes the old heresy a system: difference and becoming are primary, identity the illusion. The river Heraclitus stepped into runs through all of contemporary thought." }
+    ]
+  },
+  {
+    "id": "linguistic-turn",
+    "title": "The Linguistic Turn",
+    "tagline": "What if philosophy's problems are really problems of language? Analytic philosophy's wager, triumph, and unraveling.",
+    "intro": "What if philosophy's ancient problems are really confusions of language? This trail follows analytic philosophy's founding wager — from Frege's new logic, through its positivist triumph, to the counterattacks that ended the dream.",
+    "steps": [
+      { "rel": "russell-frege", "note": "Frege invents modern logic in total obscurity; Russell champions it — and breaks it, discovering the paradox at its heart. Philosophy acquires a new instrument and a new crisis at the same moment." },
+      { "rel": "wittgenstein-russell", "note": "Wittgenstein drives the program to its limit: language pictures the world, logic shows its scaffolding — and whatever cannot be said (ethics, God, the meaning of life) must be passed over in silence." },
+      { "rel": "carnap-wittgenstein", "note": "The Vienna Circle turns the Tractatus into a weapon: whatever cannot be verified is not deep — it is meaningless. Metaphysics is not refuted but eliminated, like a disease of language." },
+      { "rel": "quine-carnap", "note": "Quine demolishes the movement from inside: there is no clean line between truths of meaning and truths of fact. Our beliefs face experience as a single web — and even logic is, in principle, revisable." },
+      { "rel": "kripke-wittgenstein", "note": "Kripke revives what the linguistic turn had buried: names refer directly, some necessities are discovered rather than stipulated — and metaphysics, pronounced dead by two generations, walks again." }
+    ]
+  },
+  {
+    "id": "faith-and-reason",
+    "title": "Faith and Reason",
+    "tagline": "Can God be proved — and should He be? From Anselm's perfect proof to Kierkegaard's leap.",
+    "intro": "Can God be proved — and should He be? This trail follows a thousand years of the uneasy marriage of Athens and Jerusalem: from Anselm's perfect proof, through the scholastic synthesis and its unraveling, to Kierkegaard's leap beyond reason.",
+    "steps": [
+      { "rel": "anselm-augustine", "note": "Anselm inherits Augustine's 'faith seeking understanding' and sharpens it into the boldest proof ever attempted: from the mere concept of God — that than which nothing greater can be conceived — existence follows." },
+      { "rel": "aquinas-anselm", "note": "Aquinas, the greatest of the scholastics, rejects the shortcut: God's existence cannot be deduced from a definition. It must be demonstrated from the world — from motion, causes, and contingency — effect by effect." },
+      { "rel": "ockham-aquinas", "note": "Ockham's razor cuts the grand synthesis apart: reason can prove far less about God than Aquinas hoped. Faith and philosophy begin their long separation." },
+      { "rel": "spinoza-maimonides", "note": "Spinoza takes the medieval rationalists' own tools and finishes the job: read scripture as a human document, and the God of revelation dissolves into Nature. Reason no longer serves revelation — it replaces it." },
+      { "rel": "kierkegaard-socrates", "note": "After the proofs have failed, Kierkegaard relocates faith beyond reason entirely: a passionate leap that no argument can underwrite. Socrates could walk to the door; only the leap goes through it." }
+    ]
+  }
+]

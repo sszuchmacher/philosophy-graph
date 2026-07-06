@@ -217,8 +217,10 @@ const Panel = (() => {
     open();
   }
 
-  // --- Relation / essay view (used by graph edge taps) --------------------
-  function showRelation(rel, sourceName, targetName, markdown) {
+  // --- Relation / essay view (used by graph edge taps and trails) ---------
+  // `trail` (optional): { title, step, total, note, isLast, nextLabel }
+  // renders the trail context above the essay and prev/next nav below it.
+  function showRelation(rel, sourceName, targetName, markdown, trail) {
     const color = `var(--rel-${rel.type})`;
     const label = TYPE_LABEL[rel.type] || rel.type;
     const quotes = (rel.quotes || []).map((c) => `
@@ -226,7 +228,24 @@ const Panel = (() => {
     `).join("");
     const bodyHtml = markdown && window.marked ? window.marked.parse(markdown) : "";
 
+    const trailTop = trail ? `
+      <div class="trail-ctx">
+        <div class="trail-ctx__kicker">${esc(trail.title)} · stop ${trail.step} of ${trail.total}</div>
+        ${trail.intro ? `<p class="trail-ctx__intro">${esc(trail.intro)}</p>` : ""}
+        ${trail.note ? `<p class="trail-ctx__note">${esc(trail.note)}</p>` : ""}
+      </div>` : "";
+    const trailNav = trail ? `
+      <div class="trail-nav">
+        ${trail.step > 1
+          ? `<button class="ghost-btn trail-prev" type="button">← Back</button>`
+          : `<span></span>`}
+        ${trail.isLast
+          ? `<button class="primary-btn trail-finish" type="button">Finish trail ✓</button>`
+          : `<button class="primary-btn trail-next" type="button">Next: ${esc(trail.nextLabel || "continue")} →</button>`}
+      </div>` : "";
+
     content.innerHTML = `
+      ${trailTop}
       <span class="essay-kicker" style="background:${color}">${esc(label)}</span>
       <h2 class="essay-title">${esc(rel.title)}</h2>
       <div class="essay-bridge">
@@ -236,12 +255,28 @@ const Panel = (() => {
       ${rel.summary ? `<p class="essay-summary">${esc(rel.summary)}</p>` : ""}
       ${bodyHtml ? `<div class="essay-body">${bodyHtml}</div>` : ""}
       ${quotes ? `<div class="essay-cites"><div class="ph-section-title">Quotations</div>${quotes}</div>` : ""}
+      ${trailNav}
     `;
+    open();
+  }
+
+  // Arbitrary HTML view (used by the trail completion screen).
+  function showCustom(html) {
+    content.innerHTML = html;
     open();
   }
 
   // --- Delegated interactions inside the panel ----------------------------
   content.addEventListener("click", (e) => {
+    // Trail navigation buttons → broadcast; trails.js listens.
+    const trailBtn = e.target.closest(".trail-prev, .trail-next, .trail-finish, .trail-browse, .trail-exit");
+    if (trailBtn) {
+      const action = ["trail-prev", "trail-next", "trail-finish", "trail-browse", "trail-exit"]
+        .find((c) => trailBtn.classList.contains(c));
+      document.dispatchEvent(new CustomEvent("philograph:trail", { detail: { action } }));
+      return;
+    }
+
     // "Open X's card" button inside an expanded connection.
     const goto = e.target.closest(".conn-goto");
     if (goto) { if (onPhilosopherTap) onPhilosopherTap(goto.dataset.id); return; }
@@ -279,5 +314,5 @@ const Panel = (() => {
 
   function onClose(cb) { onCloseCallback = cb; }
 
-  return { showPhilosopher, showRelation, close, onClose, setData, SCHOOL_LABEL, TYPE_LABEL };
+  return { showPhilosopher, showRelation, showCustom, close, onClose, setData, SCHOOL_LABEL, TYPE_LABEL };
 })();

@@ -7,7 +7,9 @@ import socketserver
 import os
 
 ROOT = "/Users/santiagoszuchmacher/Downloads/REPOS/Santi Repos/grafo-filosofos"
-PORT = 8123
+# Use the port assigned by the environment (e.g. by the preview tool); fall
+# back to 8123 when run directly.
+PORT = int(os.environ.get("PORT", "8123"))
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):

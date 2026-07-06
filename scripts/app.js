@@ -19,11 +19,12 @@
   });
 
   // --- Data load (base JSON + user additions) ---------------------------
-  let philosophers, relations;
+  let philosophers, relations, trails;
   try {
-    [philosophers, relations] = await Promise.all([
+    [philosophers, relations, trails] = await Promise.all([
       fetch("data/philosophers.json").then((r) => r.json()),
       fetch("data/relations.json").then((r) => r.json()),
+      fetch("data/trails.json").then((r) => (r.ok ? r.json() : [])).catch(() => []),
     ]);
   } catch (err) { showError(); return; }
 
@@ -46,13 +47,13 @@
       return txt;
     } catch { return ""; }
   }
-  async function openRelation(r) {
+  async function openRelation(r, trailCtx) {
     const sourceName = byId[r.source] ? byId[r.source].name : r.source;
     const targetName = byId[r.target] ? byId[r.target].name : r.target;
-    Panel.showRelation(r, sourceName, targetName, "");
+    Panel.showRelation(r, sourceName, targetName, "", trailCtx);
     if (r.essay) {
       const md = await loadEssay(r.essay);
-      if (md) Panel.showRelation(r, sourceName, targetName, md);
+      if (md) Panel.showRelation(r, sourceName, targetName, md, trailCtx);
     }
   }
 
@@ -60,7 +61,8 @@
   Graph.init("cy", philosophers, relations, {
     onNode: (p) => Panel.showPhilosopher(p),
     onEdge: (r) => openRelation(r),
-    onBackground: () => Panel.close(),
+    // Mid-trail, a background tap keeps the path lit instead of clearing it.
+    onBackground: () => { Panel.close(); if (Trails.isActive()) Trails.rehighlight(); },
     onViewportChange: () => scheduleSync(),
   });
   Panel.onClose(() => Graph.clearHighlight());
@@ -76,6 +78,10 @@
     // Lets the panel render a relation's full essay inline.
     loadEssay,
   });
+
+  // --- Guided trails ------------------------------------------------------
+  const byRelId = Object.fromEntries(relations.map((r) => [r.id, r]));
+  Trails.init(trails, { byRelId, byId, openRelation });
 
   // --- Lane labels (desktop) --------------------------------------------
   const lanesEl = document.getElementById("lanes");

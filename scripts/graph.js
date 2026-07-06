@@ -155,6 +155,8 @@ const Graph = (() => {
       },
       // Highlighted edges pop.
       { selector: "edge.highlight", style: { width: 2.2, opacity: 0.95, "z-index": 999 } },
+      // Trail edges: the whole path stays visible while walking a trail.
+      { selector: "edge.trail", style: { width: 1.8, opacity: 0.5, "z-index": 800 } },
       // Dim hides things that aren't part of the current selection.
       { selector: ".dim", style: { opacity: 0.04 } },
       // While something is selected, also dim non-highlight elements.
@@ -163,7 +165,33 @@ const Graph = (() => {
 
   function clearHighlight() {
     if (!cy) return;
-    cy.elements().removeClass("dim highlight neighbor");
+    cy.elements().removeClass("dim highlight neighbor trail");
+  }
+
+  // Light up a whole trail: every edge on the path stays visible with its
+  // endpoints labeled; the current stop pops with the full highlight.
+  function showTrail(edgeIds, currentId) {
+    if (!cy) return;
+    clearHighlight();
+    cy.elements().addClass("dim");
+    (edgeIds || []).forEach((id) => {
+      const e = cy.getElementById(id);
+      if (e.empty()) return;
+      e.removeClass("dim").addClass("trail");
+      e.connectedNodes().removeClass("dim").addClass("neighbor");
+    });
+    if (currentId) {
+      const cur = cy.getElementById(currentId);
+      if (!cur.empty()) cur.removeClass("trail").addClass("highlight");
+    }
+  }
+
+  // Pan/zoom so both endpoints of an edge are comfortably in view.
+  function focusEdge(id) {
+    if (!cy) return;
+    const e = cy.getElementById(id);
+    if (e.empty()) return;
+    cy.animate({ fit: { eles: e.connectedNodes(), padding: 130 } }, { duration: 450 });
   }
 
   // Focal node gets .highlight (ring + larger); its neighbors get
@@ -327,6 +355,7 @@ const Graph = (() => {
   return {
     init,
     highlightNode, highlightEdge, clearHighlight, focusNode, focusSchool,
+    showTrail, focusEdge,
     setTypeVisible, setSchoolVisible, refreshTheme, addPhilosopher,
     getCy: () => cy,
     getLaneCenters: () => laneCenters,
