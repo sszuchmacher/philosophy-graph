@@ -1,5 +1,7 @@
 # Philosophy as a network — chronological map of philosophers
 
+**▶ Live site: [sszuchmacher.github.io/philosophy-graph](https://sszuchmacher.github.io/philosophy-graph/)**
+
 A mobile-first, chronologically-organized map of Western philosophy:
 
 - **Time runs left to right.** A node's horizontal position is its midlife year.
