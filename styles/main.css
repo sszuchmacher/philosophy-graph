@@ -177,7 +177,7 @@ button { font-family: var(--sans); }
   font-weight: 600;
   padding: 10px 22px;
   border-radius: 6px;
-  border: none;
+  border: 1px solid transparent; /* matches .ghost-btn's border box so paired buttons line up */
   background: var(--accent);
   color: var(--bg-elev);
   cursor: pointer;
@@ -714,7 +714,7 @@ button { font-family: var(--sans); }
   line-height: 1.5;
   margin: 0 0 12px;
 }
-.welcome__card .primary-btn { margin-top: 8px; }
+.welcome__card .welcome__actions { margin-top: 8px; }
 
 /* ============================================================
    Error overlay
