@@ -10,6 +10,7 @@ const Panel = (() => {
   const el = document.getElementById("panel");
   const content = document.getElementById("panel-content");
   const closeBtn = document.getElementById("panel-close");
+  const shareBtn = document.getElementById("panel-share");
   const backdrop = document.getElementById("panel-backdrop");
 
   // Human-readable label for each relation type.
@@ -76,10 +77,13 @@ const Panel = (() => {
     setTimeout(() => { backdrop.hidden = true; }, 220);
   }
 
-  function open() {
+  // `shareable` is false only for the trail-completion screen (showCustom),
+  // where there's no single philosopher/relation URL worth copying.
+  function open(shareable) {
     el.classList.add("is-open");
     el.setAttribute("aria-hidden", "false");
     el.scrollTop = 0;
+    if (shareBtn) shareBtn.hidden = shareable === false;
     showBackdrop();
   }
   function close() {
@@ -92,6 +96,25 @@ const Panel = (() => {
   closeBtn.addEventListener("click", close);
   if (backdrop) backdrop.addEventListener("click", close);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+
+  // Share the current view's URL: native share sheet on mobile (Messages,
+  // WhatsApp, etc.), clipboard copy elsewhere. The URL is already correct
+  // by the time this fires — Router keeps the hash in sync as the panel
+  // opens for a philosopher, relation, or trail stop.
+  if (shareBtn) {
+    shareBtn.addEventListener("click", async () => {
+      const url = location.href;
+      if (navigator.share) {
+        try { await navigator.share({ title: document.title, url }); } catch { /* user cancelled */ }
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try { await navigator.clipboard.writeText(url); if (window.Toast) Toast.show("Link copied"); return; }
+        catch { /* fall through to prompt */ }
+      }
+      window.prompt("Copy this link:", url);
+    });
+  }
 
   // Escape user text when assembling HTML manually.
   function esc(s) {
@@ -263,7 +286,7 @@ const Panel = (() => {
   // Arbitrary HTML view (used by the trail completion screen).
   function showCustom(html) {
     content.innerHTML = html;
-    open();
+    open(false);
   }
 
   // --- Delegated interactions inside the panel ----------------------------

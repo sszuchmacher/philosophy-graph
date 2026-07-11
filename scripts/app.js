@@ -50,6 +50,9 @@
   async function openRelation(r, trailCtx) {
     const sourceName = byId[r.source] ? byId[r.source].name : r.source;
     const targetName = byId[r.target] ? byId[r.target].name : r.target;
+    // Inside a trail, trails.js owns the URL (#/t/<trail>/<step>); otherwise
+    // this relation gets its own shareable link.
+    if (!trailCtx) Router.navigate("r/" + r.id);
     Panel.showRelation(r, sourceName, targetName, "", trailCtx);
     if (r.essay) {
       const md = await loadEssay(r.essay);
@@ -59,18 +62,27 @@
 
   // --- Initialize graph -------------------------------------------------
   Graph.init("cy", philosophers, relations, {
-    onNode: (p) => Panel.showPhilosopher(p),
+    onNode: (p) => { Panel.showPhilosopher(p); Router.navigate("p/" + p.id); },
     onEdge: (r) => openRelation(r),
-    // Mid-trail, a background tap keeps the path lit instead of clearing it.
-    onBackground: () => { Panel.close(); if (Trails.isActive()) Trails.rehighlight(); },
+    onBackground: () => Panel.close(),
     onViewportChange: () => scheduleSync(),
   });
-  Panel.onClose(() => Graph.clearHighlight());
+  // Single choke point for every way the panel can close (X, Escape,
+  // swipe-down, backdrop tap): clear the highlight, and either keep the
+  // trail's URL (if one is active) or drop back to the home route.
+  Panel.onClose(() => {
+    Graph.clearHighlight();
+    if (Trails.isActive()) Trails.rehighlight();
+    else Router.clear();
+  });
 
   // Give the panel the data + navigation callbacks for the connections list.
   Panel.setData(philosophers, relations, byId, {
     // Jump to another philosopher's card (from a connection's "Open … card" button).
-    onPhilosopherTap: (id) => { Graph.focusNode(id); if (byId[id]) Panel.showPhilosopher(byId[id]); },
+    onPhilosopherTap: (id) => {
+      Graph.focusNode(id);
+      if (byId[id]) { Panel.showPhilosopher(byId[id]); Router.navigate("p/" + id); }
+    },
     // When a connection expands inline, light up that edge in the graph.
     onConnectionExpand: (r) => { Graph.clearHighlight(); Graph.highlightEdge(r.id); },
     // When it collapses, restore the focus on the philosopher.
@@ -82,6 +94,28 @@
   // --- Guided trails ------------------------------------------------------
   const byRelId = Object.fromEntries(relations.map((r) => [r.id, r]));
   Trails.init(trails, { byRelId, byId, openRelation });
+
+  // --- Deep links (shareable URLs for philosophers, relations, trail stops)
+  Router.init({
+    onPhilosopher: (id) => {
+      const p = byId[id];
+      if (!p) return false;
+      Graph.focusNode(id);
+      Panel.showPhilosopher(p);
+      return true;
+    },
+    onRelation: (id) => {
+      const rel = byRelId[id];
+      if (!rel) return false;
+      Graph.clearHighlight();
+      Graph.highlightEdge(id);
+      Graph.focusEdge(id);
+      openRelation(rel);
+      return true;
+    },
+    onTrailStep: (trailId, step) => Trails.goTo(trailId, step - 1),
+  });
+  const openedFromLink = Router.start();
 
   // --- Lane labels (desktop) --------------------------------------------
   const lanesEl = document.getElementById("lanes");
@@ -321,12 +355,16 @@
 
     closeAddSheet();
     Panel.showPhilosopher(node);
+    Router.navigate("p/" + node.id);
     scheduleSync();
   }
 
-  // --- Welcome overlay (first visit) ------------------------------------
+  // --- Welcome overlay (first visit) -------------------------------------
+  // Skip it if the page loaded straight into a shared link — a "how to
+  // read this map" interruption is the wrong welcome for someone arriving
+  // at a specific philosopher, essay, or trail stop.
   const welcome = document.getElementById("welcome");
-  if (!localStorage.getItem("welcomeSeen")) welcome.hidden = false;
+  if (!localStorage.getItem("welcomeSeen") && !openedFromLink) welcome.hidden = false;
   document.getElementById("welcome-dismiss").addEventListener("click", () => {
     welcome.hidden = true;
     localStorage.setItem("welcomeSeen", "1");

@@ -12,6 +12,8 @@ A mobile-first, chronologically-organized map of Western philosophy:
 - **Follow a guided trail.** The **Trails** button opens 13 curated journeys — *The Death of God*, *The Social Contract*, *Everything Flows*, *One Is Not Born a Woman*… Each trail walks one theme chronologically through 4–6 connections: the path lights up on the map, each stop opens the essay framed by a trail note, and your place is saved so you can resume or complete trails over time.
 - **Add your own philosophers** with the ＋ button. They're generated, previewed (with proposed connections you can toggle), added live to the map, and saved in your browser. Export them as JSON to merge into the repo.
 - A **century axis** (vertical gridlines + year labels) makes "time flows left to right" legible.
+- **Everything is a link.** Every philosopher, every essay, and every trail stop has its own URL (`#/p/kant`, `#/r/kant-hume`, `#/t/death-of-god/3`) — open a card or an essay and the 🔗 button next to the close button shares or copies that exact view. Opening a shared link jumps straight there (and skips the welcome overlay). The back button retraces your steps through the graph.
+- **Installable.** Add it to your phone's home screen for a full-screen app icon, and it keeps working offline once you've visited (a small service worker caches the app and its data).
 
 121 philosophers, 260 relations, 21 schools — plus whatever you add.
 
@@ -48,6 +50,24 @@ The generator currently returns **placeholder data** (a working demo). The real 
 - **Tap an edge**: both endpoints light up; panel opens with the relation's summary and (if present) full essay.
 - **Tap the background**: clears highlight, closes the panel.
 - **Zoom in past ~0.42**: all node labels appear. Below that, only highlighted labels show — so the graph stays readable at any scale.
+
+## Deep links & sharing
+
+`scripts/router.js` keeps the URL hash in sync with whatever the panel is showing, so every view is a real, bookmarkable/shareable link:
+
+| Route | Opens |
+|---|---|
+| `#/p/<id>` | A philosopher's card (e.g. `#/p/kant`) |
+| `#/r/<id>` | A relation's essay (e.g. `#/r/kant-hume`) |
+| `#/t/<trailId>/<step>` | A specific stop in a guided trail (e.g. `#/t/death-of-god/3`) |
+
+Opening the panel pushes a history entry (so the back button retraces your path through the graph); closing it — by the × button, Escape, swipe-down, or tapping the background — drops back to the home route, unless a trail is active, in which case it just closes the panel and leaves you on that trail stop. Loading the app on a specific route skips the first-visit welcome overlay and jumps straight there; an unresolvable link (e.g. an old/mistyped id) falls back to the normal welcome screen instead of failing silently.
+
+The 🔗 button next to the panel's close button shares the current URL — the native share sheet on mobile (Messages, WhatsApp, etc. via the Web Share API), or a clipboard copy elsewhere, with a small toast confirming it.
+
+## Installing as an app (PWA)
+
+`manifest.webmanifest` + `sw.js` make the site installable. On iPhone: Safari → Share → **Add to Home Screen** gives it a standalone icon and window (no browser chrome). The service worker uses a stale-while-revalidate cache — the app shell and data JSON are cached on first visit, served instantly (and offline) afterward, and refreshed from the network in the background on every visit so the next load picks up whatever changed. Bump `CACHE_VERSION` in `sw.js` after a deploy that needs to force a clean cache.
 
 ## Data model
 
@@ -86,6 +106,8 @@ Edge direction: from the later philosopher to the earlier one. Relations are int
 ```
 grafo-filosofos/
 ├── index.html               # topbar, drawer, panel, lanes, welcome, error
+├── manifest.webmanifest     # PWA metadata (name, icons, theme color)
+├── sw.js                    # service worker: stale-while-revalidate cache
 ├── styles/main.css          # theme variables, mobile-first responsive layout
 ├── scripts/
 │   ├── graph.js             # chronological + school-lane layout, addPhilosopher, time helpers
@@ -94,12 +116,17 @@ grafo-filosofos/
 │   ├── generator.js         # generate a philosopher (stub now; real-Claude seam inside)
 │   ├── store.js             # localStorage persistence + JSON export of additions
 │   ├── trails.js            # guided trails: sheet, trail bar, progress, walking logic
+│   ├── router.js            # hash-based deep links (#/p/, #/r/, #/t/) + browser history
+│   ├── toast.js             # tiny transient message ("Link copied")
 │   └── app.js               # data merge, theme, drawer, zoom, lane labels, century axis, add-flow
 ├── data/
 │   ├── philosophers.json    # 121 philosophers
 │   ├── relations.json       # 260 relations
 │   └── trails.json          # 13 curated guided trails (68 stops)
 ├── content/essays/          # 260 full essays, one per relation (~91k words)
+├── assets/
+│   ├── icons/                # app icon (SVG source + PNG sizes for favicon/PWA/home screen)
+│   └── social-card.png       # Open Graph / Twitter card image (1200×630)
 └── serve.py                 # static server on port 8123
 ```
 

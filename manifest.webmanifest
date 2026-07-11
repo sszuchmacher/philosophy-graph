@@ -1,0 +1,15 @@
+{
+  "name": "Philosophy as a Network",
+  "short_name": "Philosophy",
+  "description": "An interactive, chronological map of 121 Western philosophers and 260 connections between them, each explained in a full essay.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f2ea",
+  "theme_color": "#7a5c3e",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

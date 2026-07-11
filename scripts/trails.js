@@ -122,6 +122,9 @@ const Trails = (() => {
     // Bar
     barTitle.textContent = trail.title;
     barProg.textContent = `${i + 1}/${trail.steps.length}`;
+
+    // URL: this stop gets its own shareable/resumable link.
+    Router.navigate(`t/${trail.id}/${i + 1}`);
   }
 
   function next() {
@@ -166,6 +169,19 @@ const Trails = (() => {
   }
 
   function isActive() { return !!active; }
+
+  // Jump straight to a specific stop (0-based) — used when a deep link or
+  // browser back/forward lands on a #/t/<trail>/<step> route. Reuses the
+  // same rendering path as start()/next()/prev().
+  function goTo(trailId, stepIndex) {
+    const trail = TRAILS.find((t) => t.id === trailId);
+    if (!trail) return false;
+    const clamped = Math.max(0, Math.min(stepIndex, trail.steps.length - 1));
+    active = { trail, step: clamped };
+    bar.hidden = false;
+    showStep(clamped);
+    return true;
+  }
 
   // --- Init ----------------------------------------------------------------
   function init(trails, dependencies) {
@@ -220,5 +236,5 @@ const Trails = (() => {
     });
   }
 
-  return { init, openSheet, isActive, rehighlight };
+  return { init, openSheet, isActive, rehighlight, goTo };
 })();

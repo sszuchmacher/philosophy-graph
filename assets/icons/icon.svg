@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background: warm parchment-ink accent, rounded for home-screen masking -->
+  <rect width="512" height="512" rx="112" fill="#7a5c3e"/>
+
+  <!-- Greek letter Phi (Φ) — the mark of philosophy — drawn from the same
+       node-and-line vocabulary as the graph itself. -->
+  <line x1="256" y1="96" x2="256" y2="416" stroke="#fffdf8" stroke-width="34" stroke-linecap="round"/>
+  <ellipse cx="256" cy="256" rx="102" ry="142" fill="none" stroke="#fffdf8" stroke-width="34"/>
+
+  <!-- Terminal nodes, echoing the graph's philosopher-circles -->
+  <circle cx="256" cy="96" r="27" fill="#fffdf8"/>
+  <circle cx="256" cy="416" r="27" fill="#fffdf8"/>
+  <circle cx="154" cy="256" r="23" fill="#fffdf8"/>
+  <circle cx="358" cy="256" r="23" fill="#fffdf8"/>
+</svg>

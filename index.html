@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#f5f2ea" />
   <title>Philosophy as a network</title>
+  <meta name="description" content="An interactive, chronological map of 121 Western philosophers and 260 connections between them — every connection explained in a full essay. Follow 13 guided trails through the history of ideas." />
+  <link rel="canonical" href="https://sszuchmacher.github.io/philosophy-graph/" />
+
+  <!-- Icons -->
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/icons/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Social preview (Open Graph + Twitter/X card) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Philosophy as a Network" />
+  <meta property="og:title" content="Philosophy as a Network" />
+  <meta property="og:description" content="An interactive, chronological map of 121 Western philosophers and 260 connections between them — every connection explained in a full essay." />
+  <meta property="og:url" content="https://sszuchmacher.github.io/philosophy-graph/" />
+  <meta property="og:image" content="https://sszuchmacher.github.io/philosophy-graph/assets/social-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Philosophy as a Network" />
+  <meta name="twitter:description" content="An interactive, chronological map of 121 Western philosophers and 260 connections between them — every connection explained in a full essay." />
+  <meta name="twitter:image" content="https://sszuchmacher.github.io/philosophy-graph/assets/social-card.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=3" />
+  <link rel="stylesheet" href="styles/main.css?v=4" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -102,10 +125,14 @@
   <!-- Side / bottom-sheet panel -->
   <aside id="panel" class="panel" aria-hidden="true">
     <div class="panel__grip" aria-hidden="true"></div>
+    <button id="panel-share" class="panel__share" aria-label="Copy link" title="Copy link">🔗</button>
     <button id="panel-close" class="panel__close" aria-label="Close">×</button>
     <div id="panel-content" class="panel__content"></div>
   </aside>
   <div id="panel-backdrop" class="backdrop" hidden></div>
+
+  <!-- Transient toast messages (e.g. "Link copied") -->
+  <div id="toast" class="toast" hidden></div>
 
   <!-- Welcome / how-to-read overlay -->
   <div id="welcome" class="welcome" hidden>
@@ -123,12 +150,24 @@
 
   <div id="error" class="error" hidden></div>
 
+  <script src="scripts/toast.js?v=1"></script>
+  <script src="scripts/router.js?v=1"></script>
   <script src="scripts/generator.js?v=2"></script>
   <script src="scripts/store.js?v=2"></script>
-  <script src="scripts/panel.js?v=3"></script>
+  <script src="scripts/panel.js?v=4"></script>
   <script src="scripts/search.js?v=2"></script>
   <script src="scripts/graph.js?v=3"></script>
-  <script src="scripts/trails.js?v=1"></script>
-  <script src="scripts/app.js?v=3"></script>
+  <script src="scripts/trails.js?v=2"></script>
+  <script src="scripts/app.js?v=4"></script>
+
+  <!-- Installable + offline-capable; registration failures (e.g. running
+       from file://) are silently ignored — the app works fine without it. -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>

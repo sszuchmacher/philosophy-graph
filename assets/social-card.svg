@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      .name { font-family: Georgia, 'Times New Roman', serif; }
+      .sans { font-family: Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f5f2ea"/>
+
+  <!-- Faint century gridlines, echoing the app's time axis -->
+  <g stroke="#ddd6c8" stroke-width="1">
+    <line x1="150" y1="0" x2="150" y2="630"/>
+    <line x1="350" y1="0" x2="350" y2="630"/>
+    <line x1="550" y1="0" x2="550" y2="630"/>
+    <line x1="750" y1="0" x2="750" y2="630"/>
+    <line x1="950" y1="0" x2="950" y2="630"/>
+    <line x1="1150" y1="0" x2="1150" y2="630"/>
+  </g>
+
+  <!-- A small constellation of philosopher-nodes and connections, upper area -->
+  <g stroke-width="2.4" opacity="0.85">
+    <line x1="150" y1="150" x2="330" y2="110" stroke="#4a7a9b"/>
+    <line x1="330" y1="110" x2="520" y2="170" stroke="#b04a3f"/>
+    <line x1="520" y1="170" x2="710" y2="120" stroke="#6b8e4e"/>
+    <line x1="710" y1="120" x2="900" y2="180" stroke="#9b6a3f"/>
+    <line x1="330" y1="110" x2="520" y2="230" stroke="#8a4f8e" opacity="0.7"/>
+    <line x1="710" y1="120" x2="900" y2="90" stroke="#4f6f6b" opacity="0.7"/>
+    <line x1="900" y1="180" x2="1080" y2="140" stroke="#4a7a9b"/>
+  </g>
+  <g fill="#7a5c3e">
+    <circle cx="150" cy="150" r="9"/>
+    <circle cx="330" cy="110" r="11"/>
+    <circle cx="520" cy="170" r="9"/>
+    <circle cx="520" cy="230" r="7"/>
+    <circle cx="710" cy="120" r="10"/>
+    <circle cx="900" cy="180" r="9"/>
+    <circle cx="900" cy="90" r="7"/>
+    <circle cx="1080" cy="140" r="8"/>
+  </g>
+
+  <!-- Title block -->
+  <text x="90" y="360" class="name" font-size="72" font-weight="600" fill="#2b2622">Philosophy</text>
+  <text x="90" y="415" class="name" font-size="40" font-style="italic" fill="#6b6358">as a network</text>
+
+  <text x="90" y="490" class="sans" font-size="26" fill="#2b2622">121 philosophers · 260 connections · 260 essays</text>
+  <text x="90" y="530" class="sans" font-size="22" fill="#6b6358">A chronological map of who argued with whom, and why</text>
+
+  <!-- Phi mark, echoing the app icon, bottom right -->
+  <g transform="translate(1010,470)">
+    <rect width="140" height="140" rx="32" fill="#7a5c3e"/>
+    <line x1="70" y1="26" x2="70" y2="114" stroke="#fffdf8" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="70" cy="70" rx="28" ry="39" fill="none" stroke="#fffdf8" stroke-width="10"/>
+    <circle cx="70" cy="26" r="7.5" fill="#fffdf8"/>
+    <circle cx="70" cy="114" r="7.5" fill="#fffdf8"/>
+    <circle cx="42" cy="70" r="6.5" fill="#fffdf8"/>
+    <circle cx="98" cy="70" r="6.5" fill="#fffdf8"/>
+  </g>
+</svg>
