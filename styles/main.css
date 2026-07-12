@@ -1223,3 +1223,21 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
   .panel__close { top: 6px; right: 8px; }
   .panel__share { top: 6px; right: 46px; }
 }
+
+/* ==========================================================================
+   Long-form idea/work entries (lazy-loaded markdown in the accordion body)
+   ========================================================================== */
+.acc-detail { }
+.acc-item--long .acc-detail { margin-bottom: 10px; }
+.acc-item--long .acc-detail p { margin: 0 0 0.85em; }
+.acc-item--long .acc-detail p:last-child { margin-bottom: 0; }
+.acc-item--long .acc-detail blockquote {
+  margin: 0.85em 0;
+  padding: 2px 0 2px 14px;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.acc-item--long .acc-detail blockquote p { font-family: var(--serif); }
+.acc-item--long .acc-detail em { font-style: italic; }
+.acc-item--long .acc-detail strong { font-weight: 600; }

@@ -54,6 +54,7 @@ const Panel = (() => {
   let onConnectionExpand = null;    // (relation) => void — e.g. highlight the edge
   let onConnectionCollapse = null;  // (philosopherId) => void — restore focus
   let loadEssay = null;             // (path) => Promise<string>
+  let loadDetails = null;           // (philosopherId) => Promise<{ideas,works}|null>
   let currentP = null;              // the philosopher currently shown
 
   function setData(philosophers, relations, byId, callbacks) {
@@ -63,6 +64,7 @@ const Panel = (() => {
     onConnectionExpand = callbacks.onConnectionExpand || null;
     onConnectionCollapse = callbacks.onConnectionCollapse || null;
     loadEssay = callbacks.loadEssay || null;
+    loadDetails = callbacks.loadDetails || null;
   }
 
   let onCloseCallback = null;
@@ -130,17 +132,45 @@ const Panel = (() => {
   // Strip a trailing "(1781)" style year from a work title for cleaner search.
   function stripYear(s) { return s.replace(/\s*\(\d{3,4}[^)]*\)\s*$/, "").trim(); }
 
-  // One expandable accordion item (used for ideas and works).
-  function accItem(title, detail, searchTerm, linkLabel) {
-    const body = `${detail ? `<p>${esc(detail)}</p>` : ""}<a class="acc-link" href="${searchLink(searchTerm)}" target="_blank" rel="noopener">${linkLabel} ↗</a>`;
+  // One expandable accordion item (used for ideas and works). Renders the
+  // short inline detail immediately; if a long-form entry loads later,
+  // upgradeAccBodies() replaces the .acc-detail region with full markdown.
+  // `kind`/`title` become data attributes so the upgrade can find this row.
+  function accItem(title, detail, searchTerm, linkLabel, kind) {
+    const body = `<div class="acc-detail">${detail ? `<p>${esc(detail)}</p>` : ""}</div>` +
+      `<a class="acc-link" href="${searchLink(searchTerm)}" target="_blank" rel="noopener">${linkLabel} ↗</a>`;
     return `
-      <div class="acc-item">
+      <div class="acc-item" data-kind="${esc(kind)}" data-key="${esc(title)}">
         <button class="acc-head" type="button" aria-expanded="false">
           <span class="acc-title">${esc(title)}</span>
           <span class="acc-chevron">›</span>
         </button>
         <div class="acc-body" hidden>${body}</div>
       </div>`;
+  }
+
+  // Replace short previews with full markdown once long-form details load.
+  // `details` = { ideas: {title: md}, works: {title: md} }.
+  function upgradeAccBodies(details) {
+    if (!details) return;
+    [["idea", details.ideas], ["work", details.works]].forEach(([kind, map]) => {
+      if (!map) return;
+      Object.entries(map).forEach(([title, md]) => {
+        if (!md) return;
+        const item = content.querySelector(`.acc-item[data-kind="${cssEsc(kind)}"][data-key="${cssEsc(title)}"]`);
+        if (!item) return;
+        const region = item.querySelector(".acc-detail");
+        if (!region) return;
+        region.innerHTML = window.marked ? window.marked.parse(md) : `<p>${esc(md)}</p>`;
+        item.classList.add("acc-item--long");
+      });
+    });
+  }
+
+  // Escape a string for use inside a CSS attribute selector.
+  function cssEsc(s) {
+    if (window.CSS && CSS.escape) return CSS.escape(s);
+    return String(s).replace(/["\\\]]/g, "\\$&");
   }
 
   // One connection row (collapsed). Body is filled lazily on first expand.
@@ -197,12 +227,12 @@ const Panel = (() => {
     const ideas = (p.central_ideas || []).map((i) => {
       const title = i && i.title ? i.title : i;
       const detail = (i && i.detail) || ideaDetails[title] || "";
-      return accItem(title, detail, title, "Look it up");
+      return accItem(title, detail, title, "Look it up", "idea");
     }).join("");
     const works = (p.key_works || []).map((w) => {
       const title = w && w.title ? w.title : w;
       const detail = (w && w.detail) || workDetails[title] || "";
-      return accItem(title, detail, stripYear(title), "Find this work");
+      return accItem(title, detail, stripYear(title), "Find this work", "work");
     }).join("");
 
     // Connections — derived from relations. Arrows point later → earlier.
@@ -238,6 +268,15 @@ const Panel = (() => {
       <div class="ph-links">${linksHtml}</div>
     `;
     open();
+
+    // Upgrade short idea/work previews to full ~220-word entries, if this
+    // philosopher has long-form details. Instant preview shows meanwhile;
+    // only patch if the card hasn't changed by the time the file loads.
+    if (p.long_docs && loadDetails) {
+      loadDetails(p.id).then((details) => {
+        if (details && currentP === p) upgradeAccBodies(details);
+      });
+    }
   }
 
   // --- Relation / essay view (used by graph edge taps and trails) ---------

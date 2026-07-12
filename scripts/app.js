@@ -47,6 +47,18 @@
       return txt;
     } catch { return ""; }
   }
+
+  // Long-form idea/work entries live in content/details/<id>.json, loaded
+  // lazily when a card with long_docs opens. Cached per philosopher.
+  const detailsCache = {};
+  async function loadDetails(pid) {
+    if (pid in detailsCache) return detailsCache[pid];
+    try {
+      const data = await fetch(`content/details/${pid}.json`).then((r) => (r.ok ? r.json() : Promise.reject()));
+      detailsCache[pid] = data;
+      return data;
+    } catch { detailsCache[pid] = null; return null; }
+  }
   async function openRelation(r, trailCtx) {
     const sourceName = byId[r.source] ? byId[r.source].name : r.source;
     const targetName = byId[r.target] ? byId[r.target].name : r.target;
@@ -89,6 +101,8 @@
     onConnectionCollapse: (id) => { Graph.clearHighlight(); Graph.highlightNode(id); },
     // Lets the panel render a relation's full essay inline.
     loadEssay,
+    // Lets the panel upgrade short idea/work previews to full entries.
+    loadDetails,
   });
 
   // --- Guided trails ------------------------------------------------------
