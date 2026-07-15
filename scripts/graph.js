@@ -311,6 +311,9 @@ const Graph = (() => {
       wheelSensitivity: 0.22,
       minZoom: 0.05,
       maxZoom: 3,
+      // Philosophers are pinned to their point in time (their x = birth year,
+      // their lane = school), so nodes must never be draggable.
+      autoungrabify: true,
     });
 
     // Initial framing: fit all lanes vertically with comfortable padding,

@@ -396,7 +396,12 @@ button { font-family: var(--sans); }
   transform: translateX(100%);
   transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
   z-index: 45;
-  overflow-y: auto;
+  /* The panel itself must NOT scroll — only .panel__content does. That keeps
+     the absolutely-positioned close/share buttons pinned to the top instead of
+     scrolling off-screen (and behind the mobile URL bar) with the content. */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
 }
 .panel.is-open { transform: translateX(0); }
@@ -417,7 +422,13 @@ button { font-family: var(--sans); }
 }
 .panel__close:hover { background: var(--line); color: var(--ink); }
 
-.panel__content { padding: 32px 34px 60px; }
+.panel__content {
+  flex: 1 1 auto;
+  min-height: 0;              /* allow the flex child to shrink and scroll */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 32px 34px 60px;
+}
 
 /* --- Philosopher view --- */
 .ph-school {
@@ -944,7 +955,11 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
     bottom: 0;
     width: 100%;
     max-width: 100%;
+    /* dvh (dynamic viewport height) tracks the visible area as the mobile
+       browser's URL bar shows/hides, so the sheet's top never slips behind it.
+       vh is kept as a fallback for older browsers. */
     max-height: 85vh;
+    max-height: 85dvh;
     border-left: 0;
     border-top: 1px solid var(--line);
     border-radius: 14px 14px 0 0;
@@ -963,7 +978,8 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
     margin: 8px auto 0;
   }
   .panel__close { top: 6px; right: 8px; }
-  .panel__content { padding: 18px 22px 40px; }
+  /* extra top padding clears the pinned grip + close/share buttons */
+  .panel__content { padding: 26px 22px 40px; }
   .add-sheet__content { padding: 18px 22px 40px; }
 
   .ph-name { font-size: 26px; }

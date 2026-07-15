@@ -6,7 +6,7 @@
    network in the background so the next visit gets what changed.
    Bump CACHE_VERSION on a deploy that needs to force a clean slate.
    ============================================================ */
-const CACHE_VERSION = "philograph-v2";
+const CACHE_VERSION = "philograph-v3";
 
 const APP_SHELL = [
   "./",
