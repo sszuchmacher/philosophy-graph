@@ -84,7 +84,7 @@ const Panel = (() => {
   function open(shareable) {
     el.classList.add("is-open");
     el.setAttribute("aria-hidden", "false");
-    el.scrollTop = 0;
+    if (content) content.scrollTop = 0;   // .panel__content is the scroll area
     if (shareBtn) shareBtn.hidden = shareable === false;
     showBackdrop();
   }

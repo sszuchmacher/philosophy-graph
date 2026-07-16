@@ -36,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=6" />
+  <link rel="stylesheet" href="styles/main.css?v=7" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -125,8 +125,12 @@
   <!-- Side / bottom-sheet panel -->
   <aside id="panel" class="panel" aria-hidden="true">
     <div class="panel__grip" aria-hidden="true"></div>
-    <button id="panel-share" class="panel__share" aria-label="Copy link" title="Copy link">🔗</button>
-    <button id="panel-close" class="panel__close" aria-label="Close">×</button>
+    <!-- Fixed header bar: buttons live in normal flow (not overlapping the
+         scroll area) so taps land reliably on every browser, incl. iOS. -->
+    <div class="panel__bar">
+      <button id="panel-share" class="panel__share" aria-label="Copy link" title="Copy link">🔗</button>
+      <button id="panel-close" class="panel__close" aria-label="Close">×</button>
+    </div>
     <div id="panel-content" class="panel__content"></div>
   </aside>
   <div id="panel-backdrop" class="backdrop" hidden></div>
@@ -154,9 +158,9 @@
   <script src="scripts/router.js?v=1"></script>
   <script src="scripts/generator.js?v=2"></script>
   <script src="scripts/store.js?v=2"></script>
-  <script src="scripts/panel.js?v=5"></script>
+  <script src="scripts/panel.js?v=6"></script>
   <script src="scripts/search.js?v=2"></script>
-  <script src="scripts/graph.js?v=4"></script>
+  <script src="scripts/graph.js?v=5"></script>
   <script src="scripts/trails.js?v=2"></script>
   <script src="scripts/app.js?v=5"></script>
 

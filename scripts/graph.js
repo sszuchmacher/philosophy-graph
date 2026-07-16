@@ -24,9 +24,15 @@ const Graph = (() => {
     "political", "feminist", "philosophy-of-science",
   ];
 
-  const LANE_HEIGHT = 130;     // vertical spacing between lanes
-  const X_SCALE = 4.5;         // pixels per year of history
-  const JITTER = [0, -28, 28, -48, 48, -14, 14]; // sub-row offsets within a lane (max ±48 so lanes don't bleed)
+  const LANE_HEIGHT = 150;     // vertical spacing between lanes
+  const X_SCALE = 6;           // pixels per year of history (wider = fewer pileups)
+  const JITTER = [0, -28, 28, -52, 52, -14, 14]; // sub-row offsets (used only for user-added nodes)
+
+  // Collision-avoidance: keep node centres at least NODE_SEP apart. Same-school
+  // contemporaries first stack into vertical slots (V_OFFSETS), and only if a
+  // lane's slots are exhausted at a given time do we nudge x rightward.
+  const NODE_SEP = 30;         // min centre-to-centre gap (px, model space)
+  const V_OFFSETS = [0, -30, 30, -60, 60];   // vertical slots, bounded well inside LANE_HEIGHT
 
   function cssVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -76,7 +82,25 @@ const Graph = (() => {
     const positions = {};
     Object.entries(buckets).forEach(([school, arr]) => {
       arr.sort((a, b) => a.year - b.year);
-      arr.forEach((item, i) => { positions[item.p.id] = positionFor(item.p, i); });
+      const laneY = laneCenters[school] ?? (SCHOOL_ORDER.length * LANE_HEIGHT);
+      const placed = [];   // {x, y} already positioned in this lane
+
+      arr.forEach((item) => {
+        let x = yearToX(item.year);
+        let y = laneY;
+        // Greedily find a slot that clears every previously-placed node in the
+        // lane. Prefer staying on the true year (x) and stacking vertically;
+        // only shift x right when all vertical slots at this x are taken.
+        for (let guard = 0; guard < 60; guard++) {
+          const slot = V_OFFSETS.find((off) =>
+            !placed.some((q) => Math.abs(q.x - x) < NODE_SEP && Math.abs(q.y - (laneY + off)) < NODE_SEP)
+          );
+          if (slot !== undefined) { y = laneY + slot; break; }
+          x += NODE_SEP;   // this time-column is full — move to the next one
+        }
+        positions[item.p.id] = { x, y };
+        placed.push({ x, y });
+      });
     });
     return positions;
   }
