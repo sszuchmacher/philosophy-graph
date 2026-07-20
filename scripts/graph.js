@@ -24,15 +24,17 @@ const Graph = (() => {
     "political", "feminist", "philosophy-of-science",
   ];
 
-  const LANE_HEIGHT = 150;     // vertical spacing between lanes
-  const X_SCALE = 6;           // pixels per year of history (wider = fewer pileups)
-  const JITTER = [0, -28, 28, -52, 52, -14, 14]; // sub-row offsets (used only for user-added nodes)
+  const LANE_HEIGHT = 220;     // vertical spacing between lanes
+  const X_SCALE = 7;           // pixels per year of history (wider = fewer pileups)
+  const JITTER = [0, -40, 40, -80, 80, -20, 20]; // sub-row offsets (used only for user-added nodes)
 
   // Collision-avoidance: keep node centres at least NODE_SEP apart. Same-school
   // contemporaries first stack into vertical slots (V_OFFSETS), and only if a
   // lane's slots are exhausted at a given time do we nudge x rightward.
-  const NODE_SEP = 30;         // min centre-to-centre gap (px, model space)
-  const V_OFFSETS = [0, -30, 30, -60, 60];   // vertical slots, bounded well inside LANE_HEIGHT
+  // NODE_SEP is sized so a node's wrapped label (~78px wide, ~2 lines tall)
+  // clears the next node's body; label stagger (above/below) does the rest.
+  const NODE_SEP = 56;         // min centre-to-centre gap (px, model space)
+  const V_OFFSETS = [0, -44, 44, -88, 88];   // vertical slots, bounded inside LANE_HEIGHT
 
   function cssVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -144,6 +146,9 @@ const Graph = (() => {
       },
       // When zoomed in, all node labels appear.
       { selector: "node.shown", style: { "text-opacity": 1 } },
+      // Nodes stacked above their lane's centre line carry their label on top,
+      // so stacked contemporaries' labels never collide with the node below.
+      { selector: "node.label-above", style: { "text-valign": "top", "text-margin-y": -4 } },
       // Neighbors of the focal node: always labeled, undimmed, normal size.
       { selector: "node.neighbor", style: { "text-opacity": 1, "z-index": 900 } },
       // The focal (tapped) node: accent ring, larger, on top.
@@ -279,6 +284,8 @@ const Graph = (() => {
     const pos = positionFor(philosopher, laneCount);
 
     cy.add({ group: "nodes", data: { id: philosopher.id, label: philosopher.name, school: philosopher.school, ref: philosopher }, position: pos });
+    const addedLaneY = laneCenters[philosopher.school];
+    if (addedLaneY != null && pos.y < addedLaneY) cy.getElementById(philosopher.id).addClass("label-above");
     (relations || []).forEach((r) => {
       // Only add edges whose endpoints exist.
       if (cy.getElementById(r.source).empty() || cy.getElementById(r.target).empty()) return;
@@ -338,6 +345,13 @@ const Graph = (() => {
       // Philosophers are pinned to their point in time (their x = birth year,
       // their lane = school), so nodes must never be draggable.
       autoungrabify: true,
+    });
+
+    // Stagger labels: nodes sitting above their lane's centre line show their
+    // label on top, so stacked contemporaries never overlap label-on-node.
+    cy.nodes().forEach((n) => {
+      const laneY = laneCenters[n.data("school")];
+      if (laneY != null && n.position("y") < laneY) n.addClass("label-above");
     });
 
     // Initial framing: fit all lanes vertically with comfortable padding,
