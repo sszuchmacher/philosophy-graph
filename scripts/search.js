@@ -20,6 +20,14 @@ const Search = (() => {
     return s.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
   }
 
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // Set by wireSearchInputs; lets app.js dismiss the dropdown (e.g. on drawer close).
+  let hideSuggestions = () => {};
+
   function buildDrawer(philosophers, relations, graph) {
     const root = document.getElementById("drawer-content");
     root.innerHTML = "";
@@ -109,25 +117,130 @@ const Search = (() => {
     return searchInput;
   }
 
-  function wireSearchInputs(inputs, philosophers, graph) {
-    function run(value) {
-      const q = norm((value || "").trim());
-      if (!q) { graph.clearHighlight(); return; }
-      const match = philosophers.find((p) => norm(p.name).includes(q));
-      if (match) graph.focusNode(match.id);
+  // Type-ahead autocomplete. A single fixed dropdown (shared across the topbar
+  // and drawer inputs, only one of which is ever focused) lists matches. Picking
+  // one focuses that node on the graph and closes the drawer, so the highlighted
+  // node is revealed — it does NOT open the card (the user taps the node for that).
+  function wireSearchInputs(inputs, philosophers, graph, opts) {
+    opts = opts || {};
+    const labels = (typeof Panel !== "undefined" && Panel.SCHOOL_LABEL) || {};
+
+    const list = document.createElement("ul");
+    list.className = "ac-list";
+    list.setAttribute("role", "listbox");
+    list.hidden = true;
+    document.body.appendChild(list);
+
+    let matches = [];
+    let active = -1;
+    let current = null;   // the input currently driving the dropdown
+
+    function meta(p) {
+      const parts = [];
+      if (p.dates) parts.push(esc(p.dates));
+      if (p.school && labels[p.school]) parts.push(esc(labels[p.school]));
+      return parts.join(" · ");
     }
-    inputs.forEach((input) => {
-      if (!input) return;
-      input.addEventListener("input", () => run(input.value));
-      input.addEventListener("keydown", (e) => { if (e.key === "Enter") run(input.value); });
+
+    function position() {
+      if (!current) return;
+      const r = current.getBoundingClientRect();
+      list.style.top = `${Math.round(r.bottom + 4)}px`;
+      list.style.left = `${Math.round(r.left)}px`;
+      list.style.width = `${Math.round(r.width)}px`;
+    }
+
+    function hide() { list.hidden = true; list.innerHTML = ""; matches = []; active = -1; }
+    hideSuggestions = hide;
+
+    function render() {
+      if (!matches.length) { hide(); return; }
+      list.innerHTML = matches.map((p, i) => `
+        <li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}">
+          <span class="ac-name">${esc(p.name)}</span>
+          <span class="ac-meta">${meta(p)}</span>
+        </li>`).join("");
+      list.hidden = false;
+      position();
+    }
+
+    function query(value) {
+      const q = norm((value || "").trim());
+      if (!q) return [];
+      const starts = [], incl = [];
+      philosophers.forEach((p) => {
+        const n = norm(p.name);
+        if (n.startsWith(q)) starts.push(p);
+        else if (n.includes(q)) incl.push(p);
+      });
+      return starts.concat(incl).slice(0, 8);
+    }
+
+    function update() {
+      if (!current) return;
+      active = -1;
+      matches = query(current.value);
+      render();
+    }
+
+    function choose(p) {
+      if (!p) return;
+      if (current) { current.value = p.name; current.blur(); }
+      hide();
+      graph.focusNode(p.id);          // pan + highlight on the graph; no card
+      if (opts.onSelect) opts.onSelect(p);   // e.g. close the drawer to reveal it
+    }
+
+    // mousedown (fired on tap via compat events too) keeps the input focused
+    // so the list isn't torn down before the click resolves; click commits.
+    list.addEventListener("mousedown", (e) => { e.preventDefault(); });
+    list.addEventListener("click", (e) => {
+      const li = e.target.closest(".ac-item");
+      if (!li) return;
+      choose(matches[Number(li.dataset.i)]);
     });
+
+    inputs.filter(Boolean).forEach((input) => {
+      input.setAttribute("autocomplete", "off");
+      input.setAttribute("autocorrect", "off");
+      input.setAttribute("autocapitalize", "off");
+      input.setAttribute("spellcheck", "false");
+      input.addEventListener("focus", () => { current = input; if (input.value.trim()) update(); });
+      input.addEventListener("input", () => { current = input; update(); });
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (!matches.length) update();
+          active = Math.min(active + 1, matches.length - 1);
+          render();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          active = Math.max(active - 1, 0);
+          render();
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          const pool = matches.length ? matches : query(input.value);
+          if (pool.length) choose(active >= 0 ? matches[active] : pool[0]);
+        } else if (e.key === "Escape") {
+          hide();
+        }
+      });
+    });
+
+    // Dismiss on outside interaction; keep the dropdown pinned to its input.
+    document.addEventListener("mousedown", (e) => {
+      if (e.target === current || list.contains(e.target)) return;
+      hide();
+    });
+    window.addEventListener("resize", () => { if (!list.hidden) position(); });
+    window.addEventListener("scroll", () => { if (!list.hidden) position(); }, true);
   }
 
-  function init(philosophers, relations, graph) {
+  function init(philosophers, relations, graph, opts) {
     const mobileSearch = buildDrawer(philosophers, relations, graph);
     const topSearch = document.getElementById("search");
-    wireSearchInputs([topSearch, mobileSearch], philosophers, graph);
+    wireSearchInputs([topSearch, mobileSearch], philosophers, graph, opts);
   }
 
-  return { init };
+  return { init, hideSuggestions: () => hideSuggestions() };
 })();

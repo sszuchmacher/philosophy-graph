@@ -205,7 +205,6 @@
   window.addEventListener("resize", scheduleSync);
 
   // --- Drawer ------------------------------------------------------------
-  Search.init(philosophers, relations, Graph);
   const drawer = document.getElementById("drawer");
   const drawerBackdrop = document.getElementById("drawer-backdrop");
   function openDrawer() {
@@ -219,7 +218,11 @@
     drawer.setAttribute("aria-hidden", "true");
     drawerBackdrop.classList.remove("is-shown");
     setTimeout(() => { drawerBackdrop.hidden = true; }, 220);
+    if (typeof Search !== "undefined") Search.hideSuggestions();
   }
+  // Picking a search suggestion focuses the node, then closes the drawer so the
+  // highlighted node is revealed on the graph (the card is not opened).
+  Search.init(philosophers, relations, Graph, { onSelect: () => closeDrawer() });
   document.getElementById("drawer-toggle").addEventListener("click", () => {
     if (drawer.classList.contains("is-open")) closeDrawer(); else openDrawer();
   });
