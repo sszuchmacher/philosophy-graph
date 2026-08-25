@@ -320,6 +320,26 @@ button { font-family: var(--sans); }
 .legend-item:hover, .school-item:hover { background: var(--line); }
 .legend-item.is-off, .school-item.is-off { opacity: 0.35; }
 
+/* Keyboard-focus ring for the drawer's non-native interactive rows (legend
+   toggles, school jump/filter) — these are role="button" spans, not real
+   <button>s, so they need an explicit focus style. */
+.legend-item:focus-visible,
+.school-item__jump:focus-visible,
+.school-item__filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Wraps the swatch + name inside a school row; sized to fill the row like
+   the two flex children it replaces (swatch, name) used to. */
+.school-item__jump {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
 .legend-swatch {
   width: 22px;
   height: 3px;

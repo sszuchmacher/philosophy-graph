@@ -48,10 +48,20 @@ const Search = (() => {
     TYPES.filter((t) => presentTypes.has(t.id)).forEach((t) => {
       const item = document.createElement("div");
       item.className = "legend-item";
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", `${t.label} relations — tap to hide`);
       item.innerHTML = `<span class="legend-swatch" style="background:var(--rel-${t.id})"></span><span>${t.label}</span>`;
-      item.addEventListener("click", () => {
+      function toggle() {
         const off = item.classList.toggle("is-off");
         graph.setTypeVisible(t.id, !off);
+        item.setAttribute("aria-label", `${t.label} relations — tap to ${off ? "show" : "hide"}`);
+      }
+      item.addEventListener("click", toggle);
+      // role="button" on a non-native element gets no built-in key handling —
+      // without this, keyboard/screen-reader users can't toggle it at all.
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
       });
       typeSection.appendChild(item);
     });
@@ -65,25 +75,39 @@ const Search = (() => {
     schoolSection.className = "drawer__section";
     schoolSection.innerHTML = `<div class="drawer__section-title">Schools — tap to jump</div>`;
     schoolOrder.filter((s) => presentSchools.has(s)).forEach((s) => {
+      const label = labels[s] || s;
       const item = document.createElement("div");
       item.className = "school-item";
+      // Two independently-focusable controls in one row (jump to lane / toggle
+      // visibility) rather than a single role="button" on the row — nesting a
+      // second interactive control inside a button-role element is invalid.
       item.innerHTML = `
-        <span class="school-swatch" style="background:var(--school-${s})"></span>
-        <span class="school-item__name">${labels[s] || s}</span>
-        <span class="school-item__filter" title="Show / hide" aria-label="Show / hide">◉</span>
+        <span class="school-item__jump" role="button" tabindex="0" aria-label="Jump to ${label}">
+          <span class="school-swatch" style="background:var(--school-${s})"></span>
+          <span class="school-item__name">${label}</span>
+        </span>
+        <span class="school-item__filter" role="button" tabindex="0" title="Show / hide" aria-label="Hide ${label}">◉</span>
       `;
-      // Click on name (or the row): jump to that lane.
-      item.addEventListener("click", (e) => {
-        if (e.target.classList.contains("school-item__filter")) return;
-        graph.focusSchool(s);
-      });
-      // Click on filter eye: toggle visibility.
-      item.querySelector(".school-item__filter").addEventListener("click", (e) => {
-        e.stopPropagation();
-        const eye = e.target;
-        const off = eye.classList.toggle("is-off");
+      const jumpEl = item.querySelector(".school-item__jump");
+      const filterEl = item.querySelector(".school-item__filter");
+
+      function jump() { graph.focusSchool(s); }
+      function toggleVisible() {
+        const off = filterEl.classList.toggle("is-off");
         item.classList.toggle("is-off", off);
         graph.setSchoolVisible(s, !off);
+        filterEl.setAttribute("aria-label", `${off ? "Show" : "Hide"} ${label}`);
+      }
+
+      // Click on name (or the row): jump to that lane.
+      jumpEl.addEventListener("click", jump);
+      jumpEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(); }
+      });
+      // Click/keyboard on filter eye: toggle visibility.
+      filterEl.addEventListener("click", (e) => { e.stopPropagation(); toggleVisible(); });
+      filterEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); toggleVisible(); }
       });
       schoolSection.appendChild(item);
     });
