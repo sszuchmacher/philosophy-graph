@@ -127,6 +127,7 @@ const Search = (() => {
 
     const list = document.createElement("ul");
     list.className = "ac-list";
+    list.id = "ac-listbox";
     list.setAttribute("role", "listbox");
     list.hidden = true;
     document.body.appendChild(list);
@@ -150,18 +151,31 @@ const Search = (() => {
       list.style.width = `${Math.round(r.width)}px`;
     }
 
-    function hide() { list.hidden = true; list.innerHTML = ""; matches = []; active = -1; }
+    // Screen readers get the standard combobox pattern: the input announces
+    // aria-expanded + aria-autocomplete, and aria-activedescendant points at
+    // whichever option is current — without ever moving focus off the input.
+    function hide() {
+      list.hidden = true;
+      list.innerHTML = "";
+      matches = []; active = -1;
+      if (current) { current.setAttribute("aria-expanded", "false"); current.removeAttribute("aria-activedescendant"); }
+    }
     hideSuggestions = hide;
 
     function render() {
       if (!matches.length) { hide(); return; }
       list.innerHTML = matches.map((p, i) => `
-        <li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}">
+        <li id="ac-opt-${i}" class="ac-item${i === active ? " is-active" : ""}" role="option" aria-selected="${i === active}" data-i="${i}">
           <span class="ac-name">${esc(p.name)}</span>
           <span class="ac-meta">${meta(p)}</span>
         </li>`).join("");
       list.hidden = false;
       position();
+      if (current) {
+        current.setAttribute("aria-expanded", "true");
+        if (active >= 0) current.setAttribute("aria-activedescendant", `ac-opt-${active}`);
+        else current.removeAttribute("aria-activedescendant");
+      }
     }
 
     function query(value) {
@@ -205,6 +219,11 @@ const Search = (() => {
       input.setAttribute("autocorrect", "off");
       input.setAttribute("autocapitalize", "off");
       input.setAttribute("spellcheck", "false");
+      input.setAttribute("role", "combobox");
+      input.setAttribute("aria-autocomplete", "list");
+      input.setAttribute("aria-haspopup", "listbox");
+      input.setAttribute("aria-controls", "ac-listbox");
+      input.setAttribute("aria-expanded", "false");
       input.addEventListener("focus", () => { current = input; if (input.value.trim()) update(); });
       input.addEventListener("input", () => { current = input; update(); });
       input.addEventListener("keydown", (e) => {
