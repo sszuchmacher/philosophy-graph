@@ -68,6 +68,11 @@ const Panel = (() => {
   }
 
   let onCloseCallback = null;
+  // Element focused right before the panel opened; restored when it closes.
+  // content.innerHTML is replaced on every render, so anything focused inside
+  // the panel (e.g. an "Open X's card" button) is destroyed on navigation —
+  // without this, keyboard/screen-reader focus silently drops to <body>.
+  let lastFocused = null;
 
   function showBackdrop() {
     if (window.innerWidth > 820) return;
@@ -82,16 +87,28 @@ const Panel = (() => {
   // `shareable` is false only for the trail-completion screen (showCustom),
   // where there's no single philosopher/relation URL worth copying.
   function open(shareable) {
+    const wasOpen = el.classList.contains("is-open");
+    if (!wasOpen) lastFocused = document.activeElement;
     el.classList.add("is-open");
     el.setAttribute("aria-hidden", "false");
     if (content) content.scrollTop = 0;   // .panel__content is the scroll area
     if (shareBtn) shareBtn.hidden = shareable === false;
     showBackdrop();
+    // Re-anchor focus inside the panel on every render (not just the first
+    // open) since the content it may have held was just destroyed above.
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
   }
   function close() {
+    const wasOpen = el.classList.contains("is-open");
     el.classList.remove("is-open");
     el.setAttribute("aria-hidden", "true");
     hideBackdrop();
+    // Only steal focus back if the panel was actually open — close() also
+    // runs on every Escape keypress app-wide, even while already closed.
+    if (wasOpen && lastFocused && document.body.contains(lastFocused) && typeof lastFocused.focus === "function") {
+      lastFocused.focus({ preventScroll: true });
+    }
+    lastFocused = null;
     if (onCloseCallback) onCloseCallback();
   }
 
