@@ -245,12 +245,12 @@
   document.getElementById("zoom-out").addEventListener("click", () => zoomBy(1 / 1.35));
   document.getElementById("zoom-fit").addEventListener("click", () => {
     const cy = Graph.getCy();
-    cy.animate({ fit: { eles: cy.elements(), padding: 40 } }, { duration: 300 });
+    cy.animate({ fit: { eles: cy.elements(), padding: 40 } }, { duration: Graph.animDuration(300) });
   });
   function zoomBy(factor) {
     const cy = Graph.getCy();
     const target = Math.min(Math.max(cy.zoom() * factor, cy.minZoom()), cy.maxZoom());
-    cy.animate({ zoom: target, pan: cy.pan() }, { duration: 180 });
+    cy.animate({ zoom: target, pan: cy.pan() }, { duration: Graph.animDuration(180) });
   }
 
   // --- Add-philosopher flow ---------------------------------------------

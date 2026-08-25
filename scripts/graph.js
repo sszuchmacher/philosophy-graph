@@ -14,6 +14,13 @@ const Graph = (() => {
   let labelsOn = false;
   let minYear = 0;             // earliest year across all nodes (for X origin)
 
+  // Respect the OS-level "reduce motion" setting: Cytoscape renders to
+  // canvas, so the CSS reduced-motion override in main.css can't reach its
+  // pan/zoom animations — checked here instead. A pan/zoom jump is exactly
+  // the kind of motion that setting exists to suppress.
+  const REDUCE_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function animDuration(ms) { return REDUCE_MOTION ? 0 : ms; }
+
   // Schools ordered roughly chronologically by first member's birth.
   // This is also the row order of the lanes (top → bottom).
   const SCHOOL_ORDER = [
@@ -220,7 +227,7 @@ const Graph = (() => {
     if (!cy) return;
     const e = cy.getElementById(id);
     if (e.empty()) return;
-    cy.animate({ fit: { eles: e.connectedNodes(), padding: 130 } }, { duration: 450 });
+    cy.animate({ fit: { eles: e.connectedNodes(), padding: 130 } }, { duration: animDuration(450) });
   }
 
   // Focal node gets .highlight (ring + larger); its neighbors get
@@ -247,7 +254,7 @@ const Graph = (() => {
   function focusNode(id) {
     const node = cy.getElementById(id);
     if (node.empty()) return;
-    cy.animate({ center: { eles: node }, zoom: 1.0 }, { duration: 350 });
+    cy.animate({ center: { eles: node }, zoom: 1.0 }, { duration: animDuration(350) });
     clearHighlight();
     highlightNode(id);
   }
@@ -257,7 +264,7 @@ const Graph = (() => {
     if (!cy) return;
     const nodes = cy.nodes(`[school = "${school}"]`);
     if (nodes.empty()) return;
-    cy.animate({ fit: { eles: nodes, padding: 40 } }, { duration: 400 });
+    cy.animate({ fit: { eles: nodes, padding: 40 } }, { duration: animDuration(400) });
   }
 
   function setTypeVisible(type, visible) {
@@ -297,7 +304,7 @@ const Graph = (() => {
     if (labelsOn) cy.getElementById(philosopher.id).addClass("shown");
     clearHighlight();
     highlightNode(philosopher.id);
-    cy.animate({ center: { eles: cy.getElementById(philosopher.id) }, zoom: Math.max(cy.zoom(), 0.7) }, { duration: 450 });
+    cy.animate({ center: { eles: cy.getElementById(philosopher.id) }, zoom: Math.max(cy.zoom(), 0.7) }, { duration: animDuration(450) });
     return true;
   }
 
@@ -403,5 +410,6 @@ const Graph = (() => {
     getSchoolOrder: () => SCHOOL_ORDER.slice(),
     getMinYear: () => minYear,
     yearToX, getTimeBounds,
+    animDuration,
   };
 })();
