@@ -913,6 +913,8 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
   outline: none;
 }
 .add-input:focus { border-color: var(--accent); }
+.add-input:disabled { opacity: 0.6; cursor: not-allowed; }
+.primary-btn:disabled { opacity: 0.6; cursor: not-allowed; filter: none; }
 .add-status {
   font-size: 13.5px;
   color: var(--ink-soft);
