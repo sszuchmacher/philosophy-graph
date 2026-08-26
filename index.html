@@ -135,8 +135,9 @@
   </aside>
   <div id="panel-backdrop" class="backdrop" hidden></div>
 
-  <!-- Transient toast messages (e.g. "Link copied") -->
-  <div id="toast" class="toast" hidden></div>
+  <!-- Transient toast messages (e.g. "Link copied"). role="status" + aria-live
+       so screen reader users hear the confirmation, not just see it. -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 
   <!-- Welcome / how-to-read overlay -->
   <div id="welcome" class="welcome" hidden>
@@ -154,7 +155,7 @@
 
   <div id="error" class="error" hidden></div>
 
-  <script src="scripts/toast.js?v=1"></script>
+  <script src="scripts/toast.js?v=2"></script>
   <script src="scripts/router.js?v=1"></script>
   <script src="scripts/generator.js?v=2"></script>
   <script src="scripts/store.js?v=2"></script>
