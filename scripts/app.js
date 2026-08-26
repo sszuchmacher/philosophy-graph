@@ -7,12 +7,24 @@
 
 (async function main() {
   // --- Theme persistence -------------------------------------------------
-  const savedTheme = localStorage.getItem("theme") || "light";
+  // A returning visitor's explicit choice always wins. A first-time visitor
+  // gets their OS preference instead of a hardcoded light default, so a
+  // system-dark user doesn't get a light flash they then have to fix by hand.
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const savedTheme = localStorage.getItem("theme") || (prefersDark ? "dark" : "light");
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  // Keep the browser-chrome color (mobile status bar / address bar) matching
+  // the applied theme, so a dark app isn't framed by a light bar.
+  function syncThemeColorMeta(theme) {
+    if (themeColorMeta) themeColorMeta.setAttribute("content", theme === "dark" ? "#1a1816" : "#f5f2ea");
+  }
   document.documentElement.setAttribute("data-theme", savedTheme);
+  syncThemeColorMeta(savedTheme);
   document.getElementById("theme-toggle").addEventListener("click", () => {
     const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
+    syncThemeColorMeta(next);
     Graph.refreshTheme();
     renderLaneLabels();
     scheduleSync();
