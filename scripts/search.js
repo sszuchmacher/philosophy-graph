@@ -134,6 +134,7 @@ const Search = (() => {
     let matches = [];
     let active = -1;
     let current = null;   // the input currently driving the dropdown
+    let hasQuery = false; // true once the current input holds non-blank text
 
     function meta(p) {
       const parts = [];
@@ -154,7 +155,19 @@ const Search = (() => {
     hideSuggestions = hide;
 
     function render() {
-      if (!matches.length) { hide(); return; }
+      if (!matches.length) {
+        // Distinguish "haven't typed anything" (nothing to show) from
+        // "typed something, zero hits" (say so — a silent dropdown reads
+        // as a broken search rather than a search that just found nothing).
+        if (hasQuery) {
+          list.innerHTML = `<li class="ac-empty" role="presentation">No philosophers found</li>`;
+          list.hidden = false;
+          position();
+        } else {
+          hide();
+        }
+        return;
+      }
       list.innerHTML = matches.map((p, i) => `
         <li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}">
           <span class="ac-name">${esc(p.name)}</span>
@@ -179,6 +192,7 @@ const Search = (() => {
     function update() {
       if (!current) return;
       active = -1;
+      hasQuery = !!(current.value || "").trim();
       matches = query(current.value);
       render();
     }

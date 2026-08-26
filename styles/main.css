@@ -183,6 +183,13 @@ button { font-family: var(--sans); }
 .ac-item:hover { background: var(--line); }
 .ac-name { font-family: var(--serif); font-size: 15px; color: var(--ink); line-height: 1.2; }
 .ac-meta { font-family: var(--sans); font-size: 12px; color: var(--ink-soft); }
+.ac-empty {
+  padding: 10px 11px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
 
 .icon-btn {
   font-size: 16px;
