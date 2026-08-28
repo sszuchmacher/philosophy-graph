@@ -36,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=9" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -82,6 +82,13 @@
 
   <!-- Graph canvas -->
   <main id="cy" class="graph"></main>
+
+  <!-- Loading indicator: only shown if the initial data fetch takes a
+       moment (app.js delays it so a fast load never flashes it). -->
+  <div id="graph-loading" class="graph-loading" hidden aria-hidden="true">
+    <div class="graph-loading__spinner"></div>
+    <div class="graph-loading__text">Loading the map…</div>
+  </div>
 
   <!-- Zoom controls -->
   <div class="zoom-controls">
@@ -162,7 +169,7 @@
   <script src="scripts/search.js?v=4"></script>
   <script src="scripts/graph.js?v=6"></script>
   <script src="scripts/trails.js?v=2"></script>
-  <script src="scripts/app.js?v=6"></script>
+  <script src="scripts/app.js?v=7"></script>
 
   <!-- Installable + offline-capable; registration failures (e.g. running
        from file://) are silently ignored — the app works fine without it. -->

@@ -18,7 +18,22 @@
     scheduleSync();
   });
 
-  // --- Data load (base JSON + user additions) ---------------------------
+  // --- Data load (base JSON + user additions) ----------------------------
+  // The graph area stays blank until this resolves. On a fast connection
+  // that's sub-100ms and invisible; on a slow one it can be long enough to
+  // look broken. Delay showing the indicator so a fast load never flashes
+  // it, but a slow one gets feedback instead of a dead screen.
+  const graphLoading = document.getElementById("graph-loading");
+  const loadingTimer = setTimeout(() => {
+    graphLoading.hidden = false;
+    graphLoading.setAttribute("aria-hidden", "false");
+  }, 250);
+  function hideLoading() {
+    clearTimeout(loadingTimer);
+    graphLoading.hidden = true;
+    graphLoading.setAttribute("aria-hidden", "true");
+  }
+
   let philosophers, relations, trails;
   try {
     [philosophers, relations, trails] = await Promise.all([
@@ -26,7 +41,8 @@
       fetch("data/relations.json").then((r) => r.json()),
       fetch("data/trails.json").then((r) => (r.ok ? r.json() : [])).catch(() => []),
     ]);
-  } catch (err) { showError(); return; }
+  } catch (err) { hideLoading(); showError(); return; }
+  hideLoading();
 
   // Merge in the user's saved additions so they survive reloads.
   const additions = Store.loadAdditions();
