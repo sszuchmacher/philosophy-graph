@@ -255,6 +255,9 @@
     openDrawer();
     setTimeout(() => { const s = document.getElementById("search-mobile"); if (s) s.focus(); }, 280);
   });
+  // Escape closes the drawer — matches the add-sheet and trails-sheet, which
+  // already dismiss on Escape; the drawer was the one overlay missing this.
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("is-open")) closeDrawer(); });
 
   // --- Zoom controls -----------------------------------------------------
   document.getElementById("zoom-in").addEventListener("click", () => zoomBy(1.35));
