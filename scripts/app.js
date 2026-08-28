@@ -276,6 +276,7 @@
   const addName = document.getElementById("add-name");
   const addStatus = document.getElementById("add-status");
   const addPreview = document.getElementById("add-preview");
+  const addGenerateBtn = document.getElementById("add-generate");
   let pending = null;   // { philosopher, relations } awaiting confirmation
 
   function openAddSheet() {
@@ -295,6 +296,8 @@
   function resetAddForm() {
     pending = null;
     addName.value = "";
+    addName.disabled = false;
+    addGenerateBtn.disabled = false;
     addStatus.hidden = true;
     addPreview.hidden = true;
     addPreview.innerHTML = "";
@@ -315,6 +318,12 @@
     const name = addName.value.trim();
     if (!name) return;
 
+    // Lock the form for the whole async round-trip below — without this, a
+    // fast double-tap (or holding Enter) fires a second concurrent
+    // Generator.generate() call, and whichever resolves last silently wins.
+    addName.disabled = true;
+    addGenerateBtn.disabled = true;
+
     // Duplicate? Focus the existing node instead of generating.
     const existingId = Generator.slugify(name);
     if (byId[existingId]) {
@@ -331,9 +340,13 @@
       pending = await Generator.generate(name, { philosophers });
     } catch {
       addStatus.textContent = "Generation failed. Try again.";
+      addName.disabled = false;
+      addGenerateBtn.disabled = false;
       return;
     }
     addStatus.hidden = true;
+    addName.disabled = false;
+    addGenerateBtn.disabled = false;
     renderPreview(pending);
   });
 
