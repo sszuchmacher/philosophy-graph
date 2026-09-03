@@ -49,7 +49,7 @@ const Panel = (() => {
   };
 
   // Graph data + navigation callbacks, injected once via setData().
-  let DATA = { philosophers: [], relations: [], byId: {} };
+  let DATA = { philosophers: [], relations: [], byId: {}, trailsByPh: {} };
   let onPhilosopherTap = null;      // (id) => void  — open that philosopher's card
   let onConnectionExpand = null;    // (relation) => void — e.g. highlight the edge
   let onConnectionCollapse = null;  // (philosopherId) => void — restore focus
@@ -57,9 +57,30 @@ const Panel = (() => {
   let loadDetails = null;           // (philosopherId) => Promise<{ideas,works}|null>
   let currentP = null;              // the philosopher currently shown
 
+  // Index: for each philosopher, the trails they appear in and the earliest
+  // stop at which they appear (so a chip jumps you to the moment they enter).
+  function indexTrails(trails, relByRelId) {
+    const idx = {};
+    (trails || []).forEach((t) => {
+      const seen = new Set();
+      (t.steps || []).forEach((s, i) => {
+        const rel = relByRelId[s.rel];
+        if (!rel) return;
+        [rel.source, rel.target].forEach((pid) => {
+          if (seen.has(pid)) return;
+          seen.add(pid);
+          (idx[pid] = idx[pid] || []).push({ id: t.id, title: t.title, step: i });
+        });
+      });
+    });
+    return idx;
+  }
+
   function setData(philosophers, relations, byId, callbacks) {
-    DATA = { philosophers, relations, byId };
+    const relByRelId = Object.fromEntries((relations || []).map((r) => [r.id, r]));
     callbacks = callbacks || {};
+    const trailsByPh = indexTrails(callbacks.trails, relByRelId);
+    DATA = { philosophers, relations, byId, trailsByPh };
     onPhilosopherTap = callbacks.onPhilosopherTap || null;
     onConnectionExpand = callbacks.onConnectionExpand || null;
     onConnectionCollapse = callbacks.onConnectionCollapse || null;
@@ -253,6 +274,15 @@ const Panel = (() => {
       `<a class="ph-link" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`
     ).join("");
 
+    // Trails this philosopher appears in. Each chip jumps to the stop where
+    // they first enter, not the trail's opener — that reads as "start with X"
+    // rather than as "here's a trail where they eventually show up".
+    const trailsForP = DATA.trailsByPh[p.id] || [];
+    const trailsHtml = trailsForP.map((t) => `
+      <button class="ph-trail-chip" type="button" data-trail="${esc(t.id)}" data-step="${t.step}">
+        <span class="ph-trail-chip__title">${esc(t.title)}</span>
+      </button>`).join("");
+
     content.innerHTML = `
       <span class="ph-school" style="background:${schoolColor}">${esc(schoolLabel)}</span>
       <h2 class="ph-name">${esc(p.name)}</h2>
@@ -265,6 +295,7 @@ const Panel = (() => {
       ${works ? `<div class="ph-section-title">Key works</div><div class="acc-list">${works}</div>` : ""}
       ${looksBackHtml ? `<div class="ph-section-title">Looks back to <span class="conn-count">${looksBack.length}</span></div><div class="ph-connections">${looksBackHtml}</div>` : ""}
       ${takenUpHtml ? `<div class="ph-section-title">Taken up by <span class="conn-count">${takenUp.length}</span></div><div class="ph-connections">${takenUpHtml}</div>` : ""}
+      ${trailsHtml ? `<div class="ph-section-title">Appears in <span class="conn-count">${trailsForP.length}</span></div><div class="ph-trails">${trailsHtml}</div>` : ""}
       <div class="ph-links">${linksHtml}</div>
     `;
     open();
@@ -338,6 +369,13 @@ const Panel = (() => {
       document.dispatchEvent(new CustomEvent("philograph:trail", { detail: { action } }));
       return;
     }
+
+    // Trail cross-link chip on a philosopher card: jump to that trail at
+    // the stop where this philosopher enters it. Uses a hash change so it
+    // routes through the same code path as the Trails sheet.
+    // URL scheme is 1-based (#/t/<id>/<stepNumber>); dataset.step is 0-based.
+    const chip = e.target.closest(".ph-trail-chip");
+    if (chip) { location.hash = "#/t/" + chip.dataset.trail + "/" + (Number(chip.dataset.step) + 1); return; }
 
     // "Open X's card" button inside an expanded connection.
     const goto = e.target.closest(".conn-goto");

@@ -118,6 +118,9 @@
 
   // Give the panel the data + navigation callbacks for the connections list.
   Panel.setData(philosophers, relations, byId, {
+    // The trails index lives on Panel so the philosopher card can cross-link
+    // to every trail this thinker appears in.
+    trails,
     // Jump to another philosopher's card (from a connection's "Open … card" button).
     onPhilosopherTap: (id) => {
       Graph.focusNode(id);

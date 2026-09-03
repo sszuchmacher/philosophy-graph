@@ -722,6 +722,42 @@ button { font-family: var(--sans); }
 .conn-goto:hover { filter: brightness(1.08); }
 
 /* External links */
+
+/* Trail cross-link chips on a philosopher card. Every trail this thinker
+   appears in becomes a tap target that jumps to the stop where they enter.
+   Wraps to a grid on mobile and to a flowing row on desktop, keyed off the
+   same accent tokens as the Trails sheet so the two feel like one system. */
+.ph-trails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 4px 0 24px;
+}
+.ph-trail-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s, transform 0.08s;
+  text-align: left;
+}
+.ph-trail-chip::before {
+  content: "→";
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+}
+.ph-trail-chip:hover { border-color: var(--accent); background: var(--bg-elev); }
+.ph-trail-chip:active { transform: scale(0.98); }
+
 .ph-links {
   display: flex;
   flex-wrap: wrap;
