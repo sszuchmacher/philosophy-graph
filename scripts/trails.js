@@ -38,27 +38,30 @@ const Trails = (() => {
     ));
   }
 
-  // Chip-sized label: "Michel de Montaigne" -> "Montaigne",
-  // "Augustine of Hippo" -> "Augustine". Falls back to the last word.
+  // Chip-sized label: "Michel de Montaigne" -> "Montaigne", "Augustine of
+  // Hippo" -> "Augustine", "Avicenna (Ibn Sina)" -> "Avicenna". Drops any
+  // parenthetical first, then the "of ..." tail, else keeps the last word.
   function shortName(name) {
     if (!name) return "";
-    const of = name.indexOf(" of ");
-    if (of > -1) return name.slice(0, of);
-    const parts = name.trim().split(/\s+/);
+    const bare = name.replace(/\s*\([^)]*\)/g, "").trim();
+    const of = bare.indexOf(" of ");
+    if (of > -1) return bare.slice(0, of);
+    const parts = bare.split(/\s+/);
     return parts[parts.length - 1];
   }
 
-  // The trail's cast, in order. Every stop is a relation whose *source* is the
-  // thinker making the new move, so the lineage reads: the first stop's target,
-  // then each stop's source. When one thinker answers two predecessors back to
-  // back the repeat collapses into a single chip owning the earlier stop.
+  // The trail's cast, in order of first appearance: for every stop, the thinker
+  // being answered and then the thinker answering. Each person appears once, tied
+  // to the stop they enter on, so predecessors who only ever appear mid-trail
+  // (Hegel in "The Death of God") still show up on the rail.
   function castOf(trail) {
     const cast = [];
+    const add = (id, stop) => { if (!cast.some((c) => c.id === id)) cast.push({ id, stop }); };
     (trail.steps || []).forEach((s, i) => {
       const rel = deps.byRelId[s.rel];
       if (!rel) return;
-      if (!cast.length) cast.push({ id: rel.target, stop: 0 });
-      if (rel.source !== cast[cast.length - 1].id) cast.push({ id: rel.source, stop: i });
+      add(rel.target, i);   // the thinker being answered
+      add(rel.source, i);   // the thinker making the move
     });
     return cast.map((c) => {
       const p = deps.byId[c.id];
