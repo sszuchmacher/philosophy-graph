@@ -41,8 +41,13 @@ const Trails = (() => {
   // Chip-sized label: "Michel de Montaigne" -> "Montaigne", "Augustine of
   // Hippo" -> "Augustine", "Avicenna (Ibn Sina)" -> "Avicenna". Drops any
   // parenthetical first, then the "of ..." tail, else keeps the last word.
+  // A few names are known by the *first* element, so the last-word rule
+  // would produce something nobody recognizes ("Empiricus").
+  const SHORT_NAME = { "Sextus Empiricus": "Sextus Empiricus" };
+
   function shortName(name) {
     if (!name) return "";
+    if (SHORT_NAME[name]) return SHORT_NAME[name];
     const bare = name.replace(/\s*\([^)]*\)/g, "").trim();
     const of = bare.indexOf(" of ");
     if (of > -1) return bare.slice(0, of);
@@ -89,27 +94,56 @@ const Trails = (() => {
   }
 
   // --- Trails sheet (the list) --------------------------------------------
+  // Thirty trails in one flat scroll is a wall. They are grouped by the era
+  // each trail is *about* (not merely where it starts — several run from
+  // antiquity to the present), in the order the eras happened. The era key
+  // lives on each trail in data/trails.json; anything with an unknown or
+  // missing key falls into a final "Other" group rather than vanishing.
+  const ERAS = [
+    { key: "ancient", label: "The ancient & medieval world" },
+    { key: "early-modern", label: "The early modern turn" },
+    { key: "nineteenth", label: "The nineteenth century" },
+    { key: "twentieth", label: "The twentieth century" },
+  ];
+
+  function cardHtml(t, prog) {
+    const st = prog[t.id] || {};
+    const mins = Math.round(t.steps.length * 2.5);
+    let stateHtml;
+    if (st.done) {
+      stateHtml = `<span class="trail-card__state is-done">\u2713 Completed \u2014 walk it again</span>`;
+    } else if (st.step > 0) {
+      stateHtml = `<span class="trail-card__state is-going">Continue \u00b7 stop ${st.step + 1} of ${t.steps.length}</span>`;
+    } else {
+      stateHtml = `<span class="trail-card__state">Start \u2192</span>`;
+    }
+    return `
+      <button class="trail-card" type="button" data-trail="${esc(t.id)}">
+        <span class="trail-card__title">${esc(t.title)}</span>
+        <span class="trail-card__tagline">${esc(t.tagline)}</span>
+        <span class="trail-card__cast">${esc(castOf(t).map((c) => shortName(c.name)).join(" \u00b7 "))}</span>
+        <span class="trail-card__meta">${t.steps.length} stops \u00b7 \u2248 ${mins} min ${stateHtml}</span>
+      </button>`;
+  }
+
   function renderList() {
     const prog = loadProgress();
-    listEl.innerHTML = TRAILS.map((t) => {
-      const st = prog[t.id] || {};
-      const mins = Math.round(t.steps.length * 2.5);
-      let stateHtml;
-      if (st.done) {
-        stateHtml = `<span class="trail-card__state is-done">✓ Completed — walk it again</span>`;
-      } else if (st.step > 0) {
-        stateHtml = `<span class="trail-card__state is-going">Continue · stop ${st.step + 1} of ${t.steps.length}</span>`;
-      } else {
-        stateHtml = `<span class="trail-card__state">Start →</span>`;
-      }
-      return `
-        <button class="trail-card" type="button" data-trail="${esc(t.id)}">
-          <span class="trail-card__title">${esc(t.title)}</span>
-          <span class="trail-card__tagline">${esc(t.tagline)}</span>
-          <span class="trail-card__cast">${esc(castOf(t).map((c) => shortName(c.name)).join(" · "))}</span>
-          <span class="trail-card__meta">${t.steps.length} stops · ≈ ${mins} min ${stateHtml}</span>
-        </button>`;
-    }).join("");
+    const known = new Set(ERAS.map((e) => e.key));
+    const groups = ERAS.map((e) => ({
+      label: e.label,
+      trails: TRAILS.filter((t) => t.era === e.key),
+    }));
+    const rest = TRAILS.filter((t) => !known.has(t.era));
+    if (rest.length) groups.push({ label: "Other", trails: rest });
+
+    listEl.innerHTML = groups
+      .filter((g) => g.trails.length)
+      .map((g) => `
+        <div class="trails-group">
+          <h3 class="trails-group__title">${esc(g.label)}<span class="trails-group__count">${g.trails.length}</span></h3>
+          ${g.trails.map((t) => cardHtml(t, prog)).join("")}
+        </div>`)
+      .join("");
   }
 
   function openSheet() {

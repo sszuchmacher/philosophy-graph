@@ -1222,6 +1222,32 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
 
 /* Trails sheet list */
 .trails-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+
+/* Era groups inside the trails sheet. The group wrapper becomes the flex item
+   of .trails-list, so it re-establishes the same column/gap for its cards. */
+.trails-group { display: flex; flex-direction: column; gap: 10px; }
+.trails-group + .trails-group { margin-top: 14px; }
+.trails-group__title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.trails-group__count {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  opacity: 0.65;
+}
 .trail-card {
   display: flex;
   flex-direction: column;
