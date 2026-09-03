@@ -36,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=9" />
+  <link rel="stylesheet" href="styles/main.css?v=10" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -53,15 +53,20 @@
 
   <!-- Trail progress bar (visible while walking a trail) -->
   <div id="trail-bar" class="trail-bar" hidden>
-    <button class="trail-bar__exit icon-btn" aria-label="Exit trail">×</button>
-    <div class="trail-bar__info" role="button" title="Reopen current stop">
-      <span class="trail-bar__title"></span>
-      <span class="trail-bar__prog"></span>
+    <div class="trail-bar__row">
+      <button class="trail-bar__exit icon-btn" aria-label="Exit trail">×</button>
+      <div class="trail-bar__info" role="button" title="Reopen current stop">
+        <span class="trail-bar__title"></span>
+        <span class="trail-bar__prog"></span>
+      </div>
+      <div class="trail-bar__btns">
+        <button class="trail-bar__prev icon-btn" aria-label="Previous stop">‹</button>
+        <button class="trail-bar__next icon-btn" aria-label="Next stop">›</button>
+      </div>
     </div>
-    <div class="trail-bar__btns">
-      <button class="trail-bar__prev icon-btn" aria-label="Previous stop">‹</button>
-      <button class="trail-bar__next icon-btn" aria-label="Next stop">›</button>
-    </div>
+    <!-- The trail's cast, in order. Shows the whole arc at a glance and stays
+         visible while the panel covers the graph; tap a thinker to jump. -->
+    <div id="trail-rail" class="trail-rail" aria-label="Trail stops"></div>
   </div>
 
   <!-- Sticky lane labels on the left (desktop only) -->
@@ -168,7 +173,7 @@
   <script src="scripts/panel.js?v=6"></script>
   <script src="scripts/search.js?v=5"></script>
   <script src="scripts/graph.js?v=6"></script>
-  <script src="scripts/trails.js?v=2"></script>
+  <script src="scripts/trails.js?v=3"></script>
   <script src="scripts/app.js?v=7"></script>
 
   <!-- Installable + offline-capable; registration failures (e.g. running

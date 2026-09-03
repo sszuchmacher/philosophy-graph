@@ -16,7 +16,7 @@ const Trails = (() => {
   let active = null;      // { trail, step } while walking
 
   // DOM (resolved in init)
-  let sheet, backdrop, listEl, bar, barTitle, barProg;
+  let sheet, backdrop, listEl, bar, barTitle, barProg, railEl;
 
   // --- Progress persistence ----------------------------------------------
   function loadProgress() {
@@ -38,6 +38,53 @@ const Trails = (() => {
     ));
   }
 
+  // Chip-sized label: "Michel de Montaigne" -> "Montaigne",
+  // "Augustine of Hippo" -> "Augustine". Falls back to the last word.
+  function shortName(name) {
+    if (!name) return "";
+    const of = name.indexOf(" of ");
+    if (of > -1) return name.slice(0, of);
+    const parts = name.trim().split(/\s+/);
+    return parts[parts.length - 1];
+  }
+
+  // The trail's cast, in order. Every stop is a relation whose *source* is the
+  // thinker making the new move, so the lineage reads: the first stop's target,
+  // then each stop's source. When one thinker answers two predecessors back to
+  // back the repeat collapses into a single chip owning the earlier stop.
+  function castOf(trail) {
+    const cast = [];
+    (trail.steps || []).forEach((s, i) => {
+      const rel = deps.byRelId[s.rel];
+      if (!rel) return;
+      if (!cast.length) cast.push({ id: rel.target, stop: 0 });
+      if (rel.source !== cast[cast.length - 1].id) cast.push({ id: rel.source, stop: i });
+    });
+    return cast.map((c) => {
+      const p = deps.byId[c.id];
+      return { id: c.id, stop: c.stop, name: p ? p.name : c.id, school: p ? p.school : "" };
+    });
+  }
+
+  // The rail under the trail bar: the whole arc at a glance. It stays visible
+  // while the panel covers the graph, and each chip jumps to that stop.
+  function renderRail() {
+    if (!railEl || !active) return;
+    const cast = castOf(active.trail);
+    let cur = 0;
+    cast.forEach((c, k) => { if (c.stop <= active.step) cur = k; });
+    railEl.innerHTML = cast.map((c, k) => {
+      const state = k < cur ? " is-done" : k === cur ? " is-current" : "";
+      return `<button class="trail-rail__chip${state}" type="button" data-stop="${c.stop}"` +
+        ` title="${esc(c.name)}" aria-label="${esc(c.name)}"${k === cur ? ' aria-current="step"' : ""}>` +
+        `<span class="trail-rail__dot" style="background:var(--school-${esc(c.school)})"></span>` +
+        `<span class="trail-rail__name">${esc(shortName(c.name))}</span></button>`;
+    }).join("");
+    // Keep the current chip centred without scrolling the page itself.
+    const el = railEl.querySelector(".is-current");
+    if (el) railEl.scrollLeft = el.offsetLeft - railEl.clientWidth / 2 + el.offsetWidth / 2;
+  }
+
   // --- Trails sheet (the list) --------------------------------------------
   function renderList() {
     const prog = loadProgress();
@@ -56,6 +103,7 @@ const Trails = (() => {
         <button class="trail-card" type="button" data-trail="${esc(t.id)}">
           <span class="trail-card__title">${esc(t.title)}</span>
           <span class="trail-card__tagline">${esc(t.tagline)}</span>
+          <span class="trail-card__cast">${esc(castOf(t).map((c) => shortName(c.name)).join(" · "))}</span>
           <span class="trail-card__meta">${t.steps.length} stops · ≈ ${mins} min ${stateHtml}</span>
         </button>`;
     }).join("");
@@ -125,6 +173,8 @@ const Trails = (() => {
 
     // URL: this stop gets its own shareable/resumable link.
     Router.navigate(`t/${trail.id}/${i + 1}`);
+
+    renderRail();
   }
 
   function next() {
@@ -146,6 +196,7 @@ const Trails = (() => {
         <div class="trail-done__badge">✓</div>
         <h2 class="trail-done__title">Trail complete</h2>
         <p class="trail-done__text">You walked <strong>${esc(trail.title)}</strong> — ${trail.steps.length} stops, one idea evolving across the centuries.</p>
+        <p class="trail-done__path">${esc(castOf(trail).map((c) => c.name).join("  →  "))}</p>
         <div class="trail-nav">
           <button class="ghost-btn trail-exit" type="button">Back to the map</button>
           <button class="primary-btn trail-browse" type="button">More trails →</button>
@@ -194,6 +245,7 @@ const Trails = (() => {
     bar = document.getElementById("trail-bar");
     barTitle = bar.querySelector(".trail-bar__title");
     barProg = bar.querySelector(".trail-bar__prog");
+    railEl = document.getElementById("trail-rail");
 
     document.getElementById("trails-btn").addEventListener("click", openSheet);
     document.getElementById("trails-close").addEventListener("click", closeSheet);
@@ -214,6 +266,21 @@ const Trails = (() => {
     listEl.addEventListener("click", (e) => {
       const card = e.target.closest(".trail-card");
       if (card) start(card.dataset.trail);
+    });
+
+    // Rail chips jump straight to a stop.
+    if (railEl) railEl.addEventListener("click", (e) => {
+      const chip = e.target.closest(".trail-rail__chip");
+      if (chip) showStep(Number(chip.dataset.stop));
+    });
+
+    // Arrow keys walk the trail (ignored while typing or browsing the sheet).
+    document.addEventListener("keydown", (e) => {
+      if (!active || sheet.classList.contains("is-open")) return;
+      const tag = (e.target.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || e.target.isContentEditable) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
     });
 
     // Trail bar controls.

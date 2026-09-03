@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "philosophy-graph",
+      "runtimeExecutable": "/usr/bin/python3",
+      "runtimeArgs": [
+        "-u",
+        "/Users/santiagoszuchmacher/Downloads/REPOS/Santi Repos/grafo-filosofos/serve.py"
+      ],
+      "port": 8123
+    }
+  ]
+}
