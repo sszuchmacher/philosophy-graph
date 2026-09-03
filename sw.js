@@ -10,7 +10,7 @@
      from the network in the background.
    Bump CACHE_VERSION on a deploy that needs to force a clean slate.
    ============================================================ */
-const CACHE_VERSION = "philograph-v10";
+const CACHE_VERSION = "philograph-v11";
 
 const APP_SHELL = [
   "./",
