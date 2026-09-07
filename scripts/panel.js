@@ -107,7 +107,12 @@ const Panel = (() => {
     el.setAttribute("aria-hidden", "false");
     if (content) content.scrollTop = 0;   // .panel__content is the scroll area
     if (shareBtn) shareBtn.hidden = shareable === false;
-    showBackdrop();
+    // In trail peek mode the graph strip above the sheet must stay fully
+    // lit and tappable — the dimming backdrop would push it back into the
+    // "background" the sheet is meant to leave visible. The sheet's own
+    // shadow separates it from the map instead.
+    if (el.classList.contains("panel--trail-peek")) hideBackdrop();
+    else showBackdrop();
   }
   function close() {
     el.classList.remove("is-open");
