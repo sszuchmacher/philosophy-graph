@@ -111,6 +111,7 @@ const Panel = (() => {
   }
   function close() {
     el.classList.remove("is-open");
+    el.classList.remove("panel--trail-peek");
     el.setAttribute("aria-hidden", "true");
     hideBackdrop();
     if (onCloseCallback) onCloseCallback();
@@ -239,6 +240,7 @@ const Panel = (() => {
   // --- Philosopher view ----------------------------------------------------
   function showPhilosopher(p) {
     currentP = p;
+    el.classList.remove("panel--trail-peek");
     const schoolLabel = SCHOOL_LABEL[p.school] || p.school || "";
     const schoolColor = p.school ? `var(--school-${p.school})` : "var(--ink-soft)";
     const ideaDetails = p.idea_details || {};
@@ -314,6 +316,7 @@ const Panel = (() => {
   // `trail` (optional): { title, step, total, note, isLast, nextLabel }
   // renders the trail context above the essay and prev/next nav below it.
   function showRelation(rel, sourceName, targetName, markdown, trail) {
+    el.classList.toggle("panel--trail-peek", !!trail);
     const color = `var(--rel-${rel.type})`;
     const label = TYPE_LABEL[rel.type] || rel.type;
     const quotes = (rel.quotes || []).map((c) => `
@@ -355,6 +358,7 @@ const Panel = (() => {
 
   // Arbitrary HTML view (used by the trail completion screen).
   function showCustom(html) {
+    el.classList.remove("panel--trail-peek");   // full sheet for the finish screen
     content.innerHTML = html;
     open(false);
   }

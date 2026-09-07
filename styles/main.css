@@ -1118,6 +1118,14 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
   }
   .panel.is-open, .add-sheet.is-open { transform: translateY(0); }
 
+  /* Trail mode: the essay sits as a shorter peek sheet so the top of the
+     graph stays visible and you can watch the highlighted hop move from
+     stop to stop. graph.js frames each hop into the strip left uncovered. */
+  .panel.panel--trail-peek {
+    height: 58dvh;
+    max-height: 58dvh;
+  }
+
   .panel__grip, .add-sheet__grip {
     display: block;
     width: 44px;

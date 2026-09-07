@@ -188,7 +188,7 @@ const Trails = (() => {
 
     // Graph: light the whole path, pop the current hop, pan to it.
     Graph.showTrail(edgeIdsOf(trail), rel.id);
-    Graph.focusEdge(rel.id);
+    Graph.focusTrailHop(rel.id);
 
     // Panel: essay + trail framing.
     const next = trail.steps[i + 1];

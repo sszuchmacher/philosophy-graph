@@ -223,6 +223,41 @@ const Graph = (() => {
     cy.animate({ fit: { eles: e.connectedNodes(), padding: 130 } }, { duration: 450 });
   }
 
+  // Trail framing: like focusEdge, but frames the hop into the part of the
+  // graph the essay sheet does NOT cover, so the highlighted pair stays
+  // visible while you read. On mobile the sheet is a bottom peek (frame into
+  // the top strip); on desktop it's a right rail (frame into the left area).
+  // The trail bar's own height is measured so the pair clears it too.
+  function focusTrailHop(id) {
+    if (!cy) return;
+    const e = cy.getElementById(id);
+    if (e.empty()) return;
+    const bb = e.connectedNodes().boundingBox();
+    const W = cy.width(), H = cy.height();
+    const mobile = window.innerWidth <= 820;
+
+    let top = 0, bottom = 0, right = 0;
+    const bar = document.getElementById("trail-bar");
+    if (bar && !bar.hidden) top = bar.getBoundingClientRect().height + 10;
+    if (mobile) {
+      bottom = Math.round(H * 0.58);                       // essay peek height
+    } else {
+      right = Math.min(460, window.innerWidth * 0.92) + 12; // right rail width
+    }
+
+    const pad = mobile ? 44 : 80;
+    const availW = Math.max(80, W - right - 2 * pad);
+    const availH = Math.max(80, H - top - bottom - 2 * pad);
+    const fitZoom = Math.min(availW / Math.max(bb.w, 1), availH / Math.max(bb.h, 1));
+    const zoom = Math.max(0.35, Math.min(fitZoom, 1.25));
+
+    const mx = bb.x1 + bb.w / 2, my = bb.y1 + bb.h / 2;    // model-space centre
+    const rx = (W - right) / 2;                            // centre of visible band
+    const ry = top + (H - top - bottom) / 2;
+    cy.animate({ zoom, pan: { x: rx - mx * zoom, y: ry - my * zoom } },
+      { duration: 450, easing: "ease-in-out" });
+  }
+
   // Focal node gets .highlight (ring + larger); its neighbors get
   // .neighbor (labeled, undimmed, normal size); everything else dims.
   function highlightNode(id) {
@@ -396,7 +431,7 @@ const Graph = (() => {
   return {
     init,
     highlightNode, highlightEdge, clearHighlight, focusNode, focusSchool,
-    showTrail, focusEdge,
+    showTrail, focusEdge, focusTrailHop,
     setTypeVisible, setSchoolVisible, refreshTheme, addPhilosopher,
     getCy: () => cy,
     getLaneCenters: () => laneCenters,
