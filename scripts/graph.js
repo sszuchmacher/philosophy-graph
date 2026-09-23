@@ -12,6 +12,7 @@ const Graph = (() => {
   let handlers = {};
   let laneCenters = {};        // school -> Y in model coords
   let minYear = 0;             // earliest year across all nodes (for X origin)
+  let edgeScale = 1;           // edge widths x this keep ~constant on-screen width when zoomed out (set in relabel)
 
   // Schools ordered roughly chronologically by first member's birth.
   // This is also the row order of the lanes (top → bottom).
@@ -189,13 +190,15 @@ const Graph = (() => {
       {
         selector: "edge",
         style: {
-          width: 1,
+          width: () => edgeScale,
           "line-color": (e) => relColor(e.data("type")),
           "target-arrow-color": (e) => relColor(e.data("type")),
-          "target-arrow-shape": "triangle",
+          // Direction is already implied by the timeline (later thinkers
+          // point back to earlier ones); arrowheads only on active edges.
+          "target-arrow-shape": "none",
           "arrow-scale": 0.7,
           "curve-style": "bezier",
-          opacity: 0.07,               // nearly invisible by default — a faint hint
+          opacity: 0.05,               // unnamed connections: a faint hint of context
           "transition-property": "opacity, width",
           "transition-duration": "0.18s",
         },
@@ -205,10 +208,30 @@ const Graph = (() => {
         selector: "edge[source = target]",
         style: { "loop-direction": "-45deg", "loop-sweep": "-90deg" },
       },
+      // Same-row connections arc over the row instead of running straight
+      // through the dots in between (see markRowEdges).
+      {
+        selector: "edge.same-row",
+        style: {
+          "curve-style": "round-segments",
+          "segment-distances": (e) => e.data("arcH"),
+          "segment-weights": (e) => e.data("arcW"),
+          "segment-radius": 10,
+          "edge-distances": "node-position",
+        },
+      },
+      // Connections at rest: both thinkers are named at this zoom (relabel).
+      { selector: "edge.rest", style: { width: () => 1.1 * edgeScale, opacity: 0.22 } },
+      // ...but ones that run far across the screen fade to a hint, so local
+      // structure stays readable when zoomed in.
+      { selector: "edge.rest.far", style: { opacity: 0.08 } },
       // Highlighted edges pop.
-      { selector: "edge.highlight", style: { width: 2.2, opacity: 0.95, "z-index": 999 } },
+      { selector: "edge.highlight", style: { width: () => 2.2 * edgeScale, opacity: 0.95, "z-index": 999, "target-arrow-shape": "triangle" } },
       // Trail edges: the whole path stays visible while walking a trail.
-      { selector: "edge.trail", style: { width: 1.8, opacity: 0.5, "z-index": 800 } },
+      { selector: "edge.trail", style: { width: () => 1.8 * edgeScale, opacity: 0.5, "z-index": 800, "target-arrow-shape": "triangle" } },
+      // Desktop hover preview: a thinker's connections and neighbours' names.
+      { selector: "edge.hover", style: { width: () => 1.6 * edgeScale, opacity: 0.75, "z-index": 900, "target-arrow-shape": "triangle" } },
+      { selector: "node.hover-nb", style: { "text-opacity": 1, "z-index": 900 } },
       // Dim hides things that aren't part of the current selection.
       { selector: ".dim", style: { opacity: 0.04 } },
       // While something is selected, also dim non-highlight elements.
@@ -217,7 +240,7 @@ const Graph = (() => {
 
   function clearHighlight() {
     if (!cy) return;
-    cy.elements().removeClass("dim highlight neighbor trail");
+    cy.elements().removeClass("dim highlight neighbor trail hover hover-nb");
   }
 
   // Light up a whole trail: every edge on the path stays visible with its
@@ -349,7 +372,7 @@ const Graph = (() => {
       // Only add edges whose endpoints exist.
       if (cy.getElementById(r.source).empty() || cy.getElementById(r.target).empty()) return;
       if (!cy.getElementById(r.id).empty()) return;
-      cy.add({ group: "edges", data: { id: r.id, source: r.source, target: r.target, type: r.type, ref: r } });
+      markRowEdges(cy.add({ group: "edges", data: { id: r.id, source: r.source, target: r.target, type: r.type, ref: r } }));
     });
 
     // Re-run label placement so the new node's label competes for space.
@@ -406,6 +429,37 @@ const Graph = (() => {
   const LABEL_MAX_PX = 15;      // on-screen cap
   const LABEL_GAP_PX = 3;       // breathing room between labels, on screen
   const DOT_BLOCK_PX = 9;       // dots at least this big on screen block labels
+  const LONG_EDGE_PX = 700;     // resting edges longer than this on screen fade
+  // Same-row arc height (model px), 16-28: clears the row's own dots (radius
+  // 11) and stays under the stacked slot above (dots from -33). Longer arcs
+  // ride higher, so overlapping ones nest like parentheses instead of
+  // sharing one track.
+  const ARC_H_MIN = 16, ARC_H_MAX = 28, ARC_H_SPAN = 1200;
+  const ARC_RISE = 28;          // horizontal run over which a same-row arc climbs to its height
+
+  // Mark connections between thinkers in the same row so they arc over the
+  // dots in between. Positions never change (nodes are locked to their year),
+  // so this runs once per edge.
+  function markRowEdges(edges) {
+    edges.forEach((e) => {
+      const a = e.source().position();
+      const b = e.target().position();
+      if (e.source().same(e.target()) || Math.abs(a.y - b.y) >= 1) return;
+      const len = Math.abs(a.x - b.x);
+      const w = Math.min(0.35, ARC_RISE / len);
+      const height = ARC_H_MIN + (ARC_H_MAX - ARC_H_MIN) * Math.min(1, len / ARC_H_SPAN);
+      // segment-distances are perpendicular to source->target; flip the sign
+      // with direction so every arc bows upward.
+      const h = (b.x < a.x ? 1 : -1) * height;
+      e.data({ arcH: `${h} ${h}`, arcW: `${w} ${1 - w}` }).addClass("same-row");
+    });
+  }
+
+  function edgeLength(e) {
+    const a = e.source().position();
+    const b = e.target().position();
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
   const LABEL_BOX = { includeNodes: false, includeEdges: false, includeLabels: true, includeOverlays: false };
   const BODY_BOX = { includeNodes: true, includeEdges: false, includeLabels: false, includeOverlays: false };
 
@@ -472,7 +526,22 @@ const Graph = (() => {
     cy.batch(() => {
       side.forEach((above, n) => { if (above !== isAbove(n)) n.style(sideStyle(above)); });
       cy.nodes().forEach((n) => n.toggleClass("shown", shownIds.has(n.id())));
+      // The network grows with the labels: a connection shows at rest when
+      // both of its thinkers are named at this zoom.
+      cy.edges().forEach((e) => {
+        const rest = shownIds.has(e.source().id()) && shownIds.has(e.target().id());
+        e.toggleClass("rest", rest);
+        e.toggleClass("far", rest && edgeLength(e) * z > LONG_EDGE_PX);
+      });
     });
+
+    // Edge widths are model px, so zoomed out they'd thin to a tenth of a
+    // pixel. Scale them to hold ~1px on screen below zoom 1.
+    const scale = Math.max(1, 1 / z);
+    if (Math.abs(scale - edgeScale) / edgeScale > 0.05) {
+      edgeScale = scale;
+      cy.edges().updateStyle();
+    }
   }
 
   // Zoom fires continuously during a pinch or wheel; relabel once it settles.
@@ -506,6 +575,8 @@ const Graph = (() => {
       if (laneY != null && n.position("y") < laneY) n.addClass("label-above");
     });
 
+    markRowEdges(cy.edges());
+
     // Initial framing: fit all lanes vertically with comfortable padding,
     // then pan horizontally to a populated era (roughly the modern dense zone).
     framInitial();
@@ -513,6 +584,21 @@ const Graph = (() => {
     relabel();
     cy.on("zoom", scheduleRelabel);
     cy.on("pan zoom render", () => { if (handlers.onViewportChange) handlers.onViewportChange(); });
+
+    // Desktop hover preview: light a thinker's connections and name their
+    // neighbours without opening anything. Skipped while a node, edge or
+    // trail is focused so it never fights the current selection.
+    const container = cy.container();
+    cy.on("mouseover", "node, edge", (evt) => {
+      container.style.cursor = "pointer";
+      if (!evt.target.isNode() || !cy.$(".highlight, .trail").empty()) return;
+      evt.target.connectedEdges().addClass("hover");
+      evt.target.closedNeighborhood("node").addClass("hover-nb");
+    });
+    cy.on("mouseout", "node, edge", () => {
+      container.style.cursor = "";
+      cy.$(".hover, .hover-nb").removeClass("hover hover-nb");
+    });
 
     cy.on("tap", "node", (evt) => {
       const p = evt.target.data("ref");
