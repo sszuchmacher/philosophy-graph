@@ -11,6 +11,7 @@ const Graph = (() => {
   let cy = null;
   let handlers = {};
   let laneCenters = {};        // school -> Y in model coords
+  let rowLayout = [];          // [{ y, schools: [{ school, x1, x2 }] }], one per row (see computeRows)
   let minYear = 0;             // earliest year across all nodes (for X origin)
   let edgeScale = 1;           // edge widths x this keep ~constant on-screen width when zoomed out (set in relabel)
 
@@ -83,15 +84,59 @@ const Graph = (() => {
   // X coordinate for a given year (depends on minYear, set during layout).
   function yearToX(year) { return timeX(year) - timeX(minYear); }
 
+  const ROW_GAP = 300;         // model px of clear time between schools sharing a row
+  const CONTROLS_RESERVE_PX = 64;  // screen px at the bottom kept clear of rows on load (+ button, zoom controls)
+
+  // Schools live for a century or two, so one row per school left 85% of the
+  // canvas empty (3 of 21 rows in use at any moment) and made history run
+  // diagonally. Schools that never coexist share a row instead. In order of
+  // appearance, each school takes a free row (one whose last school ended
+  // ROW_GAP earlier), preferring the row whose schools it has the most
+  // connections to, recent ones weighted more, so a row reads as a lineage:
+  // Classical -> Late Antiquity -> Medieval -> ... -> Critical Theory. A new
+  // row opens only when every row is busy.
+  function computeRows(philosophers, relations) {
+    const span = {};                 // school -> [x1, x2]
+    const schoolOf = {};
+    philosophers.forEach((p) => {
+      schoolOf[p.id] = p.school;
+      const x = yearToX(parseYear(p.dates));
+      const sp = span[p.school] || (span[p.school] = [x, x]);
+      sp[0] = Math.min(sp[0], x);
+      sp[1] = Math.max(sp[1], x);
+    });
+    const key = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
+    const links = {};                // cross-school connection counts
+    (relations || []).forEach((r) => {
+      const a = schoolOf[r.source], b = schoolOf[r.target];
+      if (a && b && a !== b) links[key(a, b)] = (links[key(a, b)] || 0) + 1;
+    });
+
+    const rows = [];
+    Object.keys(span).sort((a, b) => span[a][0] - span[b][0]).forEach((s) => {
+      const free = [];
+      rows.forEach((r, i) => { if (span[r[r.length - 1]][1] + ROW_GAP <= span[s][0]) free.push(i); });
+      if (!free.length) { rows.push([s]); return; }
+      const score = (i) => rows[i].reduce((t, u, k) => t + (links[key(s, u)] || 0) * (1 + k / rows[i].length), 0);
+      let best = free[0];
+      free.forEach((i) => { if (score(i) > score(best)) best = i; });
+      rows[best].push(s);
+    });
+    return rows.map((schools, i) => ({
+      y: i * LANE_HEIGHT,
+      schools: schools.map((school) => ({ school, x1: span[school][0], x2: span[school][1] })),
+    }));
+  }
+
   // Position for a single philosopher. `laneIndex` spreads philosophers
   // within the same school lane so contemporaries don't overlap.
   function positionFor(p, laneIndex) {
-    const laneY = laneCenters[p.school] ?? (SCHOOL_ORDER.length * LANE_HEIGHT);
+    const laneY = laneCenters[p.school] ?? (rowLayout.length * LANE_HEIGHT);
     const idx = laneIndex == null ? 0 : laneIndex;
     return { x: yearToX(parseYear(p.dates)), y: laneY + JITTER[idx % JITTER.length] };
   }
 
-  function computePositions(philosophers) {
+  function computePositions(philosophers, relations) {
     // Bucket by school
     const buckets = {};
     philosophers.forEach((p) => {
@@ -101,14 +146,15 @@ const Graph = (() => {
     const allYears = philosophers.map((p) => parseYear(p.dates));
     minYear = Math.min(...allYears);
 
-    // Compute lane centers in the order specified above.
+    // Lane centres: one row per lineage of schools (see computeRows).
+    rowLayout = computeRows(philosophers, relations);
     laneCenters = {};
-    SCHOOL_ORDER.forEach((s, i) => { laneCenters[s] = i * LANE_HEIGHT; });
+    rowLayout.forEach((row) => row.schools.forEach((e) => { laneCenters[e.school] = row.y; }));
 
     const positions = {};
     Object.entries(buckets).forEach(([school, arr]) => {
       arr.sort((a, b) => a.year - b.year);
-      const laneY = laneCenters[school] ?? (SCHOOL_ORDER.length * LANE_HEIGHT);
+      const laneY = laneCenters[school];
       const placed = [];   // {x, y} already positioned in this lane
 
       arr.forEach((item) => {
@@ -361,9 +407,22 @@ const Graph = (() => {
     if (!cy) return false;
     if (!cy.getElementById(philosopher.id).empty()) return false;
 
+    // A school the layout hasn't seen gets a row of its own below the rest.
+    if (laneCenters[philosopher.school] == null) {
+      laneCenters[philosopher.school] = rowLayout.length * LANE_HEIGHT;
+      rowLayout.push({ y: laneCenters[philosopher.school], schools: [] });
+    }
+
     // Count existing nodes in this lane to choose a non-overlapping offset.
     const laneCount = cy.nodes(`[school = "${philosopher.school}"]`).length;
     const pos = positionFor(philosopher, laneCount);
+
+    // Stretch the school's span in its row so the row label covers the new node.
+    const row = rowLayout.find((r) => r.y === laneCenters[philosopher.school]);
+    let entry = row.schools.find((e) => e.school === philosopher.school);
+    if (!entry) row.schools.push(entry = { school: philosopher.school, x1: pos.x, x2: pos.x });
+    entry.x1 = Math.min(entry.x1, pos.x);
+    entry.x2 = Math.max(entry.x2, pos.x);
 
     cy.add({ group: "nodes", data: { id: philosopher.id, label: philosopher.name, school: philosopher.school, ref: philosopher }, position: pos });
     const addedLaneY = laneCenters[philosopher.school];
@@ -383,34 +442,36 @@ const Graph = (() => {
     return true;
   }
 
-  // Frame the graph: zoom in just enough to read labels, then centre on the
-  // busiest stretch of the map. Every node is tried as a window centre; the
-  // window (the viewport at the target zoom) holding the most thinkers,
+  // Frame the graph so every row is on screen (history then only needs
+  // left-right panning): the usual target zoom, or less if the row band
+  // wouldn't fit. Horizontally, centre on the busiest stretch of time: every
+  // node is tried as a window centre, the window holding the most thinkers,
   // weighted by connections so hubs pull harder, wins, and the view settles
-  // on that window's weighted centroid. Data-driven, so it keeps working as
-  // the time scale, lanes or dataset change.
+  // on its weighted centroid. Data-driven, so it keeps working as the time
+  // scale, rows or dataset change.
   function framInitial() {
     const containerW = cy.width();
     const containerH = cy.height();
     const isMobile = containerW < 700;
-    // Above the label threshold (0.42) so users see names immediately on desktop.
-    // Slightly lower on mobile so more lanes fit at a glance.
+    // Above the label floor so names show immediately; a touch lower on mobile.
     const targetZoom = isMobile ? 0.55 : 0.6;
-    const halfW = containerW / targetZoom / 2;
-    const halfH = containerH / targetZoom / 2;
-    const pts = cy.nodes().map((n) => ({ x: n.position("x"), y: n.position("y"), w: 1 + n.degree(false) }));
-    const inWindow = (c) => pts.filter((p) => Math.abs(p.x - c.x) <= halfW && Math.abs(p.y - c.y) <= halfH);
+    // Keep the bottom strip clear: the + button and zoom controls float there.
+    const usableH = containerH - CONTROLS_RESERVE_PX;
+    const bandH = Math.max(1, rowLayout.length) * LANE_HEIGHT;   // rows plus half a lane either side
+    const zoom = Math.min(targetZoom, usableH / bandH);
+    const halfW = containerW / zoom / 2;
+    const pts = cy.nodes().map((n) => ({ x: n.position("x"), w: 1 + n.degree(false) }));
     let best = [], bestScore = -1;
     pts.forEach((c) => {
-      const members = inWindow(c);
+      const members = pts.filter((p) => Math.abs(p.x - c.x) <= halfW);
       const score = members.reduce((s, p) => s + p.w, 0);
       if (score > bestScore) { bestScore = score; best = members; }
     });
     const total = best.reduce((s, p) => s + p.w, 0) || 1;
     const focusX = best.reduce((s, p) => s + p.x * p.w, 0) / total;
-    const focusY = best.reduce((s, p) => s + p.y * p.w, 0) / total;
-    cy.zoom({ level: targetZoom, renderedPosition: { x: containerW / 2, y: containerH / 2 } });
-    cy.pan({ x: containerW / 2 - focusX * targetZoom, y: containerH / 2 - focusY * targetZoom });
+    const focusY = (bandH - LANE_HEIGHT) / 2;                    // middle of the row band
+    cy.zoom({ level: zoom, renderedPosition: { x: containerW / 2, y: containerH / 2 } });
+    cy.pan({ x: containerW / 2 - focusX * zoom, y: usableH / 2 - focusY * zoom });
   }
 
   // Zoom-dependent labels. Labels keep a readable on-screen size (never
@@ -553,7 +614,7 @@ const Graph = (() => {
 
   function init(containerId, philosophers, relations, h) {
     handlers = h || {};
-    const positions = computePositions(philosophers);
+    const positions = computePositions(philosophers, relations);
 
     cy = cytoscape({
       container: document.getElementById(containerId),
@@ -638,6 +699,8 @@ const Graph = (() => {
     setTypeVisible, setSchoolVisible, refreshTheme, addPhilosopher,
     getCy: () => cy,
     getLaneCenters: () => laneCenters,
+    getRows: () => rowLayout,
+    getLaneHeight: () => LANE_HEIGHT,
     getSchoolOrder: () => SCHOOL_ORDER.slice(),
     getMinYear: () => minYear,
     yearToX, getTimeBounds,

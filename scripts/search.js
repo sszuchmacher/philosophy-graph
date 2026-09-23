@@ -111,7 +111,7 @@ const Search = (() => {
     // Tiny helper text.
     const help = document.createElement("div");
     help.className = "drawer-help";
-    help.textContent = "Time flows left to right. Each row is a school of thought. Tap any philosopher to see who they argued with.";
+    help.textContent = "Time flows left to right. Colours are schools; each row follows a lineage of schools through time. Tap any philosopher to see who they argued with.";
     root.appendChild(help);
 
     return searchInput;

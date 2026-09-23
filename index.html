@@ -36,7 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 
-  <link rel="stylesheet" href="styles/main.css?v=13" />
+  <link rel="stylesheet" href="styles/main.css?v=14" />
 </head>
 <body>
   <!-- Top bar: hamburger + title + search + theme toggle -->
@@ -154,7 +154,7 @@
   <div id="welcome" class="welcome" hidden>
     <div class="welcome__card">
       <h2>How to read this map</h2>
-      <p>Each circle is a philosopher. <strong>Time flows left to right.</strong> Each <strong>row is a school of thought</strong>, ordered roughly by when it appeared.</p>
+      <p>Each circle is a philosopher, coloured by school. <strong>Time flows left to right.</strong> Each <strong>row follows a lineage</strong>: schools that shaped one another take turns on the same row as the centuries pass.</p>
       <p>Tap any philosopher to see who they argued with. Tap a connecting line to read how they connected.</p>
       <p>Not sure where to start? <strong>Follow a guided trail</strong> — one theme, evolving thinker by thinker.</p>
       <div class="welcome__actions">
@@ -171,10 +171,10 @@
   <script src="scripts/generator.js?v=2"></script>
   <script src="scripts/store.js?v=2"></script>
   <script src="scripts/panel.js?v=9"></script>
-  <script src="scripts/search.js?v=5"></script>
-  <script src="scripts/graph.js?v=16"></script>
+  <script src="scripts/search.js?v=6"></script>
+  <script src="scripts/graph.js?v=19"></script>
   <script src="scripts/trails.js?v=7"></script>
-  <script src="scripts/app.js?v=10"></script>
+  <script src="scripts/app.js?v=11"></script>
 
   <!-- Installable + offline-capable; registration failures (e.g. running
        from file://) are silently ignored — the app works fine without it. -->

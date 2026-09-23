@@ -223,7 +223,7 @@ button { font-family: var(--sans); }
 .primary-btn:hover { filter: brightness(1.08); }
 
 /* ============================================================
-   Sticky lane labels on the left (desktop only)
+   Row labels: a sticky column on desktop, pills over the graph on phones
    ============================================================ */
 .lanes {
   position: fixed;
@@ -259,6 +259,8 @@ button { font-family: var(--sans); }
   border-radius: 50%;
   flex-shrink: 0;
 }
+/* The row's schools are all off screen: the label points to the nearest. */
+.lane-label.is-away { opacity: 0.5; }
 
 /* ============================================================
    Drawer (left slide-in) — filters + school index
@@ -392,13 +394,11 @@ button { font-family: var(--sans); }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 65px,
-    rgba(0, 0, 0, 0.018) 65px,
-    rgba(0, 0, 0, 0.018) 130px
-  );
+  /* Alternating row bands, kept aligned with the graph's rows by app.js
+     (--row-h / --row-offset follow pan and zoom). */
+  background-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.018) 50%);
+  background-size: 100% calc(var(--row-h, 130px) * 2);
+  background-position: 0 var(--row-offset, 0px);
 }
 
 /* ============================================================
@@ -1066,8 +1066,29 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
 @media (max-width: 820px) {
   :root { --topbar-height: 52px; }
 
-  /* Hide the sticky lanes panel; the drawer holds the school index. */
-  .lanes { display: none; }
+  /* No room for the sticky label column: each row gets a small pill at the
+     top of its band instead, over the graph's left edge. The layer spans
+     the graph but ignores taps (pointer-events: none on .lanes). */
+  .lanes {
+    right: 0;
+    width: auto;
+    background: none;
+    border-right: 0;
+    backdrop-filter: none;
+  }
+  .lane-label {
+    left: 8px;
+    right: auto;
+    width: max-content;
+    height: 20px;
+    gap: 6px;
+    padding: 0 8px 0 7px;
+    font-size: 10.5px;
+    border-radius: 999px;
+    background: var(--bg-elev);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .lane-label__dot { width: 7px; height: 7px; }
   .graph { left: 0; }
   .time-axis { left: 0; }
 

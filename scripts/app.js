@@ -162,34 +162,67 @@
   });
   const openedFromLink = Router.start();
 
-  // --- Lane labels (desktop) --------------------------------------------
+  // --- Row labels -----------------------------------------------------------
+  // Rows are lineages: several schools share a row at different times (see
+  // computeRows in graph.js). Each row's label names the school in view, the
+  // one nearest the centre of the screen, and when none of the row's schools
+  // is on screen it points toward the nearest ("← Medieval"). Desktop
+  // shows them in the sticky column; phones get small pills at the top of
+  // each row's band, over the graph's left edge.
   const lanesEl = document.getElementById("lanes");
+  const graphEl = document.getElementById("cy");
   function renderLaneLabels() {
-    const labels = Panel.SCHOOL_LABEL || {};
-    const lanes = Graph.getLaneCenters();
-    const order = Graph.getSchoolOrder();
     lanesEl.innerHTML = "";
-    order.forEach((s) => {
-      if (!(s in lanes)) return;
+    Graph.getRows().forEach((row, i) => {
       const el = document.createElement("div");
       el.className = "lane-label";
-      el.dataset.modelY = String(lanes[s]);
-      el.innerHTML = `<span class="lane-label__dot" style="background:var(--school-${s})"></span><span>${labels[s] || s}</span>`;
+      el.dataset.row = String(i);
+      el.innerHTML = `<span class="lane-label__dot"></span><span class="lane-label__name"></span>`;
       lanesEl.appendChild(el);
     });
   }
   function syncLaneLabels() {
     const cy = Graph.getCy();
     if (!cy) return;
+    const labels = Panel.SCHOOL_LABEL || {};
+    const rows = Graph.getRows();
+    const laneH = Graph.getLaneHeight();
     const zoom = cy.zoom();
-    const panY = cy.pan().y;
-    const vpHeight = window.innerHeight;
+    const pan = cy.pan();
+    const mobile = window.innerWidth <= 820;
+    // Visible time range, in model x.
+    const vx1 = -pan.x / zoom;
+    const vx2 = (cy.width() - pan.x) / zoom;
+    const vc = (vx1 + vx2) / 2;
+
+    // The alternating row bands behind the graph follow the rows.
+    graphEl.style.setProperty("--row-h", `${laneH * zoom}px`);
+    graphEl.style.setProperty("--row-offset", `${pan.y - (laneH / 2) * zoom}px`);
+
+    if (lanesEl.children.length !== rows.length) renderLaneLabels();
+    const vpHeight = lanesEl.clientHeight || window.innerHeight;
     lanesEl.querySelectorAll(".lane-label").forEach((el) => {
-      const modelY = parseFloat(el.dataset.modelY);
-      const y = panY + modelY * zoom - 13;
+      const row = rows[Number(el.dataset.row)];
+      if (!row || !row.schools.length) { el.style.visibility = "hidden"; return; }
+      const dist = (e) => (vc < e.x1 ? e.x1 - vc : vc > e.x2 ? vc - e.x2 : 0);
+      const pick = row.schools.reduce((a, b) => (dist(b) < dist(a) ? b : a));
+      const onScreen = pick.x2 >= vx1 && pick.x1 <= vx2;
+      const ahead = pick.x1 > vc;
+      const key = pick.school + (onScreen ? "" : ahead ? ">" : "<");
+      if (el.dataset.key !== key) {
+        el.dataset.key = key;
+        const name = labels[pick.school] || pick.school;
+        el.querySelector(".lane-label__dot").style.background = `var(--school-${pick.school})`;
+        el.querySelector(".lane-label__name").textContent =
+          onScreen ? name : ahead ? `${name} \u2192` : `\u2190 ${name}`;
+        el.classList.toggle("is-away", !onScreen);
+      }
+      // Desktop: centred on the row. Phone: at the top of the row's band, so
+      // the pill sits above the row's dots rather than on them.
+      const rowY = pan.y + row.y * zoom;
+      const y = mobile ? rowY - (laneH / 2) * zoom + 6 : rowY - 13;
       el.style.transform = `translateY(${y}px)`;
-      const visible = y > -30 && y < vpHeight - 20;
-      el.style.opacity = visible ? "1" : "0";
+      el.style.visibility = y > -30 && y < vpHeight - 20 ? "" : "hidden";
     });
   }
 
