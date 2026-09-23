@@ -25,7 +25,16 @@ const Graph = (() => {
   ];
 
   const LANE_HEIGHT = 220;     // vertical spacing between lanes
-  const X_SCALE = 7;           // pixels per year of history (wider = fewer pileups)
+
+  // Piecewise-linear time scale. History is very unevenly populated: about
+  // 0.6 thinkers per century between 0 and 1000 CE, about 46 in the 1900s.
+  // A uniform px-per-year scale left antiquity as a vast empty plain and
+  // crammed the modern era. Each era gets its own rate; within an era time is
+  // still linear, so ordering and relative spacing stay honest.
+  // RATES[0] applies before TIME_BREAKS[0], RATES[i] between breaks i-1 and i,
+  // and the last rate after the final break.
+  const TIME_BREAKS = [-200, 0, 1000, 1500, 1700, 1800, 1900];
+  const TIME_RATES = [5, 3, 1, 2.5, 7, 11, 14, 20];   // px per year
   const JITTER = [0, -40, 40, -80, 80, -20, 20]; // sub-row offsets (used only for user-added nodes)
 
   // Collision-avoidance: keep node centres at least NODE_SEP apart. Same-school
@@ -56,8 +65,22 @@ const Graph = (() => {
     return bce ? -v : v;
   }
 
+  // Integral of the rate from the first break to `year` (negative before it).
+  function timeX(year) {
+    let prev = TIME_BREAKS[0];
+    if (year <= prev) return (year - prev) * TIME_RATES[0];
+    let x = 0;
+    for (let i = 1; i <= TIME_BREAKS.length; i++) {
+      const next = i < TIME_BREAKS.length ? TIME_BREAKS[i] : Infinity;
+      if (year <= next) return x + (year - prev) * TIME_RATES[i];
+      x += (next - prev) * TIME_RATES[i];
+      prev = next;
+    }
+    return x;
+  }
+
   // X coordinate for a given year (depends on minYear, set during layout).
-  function yearToX(year) { return (year - minYear) * X_SCALE; }
+  function yearToX(year) { return timeX(year) - timeX(minYear); }
 
   // Position for a single philosopher. `laneIndex` spreads philosophers
   // within the same school lane so contemporaries don't overlap.
@@ -336,22 +359,32 @@ const Graph = (() => {
     return true;
   }
 
-  // Frame the graph: zoom in just enough to read labels, then center on
-  // the modern-era cluster (where most connections live).
+  // Frame the graph: zoom in just enough to read labels, then centre on the
+  // busiest stretch of the map. Every node is tried as a window centre; the
+  // window (the viewport at the target zoom) holding the most thinkers,
+  // weighted by connections so hubs pull harder, wins, and the view settles
+  // on that window's weighted centroid. Data-driven, so it keeps working as
+  // the time scale, lanes or dataset change.
   function framInitial() {
-    const bb = cy.elements().boundingBox();
     const containerW = cy.width();
     const containerH = cy.height();
     const isMobile = containerW < 700;
     // Above the label threshold (0.42) so users see names immediately on desktop.
     // Slightly lower on mobile so more lanes fit at a glance.
     const targetZoom = isMobile ? 0.55 : 0.6;
-    // Center horizontally on the modern era — 65th percentile of node X
-    // lands somewhere in the 1700s–1800s where the graph is densest.
-    const xs = cy.nodes().map((n) => n.position("x")).sort((a, b) => a - b);
-    const focusX = xs[Math.floor(xs.length * 0.65)] || (bb.x1 + bb.w / 2);
-    // Center vertically on the middle of the lane stack.
-    const focusY = bb.y1 + bb.h / 2;
+    const halfW = containerW / targetZoom / 2;
+    const halfH = containerH / targetZoom / 2;
+    const pts = cy.nodes().map((n) => ({ x: n.position("x"), y: n.position("y"), w: 1 + n.degree(false) }));
+    const inWindow = (c) => pts.filter((p) => Math.abs(p.x - c.x) <= halfW && Math.abs(p.y - c.y) <= halfH);
+    let best = [], bestScore = -1;
+    pts.forEach((c) => {
+      const members = inWindow(c);
+      const score = members.reduce((s, p) => s + p.w, 0);
+      if (score > bestScore) { bestScore = score; best = members; }
+    });
+    const total = best.reduce((s, p) => s + p.w, 0) || 1;
+    const focusX = best.reduce((s, p) => s + p.x * p.w, 0) / total;
+    const focusY = best.reduce((s, p) => s + p.y * p.w, 0) / total;
     cy.zoom({ level: targetZoom, renderedPosition: { x: containerW / 2, y: containerH / 2 } });
     cy.pan({ x: containerW / 2 - focusX * targetZoom, y: containerH / 2 - focusY * targetZoom });
   }

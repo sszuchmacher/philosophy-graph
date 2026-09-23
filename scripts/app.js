@@ -205,22 +205,31 @@
     if (!cy) return;
     const zoom = cy.zoom();
     const panX = cy.pan().x;
-    const pxPerYear = (Graph.yearToX(1) - Graph.yearToX(0)) * zoom; // = X_SCALE * zoom
-    // Pick a century step so labels stay ~110px apart minimum.
-    const candidates = [100, 200, 500, 1000, 2000];
-    let step = candidates[candidates.length - 1];
-    for (const s of candidates) { if (s * pxPerYear >= 110) { step = s; break; } }
+    // The time scale is piecewise (modern centuries are wider than ancient
+    // ones), so no single step suits the whole axis. Place ticks by rank —
+    // millennia, then 500s, 200s, centuries, half- and quarter-centuries —
+    // each only where it stays MIN_GAP clear of ticks already placed. Wide
+    // modern centuries fill in with 1850/1925-style ticks; sparse eras thin
+    // out to rounder numbers.
+    const MIN_GAP = 110;
     const bounds = Graph.getTimeBounds();
-    const start = Math.floor(bounds.min / step) * step;
-    const end = Math.ceil(bounds.max / step) * step;
+    const start = Math.floor(bounds.min / 100) * 100;
+    // No ticks in the future (living thinkers are placed near 2000).
+    const end = Math.min(Math.ceil(bounds.max / 100) * 100,
+      Math.floor(new Date().getFullYear() / 100) * 100);
     const width = axisEl.clientWidth;
-    let html = "";
-    for (let y = start; y <= end; y += step) {
-      const x = panX + Graph.yearToX(y) * zoom;
-      if (x < -60 || x > width + 60) continue;
-      html += `<div class="time-tick" style="transform:translateX(${x}px)"><div class="time-tick__label">${fmtYear(y)}</div></div>`;
+    const placed = [];
+    for (const step of [1000, 500, 200, 100, 50, 25]) {
+      for (let y = Math.ceil(start / step) * step; y <= end; y += step) {
+        const x = panX + Graph.yearToX(y) * zoom;
+        if (x < -60 || x > width + 60) continue;
+        if (placed.some((t) => t.y === y || Math.abs(t.x - x) < MIN_GAP)) continue;
+        placed.push({ y, x });
+      }
     }
-    axisEl.innerHTML = html;
+    axisEl.innerHTML = placed.map((t) =>
+      `<div class="time-tick" style="transform:translateX(${t.x}px)"><div class="time-tick__label">${fmtYear(t.y)}</div></div>`
+    ).join("");
   }
 
   // Coalesce both syncs into a single rAF so frequent pan/zoom/render
