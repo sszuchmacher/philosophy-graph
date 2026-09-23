@@ -263,6 +263,44 @@ button { font-family: var(--sans); }
 .lane-label.is-away { opacity: 0.5; }
 
 /* ============================================================
+   Era jump buttons (bottom-left of the graph)
+   ============================================================ */
+.era-bar {
+  position: fixed;
+  left: calc(var(--lanes-width) + 16px);
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;                 /* over the graph and row labels, under sheets */
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  max-width: calc(100vw - var(--lanes-width) - 90px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.era-bar::-webkit-scrollbar { display: none; }
+/* A trail has its own stop-to-stop navigation. */
+#trail-bar:not([hidden]) ~ .era-bar { display: none; }
+.era-chip {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.era-chip:hover { background: var(--line); color: var(--ink); }
+.era-chip.is-current { background: var(--accent); color: var(--bg-elev); }
+
+/* ============================================================
    Drawer (left slide-in) — filters + school index
    ============================================================ */
 .drawer {
@@ -1168,6 +1206,13 @@ html[data-theme="dark"] .time-tick { background: rgba(255, 255, 255, 0.06); }
   .zoom-controls { bottom: calc(14px + env(safe-area-inset-bottom, 0px)); right: 12px; }
   /* FAB sits above the zoom controls on the opposite corner */
   .fab { left: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+  /* Between the + button and the zoom stack; scrolls if the eras don't fit. */
+  .era-bar {
+    left: 74px;
+    bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 74px - 60px);
+  }
+  .era-chip { padding: 6px 10px; font-size: 12px; }
 }
 
 /* Tiny screens — extra compaction */

@@ -265,13 +265,70 @@
     ).join("");
   }
 
+  // --- Era jump buttons ------------------------------------------------------
+  // Tap an era to glide there: a horizontal pan at the current zoom, so the
+  // rows and labels stay put. It lands on the era's thinkers (their
+  // connection-weighted centre), not on the era's midpoint. The button for
+  // the era at the centre of the screen stays lit, so the bar doubles as a
+  // "you are here".
+  const ERAS = [
+    { label: "Ancient", from: -Infinity, to: 400 },
+    { label: "Medieval", from: 400, to: 1450 },
+    { label: "Early modern", from: 1450, to: 1780 },
+    { label: "1800s", from: 1780, to: 1900 },
+    { label: "1900s", from: 1900, to: Infinity },
+  ];
+  const eraBar = document.getElementById("era-bar");
+  eraBar.innerHTML = ERAS.map((e, i) =>
+    `<button class="era-chip" type="button" data-era="${i}">${e.label}</button>`).join("");
+  const eraX = (year) => (Number.isFinite(year) ? Graph.yearToX(year) : year);
+  function eraTargetX(era) {
+    const x1 = eraX(era.from), x2 = eraX(era.to);
+    let sum = 0, weight = 0;
+    Graph.getCy().nodes().forEach((n) => {
+      const x = n.position("x");
+      if (x < x1 || x >= x2) return;
+      const w = 1 + n.degree(false);
+      sum += x * w;
+      weight += w;
+    });
+    return weight ? sum / weight : (x1 + x2) / 2;
+  }
+  eraBar.addEventListener("click", (e) => {
+    const chip = e.target.closest(".era-chip");
+    if (!chip) return;
+    const cy = Graph.getCy();
+    const x = eraTargetX(ERAS[Number(chip.dataset.era)]);
+    cy.stop();
+    cy.animate({ pan: { x: cy.width() / 2 - x * cy.zoom(), y: cy.pan().y } },
+      { duration: 450, easing: "ease-in-out" });
+  });
+  function syncEraChips() {
+    const cy = Graph.getCy();
+    if (!cy) return;
+    const cx = (cy.width() / 2 - cy.pan().x) / cy.zoom();
+    const current = ERAS.findIndex((e) => cx >= eraX(e.from) && cx < eraX(e.to));
+    eraBar.querySelectorAll(".era-chip").forEach((chip, i) => {
+      const on = i === current;
+      if (chip.classList.contains("is-current") === on) return;
+      chip.classList.toggle("is-current", on);
+      if (on) {
+        chip.setAttribute("aria-current", "true");
+        // On phones the bar scrolls; keep the lit era in view.
+        eraBar.scrollLeft = chip.offsetLeft - (eraBar.clientWidth - chip.offsetWidth) / 2;
+      } else {
+        chip.removeAttribute("aria-current");
+      }
+    });
+  }
+
   // Coalesce both syncs into a single rAF so frequent pan/zoom/render
   // events don't thrash the DOM.
   let syncQueued = false;
   function scheduleSync() {
     if (syncQueued) return;
     syncQueued = true;
-    requestAnimationFrame(() => { syncQueued = false; syncLaneLabels(); syncTimeAxis(); });
+    requestAnimationFrame(() => { syncQueued = false; syncLaneLabels(); syncTimeAxis(); syncEraChips(); });
   }
   renderLaneLabels();
   scheduleSync();
