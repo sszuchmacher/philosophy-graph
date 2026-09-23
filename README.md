@@ -8,14 +8,14 @@ A mobile-first, chronologically-organized map of Western philosophy:
 - **Each horizontal lane is a school of thought.** Schools are ordered roughly chronologically (Pre-Socratics on top, contemporary feminism near the bottom).
 - **Each circle is a philosopher**, colored by school.
 - **Lines connect philosophers who argued with one another** — six kinds of relation: continuation, critique, reinterpretation, radicalization, inversion, diagnosis.
-- **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected — **every one of the 260 relations has a full ~350-word essay** (about 91,000 words in all) explaining the philosophical link, rendered inline.
+- **Tap any circle** for that philosopher's card — including a tappable **connections list** ("looks back to" / "taken up by"), a signature quote, and look-up links. **Tap any line** (or a connection in the card) to read how they connected — **every one of the 282 relations has a full ~350-word essay** (about 98,000 words in all) explaining the philosophical link, rendered inline.
 - **Follow a guided trail.** The **Trails** button opens 13 curated journeys — *The Death of God*, *The Social Contract*, *Everything Flows*, *One Is Not Born a Woman*… Each trail walks one theme chronologically through 4–6 connections: the path lights up on the map, each stop opens the essay framed by a trail note, and your place is saved so you can resume or complete trails over time.
 - **Add your own philosophers** with the ＋ button. They're generated, previewed (with proposed connections you can toggle), added live to the map, and saved in your browser. Export them as JSON to merge into the repo.
 - A **century axis** (vertical gridlines + year labels) makes "time flows left to right" legible.
 - **Everything is a link.** Every philosopher, every essay, and every trail stop has its own URL (`#/p/kant`, `#/r/kant-hume`, `#/t/death-of-god/3`) — open a card or an essay and the 🔗 button next to the close button shares or copies that exact view. Opening a shared link jumps straight there (and skips the welcome overlay). The back button retraces your steps through the graph.
 - **Installable.** Add it to your phone's home screen for a full-screen app icon, and it keeps working offline once you've visited (a small service worker caches the app and its data).
 
-121 philosophers, 260 relations, 21 schools — plus whatever you add.
+121 philosophers, 282 relations, 21 schools — plus whatever you add.
 
 ## Running it
 
@@ -121,9 +121,9 @@ grafo-filosofos/
 │   └── app.js               # data merge, theme, drawer, zoom, lane labels, century axis, add-flow
 ├── data/
 │   ├── philosophers.json    # 121 philosophers
-│   ├── relations.json       # 260 relations
+│   ├── relations.json       # 282 relations
 │   └── trails.json          # 13 curated guided trails (68 stops)
-├── content/essays/          # 260 full essays, one per relation (~91k words)
+├── content/essays/          # 282 full essays, one per relation (~98k words)
 ├── assets/
 │   ├── icons/                # app icon (SVG source + PNG sizes for favicon/PWA/home screen)
 │   └── social-card.png       # Open Graph / Twitter card image (1200×630)

@@ -1,0 +1,9 @@
+Erasmus spent his life attacking the scholastic theology of the universities: its technical questions, its disputations, its distance from the simple teaching of the Gospels. What he offered in its place he called the **philosophy of Christ**, a way of life rather than a system, and one of its unlikely heroes was Socrates.
+
+The image Erasmus returned to most often came from Plato's *Symposium*, where Alcibiades compares Socrates to the Sileni: small carved figures of an ugly satyr that could be opened to reveal the image of a god inside. In the adage *The Sileni of Alcibiades*, one of the longest essays in his great collection of proverbs, Erasmus makes this the key to true wisdom. Socrates looked like a rustic fool, owned nothing and was mocked by the clever; inside he was the wisest of men. Christ, Erasmus suggests, is the supreme Silenus, humble in appearance and divine within. The Church, by contrast, too often inverts the figure: splendid outside, empty inside.
+
+In one of his *Colloquies*, a guest moved by the way Socrates faced death confesses that he can hardly keep himself from exclaiming *Saint Socrates, pray for us*. It is a joke with a serious point. A pagan who lived and died with such integrity had grasped something essential about the moral life that the learned theologians of Erasmus's day had lost.
+
+This is a reinterpretation, not a return. Erasmus's Socrates is not the relentless questioner of the early dialogues or the metaphysician of the *Republic*. He is a moral **exemplar**, modest, ironic and indifferent to wealth and death, enlisted in a programme of Christian reform. The same ironic mode shapes Erasmus's own *Praise of Folly*, in which Folly herself speaks and the pretensions of the wise are exposed.
+
+In Erasmus the humanist return to the ancients becomes a return to a person more than a doctrine: Socrates as a life to imitate.

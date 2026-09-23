@@ -1,0 +1,9 @@
+Pyrrho left no writings, and his thought reaches us through his disciple Timon and much later sources. But those sources consistently place him in the line of **Democritus**. The ancient biographical tradition says he studied with Anaxarchus, a follower of the Democritean school, and that he was especially fond of citing Democritus.
+
+The connection is philosophical, not only biographical. Democritus had drawn a sharp line between appearance and reality. Sweet, bitter, hot, cold and colour exist **by convention**, he said; in reality there are only atoms and the void. The qualities our senses report are effects of atoms on our bodies, not features of things as they are. Yet Democritus also turned this line against knowledge itself. In some of his most striking fragments he concedes that in reality we know nothing, for truth lies in the depths, and he imagines the senses answering the intellect: wretched mind, you take your evidence from us and then try to overthrow us.
+
+Pyrrho takes the step Democritus hesitated to take. If the senses do not reveal things as they are, and if reason's picture of hidden atoms is built from sensory evidence, then we have no secure access to the nature of things at all. According to Timon's report, Pyrrho held that things are **indifferent, unmeasurable and undecidable**, so that our perceptions and opinions are neither true nor false. The proper response is to hold no opinions, to incline neither way, and to say of each thing that it no more is than is not.
+
+What began in Democritus as a scientific distinction between appearance and atomic reality becomes in Pyrrho a way of life. Its goal is not a theory but a condition: **ataraxia**, freedom from disturbance, which follows once one stops needing to decide.
+
+This is the origin of the tradition later systematized by Sextus Empiricus, and its roots lie in a doubt first opened within atomism itself.

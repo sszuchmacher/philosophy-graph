@@ -1,0 +1,9 @@
+The Stoics always claimed Heraclitus as a forerunner. From him they took the idea of a divine **logos** ordering the cosmos and the image of fire as the active principle from which all things arise and into which they return. Marcus Aurelius, writing private notes to himself on campaign in the second century, carries that inheritance in its most personal form.
+
+Heraclitus appears by name several times in the *Meditations*. Marcus reminds himself of the saying that the death of earth is to become water, the death of water to become air, and of air fire: the ceaseless exchange of the elements. He recalls the warning that we should not act and speak like people asleep, each turned away into a private world. And he notes, with his usual dryness, that Heraclitus, after much speculation about the world's end in fire, died of dropsy.
+
+More pervasive than the citations is the Heraclitean vision of **flux**. Time, Marcus writes, is a river of passing events, and a strong current; no sooner is a thing seen than it is swept away and another takes its place. Everything we have is on loan from the continual change of nature.
+
+What is distinctive is the use Marcus makes of this vision. For Heraclitus, flux belonged to an enigmatic account of how opposites belong together. For Marcus, it is an **exercise**. Remembering that everything changes is a way of loosening attachment to fame, possessions and even one's own life, and of accepting one's place in the order of the whole. Change is not a threat to that order; it is how the order works.
+
+And the common logos, which Heraclitus reproached people for ignoring, becomes for Marcus a moral fact. Because we share reason, we are made for cooperation, like hands, like feet, like the two rows of teeth. The cosmic principle becomes the ground of a duty to others.

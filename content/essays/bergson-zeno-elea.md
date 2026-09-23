@@ -1,0 +1,9 @@
+For two thousand years philosophers tried to answer Zeno. Bergson proposed instead to explain why the paradoxes seem compelling at all, and in doing so he turned them into a diagnosis of the intellect itself.
+
+Every one of Zeno's arguments, Bergson observes, makes the same move. It replaces a movement with the **trajectory** the movement traces, a line in space, and then treats that line as if it were the movement. A line can indeed be divided without end, and any point on it can be singled out. But the movement that produced it was never made of points. Achilles does not run through an infinite series of positions; he takes a finite number of strides, and each stride is a single, **indivisible act**. Try to reconstruct the stride from positions and it will never move again, just as an arrow reassembled from instants will never fly.
+
+In *Creative Evolution* Bergson calls this the **cinematographical mechanism** of thought. Like a film camera, the intellect takes snapshots of reality at rest and then tries to restore movement by running them in sequence, adding an abstract, uniform becoming to animate them. The method works superbly for practical purposes and for physics, which needs to measure and predict. But it is a method for handling things, not for grasping change. Applied to motion as such, it produces exactly Zeno's contradictions.
+
+The underlying error is the one Bergson finds in the scientific treatment of time: **duration** is spatialized, converted into a line of juxtaposed moments. Zeno's arguments are valid consequences of that conversion. They do not show that motion is impossible; they show that motion cannot be composed of immobilities.
+
+So Bergson neither refutes Zeno nor accepts him. He locates the paradoxes in a habit of thought that the Eleatics inaugurated and much of later philosophy inherited, and he asks us to recover, through intuition, the movement that habit leaves out.

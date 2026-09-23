@@ -1,0 +1,9 @@
+For centuries the Latin West knew Aristotle's logic almost entirely through Boethius. His translations of the *Categories* and *On Interpretation*, with his commentaries on those works and on Porphyry's *Isagoge*, formed the core of what medieval teachers called the old logic. Peter Abelard learned his trade on these texts, and his philosophy of language grew out of a question Boethius had made unavoidable.
+
+Porphyry, introducing the *Categories*, had raised three questions about genera and species and then declined to answer them: do they exist in reality or only in the mind; if they exist, are they bodily or not; and do they exist apart from sensible things or in them? Boethius, commenting on the passage, offered an Aristotelian answer: universals exist in sensible things, but are understood apart from them by abstraction. The mind can consider what is common to many individuals without thereby creating a separate thing.
+
+Abelard found the realist theories of his own teachers untenable. If a universal were a single thing wholly present in many individuals, Socrates and Plato would contain one and the same thing, and contrary properties would belong to a single reality. So he placed universality not in things but in **words**, more precisely in words insofar as they signify. A universal is a term apt to be predicated of many.
+
+Yet Abelard did not make universals arbitrary. What justifies applying the same word to Socrates and Plato is that both share a **status**, the condition of being human, which is not itself a thing but is nonetheless real. Words are universal; their common application rests on how things actually are.
+
+This is recognizably an answer to Boethius's question, pressed with the instruments Boethius had supplied. It moved the debate from metaphysics toward the **semantics of language**, a direction later medieval logic, down to Ockham, would pursue.

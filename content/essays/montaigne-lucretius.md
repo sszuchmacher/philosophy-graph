@@ -1,0 +1,9 @@
+Lucretius' *On the Nature of Things* was nearly lost. A manuscript found in a German monastery by the humanist Poggio Bracciolini in 1417 returned it to circulation, and within a century and a half it had become one of the texts through which Renaissance readers thought about nature, death and the gods. Few absorbed it more thoroughly than Montaigne.
+
+He quotes Lucretius again and again in the *Essays*, and in 1989 his own heavily annotated copy of the poem was identified in a library in England, its margins full of his notes. The attraction was not the atomist physics as such. It was what the poem does with that physics: it uses the image of a world made of atoms, without providence and without an afterlife, to free people from **fear**.
+
+This is the Lucretius who runs through Montaigne's early essay *That to philosophize is to learn to die*. Death, Lucretius had argued after Epicurus, is nothing to us: while we exist it is absent, and when it arrives we no longer exist. Nature did not consult us about our arrival and will not consult us about our departure; the same matter will be used again, and generations pass on the torch of life like runners. Montaigne takes over these arguments, the lines that carry them and above all their tone: the attempt to make death familiar rather than terrible, a natural event rather than a punishment or a trial.
+
+He also inherits Lucretius' deflation of human pride: the insistence that humans are part of nature, not its masters, and that other animals share far more with us than we like to admit.
+
+Yet Montaigne never becomes an Epicurean. His scepticism, fed by Sextus Empiricus, will not let him trust any system to explain the universe, the atomists' included. What he keeps from Lucretius is less a doctrine than a **remedy**: the conviction that looking steadily at nature can quiet the mind, adapted to a life of doubt rather than certainty.

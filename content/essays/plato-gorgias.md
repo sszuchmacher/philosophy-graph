@@ -1,0 +1,9 @@
+Gorgias of Leontini was the most celebrated teacher of speech in the Greek world, and he made extraordinary claims for his art. In his *Encomium of Helen* he calls speech a mighty lord that, with the smallest and least visible body, achieves the most divine works: it can stop fear, banish grief, create joy and increase pity. If Helen was persuaded, she was overpowered, and is no more to blame than if she had been carried off by force.
+
+Plato took that claim seriously enough to devote one of his longest dialogues to it. In the *Gorgias*, Socrates asks the master what rhetoric is about. Gorgias answers: persuasion in courts and assemblies about what is just and unjust. Socrates then draws the distinction the whole dialogue turns on. There is persuasion that produces **knowledge** and persuasion that produces mere **belief**. Rhetoric, which must convince crowds quickly, can only produce belief; the orator persuades without knowing, and without teaching.
+
+From there the critique widens. Rhetoric, Socrates argues, is not an art at all but a **knack**, a form of flattery aimed at pleasure rather than good. It stands to justice as cookery stands to medicine: cookery pretends to know which foods are best by offering what tastes pleasant, while medicine knows what is actually healthy. The orator gives assemblies what they want to hear.
+
+The argument escalates as Gorgias gives way to his pupil Polus and then to Callicles, who defends the right of the stronger to take more than others. A conversation that began with a technique of speech ends with a choice between two lives: the life of power won by persuasion, and the philosophical life devoted to the care of the soul.
+
+Gorgias had loosened the bond between speech and truth; in his treatise *On Not-Being* he doubted that truth could be communicated at all. Plato's answer is to tie persuasion back to knowledge, and to make that bond the test of whether speech serves justice or only power.
