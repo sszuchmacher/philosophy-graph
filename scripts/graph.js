@@ -2,8 +2,8 @@
    graph.js — Chronological + school-lane layout.
    Time runs left-to-right (X = year), schools stack as
    horizontal lanes (Y). Deterministic positions; no force-
-   directed pileup. Labels appear only at higher zoom and on
-   highlighted nodes. Edges are nearly invisible by default
+   directed pileup. Labels keep a readable size and are placed
+   by importance where they fit (see relabel). Edges are nearly invisible by default
    and snap to full opacity when their endpoints are selected.
    ============================================================ */
 
@@ -11,7 +11,6 @@ const Graph = (() => {
   let cy = null;
   let handlers = {};
   let laneCenters = {};        // school -> Y in model coords
-  let labelsOn = false;
   let minYear = 0;             // earliest year across all nodes (for X origin)
 
   // Schools ordered roughly chronologically by first member's birth.
@@ -25,6 +24,7 @@ const Graph = (() => {
   ];
 
   const LANE_HEIGHT = 220;     // vertical spacing between lanes
+  const NODE_SIZE = 22;        // dot diameter (model px)
 
   // Piecewise-linear time scale. History is very unevenly populated: about
   // 0.6 thinkers per century between 0 and 1000 CE, about 46 in the 1900s.
@@ -160,14 +160,14 @@ const Graph = (() => {
           "text-outline-color": cssVar("--bg"),
           "text-outline-width": 2,
           "text-opacity": 0,           // hidden by default; toggled by .shown class
-          width: 22,
-          height: 22,
+          width: NODE_SIZE,
+          height: NODE_SIZE,
           "border-width": 0,
           "transition-property": "opacity, border-width, text-opacity",
           "transition-duration": "0.18s",
         },
       },
-      // When zoomed in, all node labels appear.
+      // Labels chosen by relabel() for the current zoom.
       { selector: "node.shown", style: { "text-opacity": 1 } },
       // Nodes stacked above their lane's centre line carry their label on top,
       // so stacked contemporaries' labels never collide with the node below.
@@ -326,9 +326,10 @@ const Graph = (() => {
     const nodes = cy.nodes(`[school = "${school}"]`);
     nodes.style("display", visible ? "element" : "none");
     nodes.connectedEdges().style("display", visible ? "element" : "none");
+    relabel();   // hidden lanes free up label space
   }
 
-  function refreshTheme() { if (cy) cy.style(styles()); }
+  function refreshTheme() { if (cy) { cy.style(styles()); relabel(); } }
 
   // Inject a newly generated philosopher + its relations into the live
   // graph, position it, flash a highlight, and pan to it. Returns true on
@@ -351,8 +352,8 @@ const Graph = (() => {
       cy.add({ group: "edges", data: { id: r.id, source: r.source, target: r.target, type: r.type, ref: r } });
     });
 
-    // Make sure the new node's label shows even if zoomed out.
-    if (labelsOn) cy.getElementById(philosopher.id).addClass("shown");
+    // Re-run label placement so the new node's label competes for space.
+    relabel();
     clearHighlight();
     highlightNode(philosopher.id);
     cy.animate({ center: { eles: cy.getElementById(philosopher.id) }, zoom: Math.max(cy.zoom(), 0.7) }, { duration: 450 });
@@ -389,13 +390,96 @@ const Graph = (() => {
     cy.pan({ x: containerW / 2 - focusX * targetZoom, y: containerH / 2 - focusY * targetZoom });
   }
 
-  // Show node labels only when zoomed in enough to read them.
-  function syncLabels() {
-    const want = cy.zoom() > 0.42;
-    if (want === labelsOn) return;
-    labelsOn = want;
-    if (want) cy.nodes().addClass("shown");
-    else cy.nodes().removeClass("shown");
+  // Zoom-dependent labels. Labels keep a readable on-screen size (never
+  // below LABEL_MIN_PX, capped at LABEL_MAX_PX when zoomed in), so zoomed
+  // out a label is large relative to the gaps between thinkers and only a
+  // few fit. Which ones: greedily, most-connected first, a label is shown
+  // only if its box clears every label already placed and every other
+  // thinker's dot that is big enough on screen to matter (below
+  // DOT_BLOCK_PX only already-labelled dots block, so a speck can't veto a
+  // hub's name). Hubs win when zoomed out; names fill in as you zoom.
+  // Geometry here depends only on zoom (pan is a translation), so labels
+  // stay stable while panning. Focused nodes (.highlight/.neighbor) keep
+  // their forced labels via the stylesheet regardless.
+  const BASE_FONT = 10;         // model px; natural size when zoomed in
+  const LABEL_MIN_PX = 11;      // on-screen floor
+  const LABEL_MAX_PX = 15;      // on-screen cap
+  const LABEL_GAP_PX = 3;       // breathing room between labels, on screen
+  const DOT_BLOCK_PX = 9;       // dots at least this big on screen block labels
+  const LABEL_BOX = { includeNodes: false, includeEdges: false, includeLabels: true, includeOverlays: false };
+  const BODY_BOX = { includeNodes: true, includeEdges: false, includeLabels: false, includeOverlays: false };
+
+  function overlaps(a, b) {
+    return a.x1 < b.x2 && a.x2 > b.x1 && a.y1 < b.y2 && a.y2 > b.y1;
+  }
+
+  function relabel() {
+    if (!cy) return;
+    const z = cy.zoom();
+    const f = Math.min(LABEL_MAX_PX, Math.max(LABEL_MIN_PX, BASE_FONT * z)) / z;
+    const gap = LABEL_GAP_PX / z;
+    const nodes = cy.nodes().filter((n) => n.style("display") !== "none");
+    const isAbove = (n) => n.style("text-valign") === "top";
+    const sideStyle = (above) => ({
+      "text-valign": above ? "top" : "bottom",
+      "text-margin-y": (above ? -1 : 1) * f * 0.35,
+    });
+
+    // One batched restyle at the new size (keeping each label's current side),
+    // then measure every label once.
+    cy.batch(() => {
+      nodes.forEach((n) => n.style({
+        "font-size": f,
+        "text-max-width": f * 8,
+        "text-outline-width": f * 0.2,
+        ...sideStyle(isAbove(n)),
+      }));
+    });
+
+    // A label sits symmetrically about its dot (same margin either side), so
+    // its box on the other side is the measured box mirrored through the
+    // dot's centre. That avoids a restyle per candidate side, which made
+    // this pass ~100ms instead of a few.
+    const labelBox = (n, above) => {
+      const b = n.boundingBox(LABEL_BOX);
+      const box = above === isAbove(n) ? b
+        : { x1: b.x1, x2: b.x2, y1: 2 * n.position("y") - b.y2, y2: 2 * n.position("y") - b.y1 };
+      return { x1: box.x1 - gap, x2: box.x2 + gap, y1: box.y1 - gap, y2: box.y2 + gap };
+    };
+
+    const allDotsBlock = NODE_SIZE * z >= DOT_BLOCK_PX;
+    const bodies = nodes.map((n) => ({ id: n.id(), box: n.boundingBox(BODY_BOX) }));
+    const placed = [];
+    const side = new Map();       // node -> chosen side (true = above)
+    const shownIds = new Set();
+    nodes.sort((a, b) => (b.degree(false) - a.degree(false)) || a.id().localeCompare(b.id()))
+      .forEach((n) => {
+        // Try the lane's default side first (see .label-above), then the
+        // other: in a crowded row, alternating neighbours can both fit.
+        const preferAbove = n.hasClass("label-above");
+        side.set(n, preferAbove);   // unplaced labels keep the default side (focus may force them on)
+        for (const above of [preferAbove, !preferAbove]) {
+          const box = labelBox(n, above);
+          if (placed.some((p) => overlaps(p, box))) continue;
+          if (bodies.some((o) => o.id !== n.id() && (allDotsBlock || shownIds.has(o.id)) && overlaps(o.box, box))) continue;
+          placed.push(box);
+          side.set(n, above);
+          shownIds.add(n.id());
+          return;
+        }
+      });
+
+    cy.batch(() => {
+      side.forEach((above, n) => { if (above !== isAbove(n)) n.style(sideStyle(above)); });
+      cy.nodes().forEach((n) => n.toggleClass("shown", shownIds.has(n.id())));
+    });
+  }
+
+  // Zoom fires continuously during a pinch or wheel; relabel once it settles.
+  let relabelTimer = null;
+  function scheduleRelabel() {
+    clearTimeout(relabelTimer);
+    relabelTimer = setTimeout(relabel, 90);
   }
 
   function init(containerId, philosophers, relations, h) {
@@ -426,8 +510,8 @@ const Graph = (() => {
     // then pan horizontally to a populated era (roughly the modern dense zone).
     framInitial();
 
-    syncLabels();
-    cy.on("zoom", syncLabels);
+    relabel();
+    cy.on("zoom", scheduleRelabel);
     cy.on("pan zoom render", () => { if (handlers.onViewportChange) handlers.onViewportChange(); });
 
     cy.on("tap", "node", (evt) => {
